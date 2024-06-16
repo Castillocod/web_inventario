@@ -1,0 +1,26 @@
+thead>tr>th
+{
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+tbody>tr>td
+{
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+/* div > form > div > .form-label
+{
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+} */
+
+/* .modal-body > #formregistrar > div >input
+{
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+} */
+

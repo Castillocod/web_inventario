@@ -1,0 +1,85 @@
+/* Aquí inicia el dropdown CSS */
+.dropdown{
+    width: 150px;
+}
+
+.dropdown * {
+    box-sizing: border-box;
+}
+
+.select {
+    background: #ff0000;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 2px #ff0000 solid;
+    border-radius: 4px;
+    padding-left: 5px;
+    padding-right: 2px;
+    height: 40px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.select-clicked {
+    border: 2px #db4b4b solid;
+    box-shadow: 0 0 0.8em #26489a;
+}
+
+.select:hover{
+    background: #db4b4b;
+    border: 2px #db4b4b solid;
+}
+
+.caret {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #fff;
+    transition: 0.3s;
+}
+
+.caret-rotate {
+    transform: rotate(180deg);
+}
+
+.menu {
+    list-style: none;
+    padding: 0.2em 0.5em;
+    background: #ffffff;
+    border: 1px #545556 solid;
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
+    border-radius: 0.5em;
+    color: #000000;
+    position: absolute;
+    top: 3em;
+    left: 35%;
+    width: 240px;
+    transform: translateX(-50%);
+    opacity: 0;
+    display: none;
+    transition: 0.2s;
+    z-index: 1;
+}
+
+.menu li a {
+    padding: 0.7em 0.5em;
+    margin: 0.3em 0;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+.menu li a:hover {
+    background: #e1e1e4;
+}
+
+.menu-open {
+    display: block;
+    opacity: 1;
+}
+
+/* Aquí termina el dropdown CSS */
+
