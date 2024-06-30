@@ -12,10 +12,10 @@ class mcategorias extends CI_Model
            return $query->num_rows();
     }
 
-    public function totalcategorias($limite, $iniciar, $col, $dir)
+    public function totalcategorias($limite, $iniciar)
     {
         $this->db->limit($limite, $iniciar);
-        $this->db->order_by($col, $dir);
+        // $this->db->order_by($col, $dir);
         $query = $this->db->get('almacen_categorias');
 
         if($query->num_rows() > 0)
@@ -28,14 +28,14 @@ class mcategorias extends CI_Model
         }
     }
 
-    public function buscar_categorias($limite, $iniciar, $buscar, $col, $dir)
+    public function buscar_categorias($limite, $iniciar, $buscar)
     {
         $this->db->from('almacen_categorias');
         $this->db->like('id', $buscar, 'both');
         $this->db->or_like('categoria', $buscar, 'both');
         $this->db->or_like('estado_vcat', $buscar, 'both');
         $this->db->limit($limite, $iniciar);
-        $this->db->order_by($col, $dir);
+        // $this->db->order_by($col, $dir);
         $query = $this->db->get();
 
         if($query->num_rows() > 0)
@@ -87,6 +87,20 @@ class mcategorias extends CI_Model
         {
             return false;
         }
+    }
+
+    public function pdf_categorias_activas()
+    {
+        $this->db->where('estado_vcat', 'Activo');
+        $query = $this->db->get('almacen_categorias');
+        return $query->result_array();
+    }
+
+    public function pdf_categorias_inactivas()
+    {
+        $this->db->where('estado_vcat', 'Inactivo');
+        $query = $this->db->get('almacen_categorias');
+        return $query->result_array();
     }
 }
 ?>

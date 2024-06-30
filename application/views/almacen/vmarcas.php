@@ -190,17 +190,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($almacen_marcas as $row) { ?>
                             <tr>
-                                <td><?= $row['id']?></td>
-                                <td><?= $row['marca']?></td>
-                                <td><span id="celda_estado" style="font-weight: bold; font-size:11px"><?= $row['estado_vmarcas']?></span></td>
+                                <td></td>
+                                <td></td>
+                                <td><span id="celda_estado" style="font-weight: bold; font-size:11px"></span></td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#vmarcas_modeditar" onclick="vmarcas_editar(<?= $row['id']?>)" value="<?= $row['id']?>"></button>
-                                    <button onclick="mensajeborrar_vmarcas(<?= $row['id']?>)" class="btn btn-sm btn-danger fa-solid fa-trash-can"></button>
+                                    <button class="btn btn-sm btn-warning fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#vmarcas_modeditar" onclick="vmarcas_editar()" value=""></button>
+                                    <button onclick="mensajeborrar_vmarcas()" class="btn btn-sm btn-danger fa-solid fa-trash-can"></button>
                                 </td>
                             </tr>
-                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -212,12 +210,11 @@
                                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vmarcas_modexcel">Importar excel</button>
                             </div>
                             <div style="padding-left: 10px;">
-                                <a class="btn btn-success" href="<?= base_url() ?>almacen/cmarcas/exportarexcel">Exportar Excel</a>
+                                
                             </div>
                         </div> 
                     </div>
-                    <div class="d-flex justify-content-end">
-                            <?= $links ?>
+                    <div class="d-flex justify-content-end" id="pagination_vmarcas">
                     </div>
                 </div>
             </div>

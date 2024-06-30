@@ -3,6 +3,7 @@ $(document).ready(function() {
     var table = $("#tabla_vprod").DataTable({
         'processing': true,
         'serverSide': true,
+        'ordering': false,
         'ajax': {
             'url': 'cproductos/obtenerdatos',
             'type': 'POST',
@@ -110,8 +111,89 @@ $(document).ready(function() {
                 extend: 'excel',
                 text: 'Excel',
                 className: 'btn btn-success',
-                action: function(e, dt, node, config){
-                    $.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e, dt, node, config);
+                action: function(e, dt, node, config)
+                {
+                    $.ajax({
+                        url: 'cproductos/allproductosexcel',
+                        type: 'GET',
+                        dataType: 'JSON',
+                        success: function(data)
+                        {
+
+
+                            var excelproductos = data.data;
+                            var ws_data = [];
+                            var header = [];
+
+                            // Obtener encabezados de la tabla
+                            table.columns().header().to$().each(function() {
+                                header.push($(this).text());
+                            });
+                            ws_data.push(header);
+
+                            // Llenar datos de la tabla
+                            $.each(excelproductos, function(i, row) {
+                                var rowData = [];
+                                table.columns().header().to$().each(function(j) {
+                                    rowData.push(row[table.column(j).dataSrc()]);
+                                });
+                                ws_data.push(rowData);
+                            });
+
+                            // Crear hoja de trabajo y libro
+                            var ws = XLSX.utils.aoa_to_sheet(ws_data);
+                            var wb = XLSX.utils.book_new();
+                            XLSX.utils.book_append_sheet(wb, ws, 'Productos');
+
+                            // Descargar archivo Excel
+                            XLSX.writeFile(wb, 'Productos.xlsx');
+
+
+
+                            // var excelproductos = data.data;
+                            // var tabla_allproductos = $('<table>').attr('id', 'tabla_allproductos');
+
+                            // var thead = $('<thead>').appendTo(tabla_allproductos); 
+                            // var headerrow = $('<tr>').appendTo(thead);
+                            // table.columns().header().to$().each(function() {
+                            //     $('<th>').text($(this).text()).appendTo(headerrow);
+                            // });
+
+                            // var tbody = $('<tbody>').appendTo(tabla_allproductos);
+                            // $.each(excelproductos, function(i, row){
+                            //     var datarow = $('<tr>').appendTo(tbody);
+                            //     table.columns().header().to$().each(function(j){
+                            //         $('<td>').text(row[table.column(j).dataSrc()]).appendTo(datarow);
+                            //     });
+                            // });
+                            // $.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e, $.extend({}, dt, {settings: {aoData: tabla_allproductos.find('tr').toArray()}}), node, config);
+
+                            // var temptable = $(tabla_allproductos).DataTable({
+                            //     dom: 'Bfrtip',
+                            //     buttons: [
+                            //         {
+                            //             extend: 'excelHtml5',
+                            //             exportOptions:{
+                            //                 columns: ':visible'
+                            //             }
+                            //         }
+                            //     ]
+                            // });
+
+                            // temptable.button('.buttons-excel').trigger();
+                        },
+                        error: function(xhr, error, code)
+                        {
+                            alert('Error al hacer la petición');
+                            console.error('Error', error);
+                            console.code('Codigo', code);
+                            console.xhr('xhr', xhr);
+        
+                            if(xhr.responseText){
+                                console.error('Respuesta del error', xhr.responseText);
+                            }
+                        }
+                    });
                 }
             },
             // {
@@ -137,8 +219,9 @@ $(document).ready(function() {
         table.search(this.value).draw();
     });
 
-    $('#dt-length-0').on('change', function(){
-        table.page.len(this.value).draw();
+    $('#dt-length-0').on('change', function()
+    {
+        table.page.len(this.value).draw(); 
     });
 
     // $('#btn-copy').on('click', function(){
@@ -303,7 +386,47 @@ $(document).ready(function() {
             $('#editpreciotienda').val('');
         }
     });
+
+    
+    // flatpickr('#datemes', {
+    //     plugins: [
+    //         new monthSelectPlugin({
+    //             shorthand: true, // Displays the months in shorthand (Jan, Feb, Mar, etc.)
+    //             dateFormat: "Y-m", // Format to return to input
+    //             altFormat: "F Y", // Format to display in input
+    //             theme: 'dark'
+    //         })
+    //     ]
+    // });
+
+    $('#datefechas').datepicker({
+        language: 'es'
+    });
+
+    $('#datefechasdos').datepicker({
+        language: 'es'
+    });
+
+    $('#datemes').datepicker({
+        format: 'mm/yyyy',
+        startView: 'months',
+        minViewMode: 'months',
+        autoclose: true,
+        language: 'es'
+    });
+
+    $('#cancelexcel_vprod').click(function() {
+        $('#datefechas').val('');
+        $('#datefechasdos').val('');
+        $('#datemes').val('');
+    });
 });
+
+// $(document).on("click", "#cancelexcel_vprod", function(e) {
+//     e.preventDefault();
+
+//     alert('Boton funcionando');
+// });
 
 $(document).on('click', '#vprod_registrar', function(e){
     e.preventDefault();
@@ -510,16 +633,48 @@ function resetbtnconversion()
 }
 
 
-// document.addEventListener('DOMContentLoaded', function(){
-//     var celdaestadovprod = document.querySelectorAll('#celda_estado_vprod');
+var dropdown_vprod = document.querySelectorAll('#dropdown_vproductos');
 
-//     celdaestadovprod.forEach(function(celda){
-//         var estado_vprod = celda.textContent.trim();
+document.addEventListener('click', function(event){
+    dropdown_vprod.forEach(dropdown => {
+        const select = dropdown.querySelector('.select');
+        const caret = dropdown.querySelector('.caret');
+        const menu = dropdown.querySelector('.menu');
 
-//         if(estado_vprod === 'Activo'){
-//             celda.classList.add('badge', 'badge-success');
-//         } else if (estado_vprod === 'Inactivo'){
-//             celda.classList.add('badge', 'badge-warning');
-//         }
-//     });
-// });
+        if(!dropdown.contains(event.target)){
+            select.classList.remove('select-clicked');
+            caret.classList.remove('caret-rotate');
+            menu.classList.remove('menu-open');
+        }
+    });
+});
+
+dropdown_vprod.forEach(dropdown => {
+    const select = dropdown.querySelector('.select');
+    const caret = dropdown.querySelector('.caret');
+    const menu = dropdown.querySelector('.menu');
+    const options = dropdown.querySelectorAll('.menu li a');
+    const selected = dropdown.querySelector('.selected');
+
+    select.addEventListener('click', () => {
+        select.classList.toggle('select-clicked');
+        caret.classList.toggle('caret-rotate');
+        menu.classList.toggle('menu-open');
+    });
+
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            caret.classList.remove('caret-rotate');
+            menu.classList.remove('menu-open');
+
+            options.forEach(option => {
+                select.classList.toggle('select-clicked');
+            });
+
+            option.classList.add('active');
+        });
+    });
+});
+
+
+

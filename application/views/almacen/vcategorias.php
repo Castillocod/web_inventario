@@ -145,7 +145,7 @@
                         <label for="dt-search-0">Buscar:</label>
                     </div>
                     <div class="col-3">
-                        <input type="search" class="form-control form-control-sm" id="dt-search-0" placeholder="Escriba para buscar..." aria-controls="tabla_vcat">
+                        <input type="search" class="form-control" id="dt-search-0" placeholder="Escriba para buscar..." aria-controls="tabla_vcat">
                     </div>
                     <div class="col-9 d-flex justify-content-end">
                         <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vcat_agregarcategorias">Agregar Categoría</a>
@@ -168,7 +168,7 @@
                         <div class="dt-length text-center">
                             <div class="input-group">
                                 <h5 style="padding-top: 5px; padding-right: 5px">Ver:</h5>
-                                <select class="form-select form-select-sm" id="dt-length-0" name="tabla_vcat_length" style="border-radius: 5px;" aria-controls="tabla_vcat">
+                                <select class="form-select" id="dt-length-0" name="tabla_vcat_length" style="border-radius: 5px;" aria-controls="tabla_vcat">
                                     <option value="10">10</option>
                                     <option value="25">25</option>
                                     <option value="50">50</option>
@@ -183,10 +183,10 @@
                     <table class="table table-striped table-sm" id="tabla_vcat">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Categoría</th>
-                                <th>Estado</th> <!-- Aquí indicara si estara activo o no -->
-                                <th>Opciones</th>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Categoría</th>
+                                <th class="text-center">Estado</th> <!-- Aquí indicara si estara activo o no -->
+                                <th class="text-center">Opciones</th>
                             </tr>
                         </thead>
                         <tbody>

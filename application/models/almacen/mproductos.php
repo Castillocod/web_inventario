@@ -26,10 +26,10 @@ class mproductos extends CI_Model
         return $query->num_rows();
     }
 
-    public function all_vproductos($limit, $start, $col, $dir)
+    public function all_vproductos($limit, $start)
     {
         $this->db->limit($limit, $start);
-        $this->db->order_by($col, $dir);
+        // $this->db->order_by($col, $dir);
         $query = $this->db->get('almacen_productos');
 
         if($query->num_rows() > 0)
@@ -42,7 +42,7 @@ class mproductos extends CI_Model
         }
     }
 
-    public function vproductos_search($limit, $start, $search, $col, $dir)
+    public function vproductos_search($limit, $start, $search)
     {
         $this->db->from('almacen_productos');
         $this->db->like('id', $search, 'both');
@@ -59,7 +59,7 @@ class mproductos extends CI_Model
         $this->db->or_like('codigofiscal', $search, 'both');
         $this->db->or_like('estado_prod', $search, 'both');
         $this->db->limit($limit, $start);
-        $this->db->order_by($col, $dir);
+        // $this->db->order_by($col, $dir);
         $query = $this->db->get();
 
         if($query->num_rows() > 0)
@@ -183,6 +183,26 @@ class mproductos extends CI_Model
             }
         }
         return $porcentajes;
+    }
+
+    public function pdf_activos()
+    {
+        $this->db->where('estado_prod', 'Activo');
+        $query = $this->db->get('almacen_productos');
+        return $query->result_array();
+    }
+
+    public function pdf_inactivos()
+    {
+        $this->db->where('estado_prod', 'Inactivo');
+        $query = $this->db->get('almacen_productos');
+        return $query->result_array();
+    }
+
+    public function allproductosexcel()
+    {
+        $query = $this->db->get('almacen_productos');
+        return $query->result_array();
     }
 }
 ?>

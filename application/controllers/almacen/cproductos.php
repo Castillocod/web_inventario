@@ -45,21 +45,21 @@ class cproductos extends CI_Controller
 
         $limit = $this->input->post('length');
         $start = $this->input->post('start');
-        $ordercolumns = $this->input->post('order')[0]['column'];
-        $order = $columns[$ordercolumns];
-        $dir = $this->input->post('order')[0]['dir'];
+        // $ordercolumns = $this->input->post('order')[0]['column'];
+        // $order = $columns[$ordercolumns];
+        // $dir = $this->input->post('order')[0]['dir'];
 
         $totaldata = $this->mproductos->all_vproductos_count();
         $totalfiltered = $totaldata;
 
         if(empty($this->input->post('search')['value']))
         {
-            $vproductos = $this->mproductos->all_vproductos($limit, $start, $order, $dir);
+            $vproductos = $this->mproductos->all_vproductos($limit, $start);
         }
         else
         {
             $search = $this->input->post('search')['value'];
-            $vproductos = $this->mproductos->vproductos_search($limit, $start, $search, $order, $dir);
+            $vproductos = $this->mproductos->vproductos_search($limit, $start, $search);
             $totalfiltered = $this->mproductos->vproductos_search_count($search);
         }
 
@@ -361,6 +361,30 @@ class cproductos extends CI_Controller
         {
             return false;
         }
+    }
+
+    public function allproductosexcel()
+    {
+        $excelproductos = $this->mproductos->allproductosexcel();
+        echo json_encode($excelproductos);
+    }
+
+    public function pdf_activos()
+    {
+        $data['almacen_productos'] = $this->mproductos->pdf_activos();
+        $html = $this->load->view('almacen/reportes_vproductos/rep_activos_vprod', $data, true);
+        $mpdf = new Mpdf\Mpdf();
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+    }
+
+    public function pdf_inactivos()
+    {
+        $data['almacen_productos'] = $this->mproductos->pdf_inactivos();
+        $html = $this->load->view('almacen/reportes_vproductos/rep_inactivos_vprod', $data, true);
+        $mpdf = new Mpdf\Mpdf();
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
     }
 }
 ?>

@@ -259,15 +259,76 @@
                     </div>
                 </div>
                 <!-- AQUÍ TERMINA EL MODAL PARA IMPORTAR EXCEL -->
+                 <!-- AQUÍ INICIA EL MODAL PARA EXPORTAR POR MES Y DIAS -->
+                <div class="modal fade" id="vprod_exportarexcel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog col-xl">
+                        <div class="modal-content">
+                            <div class="modal-header d-block">
+                                <h4 class="modal-title text-center">
+                                    Exportación por Tiempo
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <center><h4>Selecciona el tipo de exportación</h4></center>
+                                <div class="col-12">
+                                    <fieldset><legend>Datos por Fecha</legend></fieldset>
+                                    <div class="row d-flex justify-content-between">
+                                    
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="datefechas" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="datefechasdos" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Datos por Mes</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="datemes" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" data-bs-dismiss="modal" id="cancelexcel_vprod">Cancelar</button>
+                                <button class="btn btn-success" id="">Exportar datos</button>
+                            </div>
+                        </div>i
+                    </div>
+                </div>
+                <!-- AQUÍ TERMINA EL MODAL PARA IMPORTAR EXCEL -->
                 <div class="row dt-search">
                     <div>
                         <label for="dt-search-0">Buscar:</label>
                     </div>
                     <div class="col-3">
-                        <input type="search" class="form-control form-control-sm" id="dt-search-0" placeholder="Escriba para buscar..." aria-controls="tabla_vprod">
+                        <input type="search" class="form-control" id="dt-search-0" placeholder="Escriba para buscar..." aria-controls="tabla_vprod">
                     </div>
                     <div class="col-9 d-flex justify-content-end">
-                        <a class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#vprod_agregarproductos">Agregar productos</a>
+                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vprod_agregarproductos">Agregar productos</a>
+                        <div style="padding-left: 10px">
+                            <div class="dropdown" id="dropdown_vproductos">
+                                <div class="select">
+                                    <span class="selected">Imprimir reportes</span>
+                                    <div class="caret"></div>
+                                </div>
+                                <ul class="menu">
+                                    <li><a class="dropdown-item" href="<?= base_url() ?>almacen/cproductos/pdf_activos"><i class="fa-regular fa-file-pdf"></i>&nbspProductos Activos</a></li>
+                                    <li><a class="dropdown-item" href="<?= base_url() ?>almacen/cproductos/pdf_inactivos"><i class="fa-regular fa-file-pdf"></i>&nbspProductos Inactivos</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div><br>
                 <div class="row">
@@ -280,7 +341,7 @@
                         <div class="dt-length text-center">
                             <div class="input-group">
                                 <h5 style="padding-top: 5px; padding-right: 5px">Ver:</h5>
-                                <select class="form-select form-select-sm" id="dt-length-0" name="tabla_vprod_length" style="border-radius: 5px;" aria-controls="tabla_vprod">
+                                <select class="form-select" id="dt-length-0" name="tabla_vprod_length" style="border-radius: 5px;" aria-controls="tabla_vprod">
                                     <option value="10">10</option>
                                     <option value="25">25</option>
                                     <option value="50">50</option>
@@ -339,8 +400,8 @@
                                 <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#vprod_modexcel">Importar excel</button>
                             </div>
                             <div style="padding-left: 10px;">
-                                <button class="btn btn-sm btn-success buttons-excel buttons-html5" id="btn-excel" name="" tabindex="0" aria-controls="tabla_vprod" type="button">
-                                    <span>Exportar Excel</span>
+                                <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#vprod_exportarexcel">
+                                    Exportar Excel
                                 </button>
                             </div>
                             
