@@ -88,12 +88,18 @@
                                             <input type="text" name="preciotienda" value="" id="preciotienda" placeholder="Precio de Tienda" class="form-control" readonly>
                                         </div>
                                     </div><br>
+                                    <div class="row d-flex justify-content-between">
+                                        <div class="col-5">
+                                            <label for="codigofiscal" class="form-label">Código Fiscal</label>
+                                            <input type="text" maxlength="10" name="codigofiscal" id="codigofiscal" placeholder="Código Fiscal" class="form-control">
+                                        </div>
+                                        <div class="col-5">
+                                            <label for="fecha_vprod" class="form-label">Fecha</label>
+                                            <input type="text" name="fecha_vprod" id="fecha_vprod" placeholder="Fecha" class="form-control" readonly>
+                                        </div>
+                                    </div><br>
                                     <div class="mb-3">
-                                        <label for="codigofiscal" class="form-label">Código Fiscal</label>
-                                        <input type="text" maxlength="10" name="codigofiscal" id="codigofiscal" placeholder="Código Fiscal" class="form-control">
-                                    </div>
-                                    <div class="mb-3">
-                                    <label for="estado" style="padding-right: 60px">Estado</label>
+                                        <label for="estado" style="padding-right: 60px">Estado</label>
                                         <div class="form-check form-switch" >
                                             <input class="form-check-input" type="checkbox" id="switchestadoproductos">
                                             <label id="estado_lblprod" name="estado_label" class="form-check-label" value=""></label>
@@ -185,12 +191,18 @@
                                             <input type="text" name="editpreciotienda" id="editpreciotienda" placeholder="Precio de Tienda" class="form-control" readonly>
                                         </div>
                                     </div><br>
+                                    <div class="row d-flex justify-content-between">
+                                        <div class="col-5">
+                                            <label for="editcodigofiscal" class="form-label">Código Fiscal</label>
+                                            <input type="text" maxlength="10" name="editcodigofiscal" id="editcodigofiscal" placeholder="Código Fiscal" class="form-control">
+                                        </div>
+                                        <div class="col-5">
+                                            <label for="editfecha_vprod" class="form-label">Fecha</label>
+                                            <input type="text" name="editfecha_vprod" id="editfecha_vprod" placeholder="Fecha" class="form-control">
+                                        </div>
+                                    </div><br>
                                     <div class="mb-3">
-                                        <label for="editcodigofiscal" class="form-label">Código Fiscal</label>
-                                        <input type="text" maxlength="10" name="editcodigofiscal" id="editcodigofiscal" placeholder="Código Fiscal" class="form-control">
-                                    </div>
-                                    <div class="mb-3">
-                                    <label for="edit_estado" style="padding-right: 60px">Estado</label>
+                                        <label for="edit_estado" style="padding-right: 60px">Estado</label>
                                         <div class="form-check form-switch" >
                                             <input class="form-check-input" type="checkbox" id="edit_switchestadoproductos">
                                             <label id="edit_estado_lblprod" name="edit_estado_lblprod" class="form-check-label" value=""></label>
@@ -276,13 +288,13 @@
                                     
                                         <div class="col-5">                                    
                                             <div class="input-group">
-                                                <span class="form-control col-3"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <span class="form-control col-3" id="lbldatefechas"><i class="fa-solid fa-calendar-days"></i></span>
                                                 <input class="form-control col-12" id="datefechas" style="text-transform:uppercase;" value="" readonly>
                                             </div>
                                         </div>
                                         <div class="col-5">                                    
                                             <div class="input-group">
-                                                <span class="form-control col-3"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <span class="form-control col-3" id="lbldatefechasdos"><i class="fa-solid fa-calendar-days"></i></span>
                                                 <input class="form-control col-12" id="datefechasdos" style="text-transform:uppercase;" value="" readonly>
                                             </div>
                                         </div>
@@ -293,18 +305,29 @@
                                     <div class="row">
                                         <div class="col-5">                                    
                                             <div class="input-group">
-                                                <span class="form-control col-3"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <span class="form-control col-3" id="lbldatemes"><i class="fa-solid fa-calendar-days"></i></span>
                                                 <input class="form-control col-12" id="datemes" style="text-transform:uppercase;" value="" readonly>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Todos los Datos</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <label for="">
+                                                <input type="radio" name="totaldatos" id="totaldatos" value="">
+                                                <span style="font-weight:bold; font-family:Arial, Helvetica, sans-serif;" id="lbltotaldatos">Total de Datos</span>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-danger" data-bs-dismiss="modal" id="cancelexcel_vprod">Cancelar</button>
-                                <button class="btn btn-success" id="">Exportar datos</button>
+                                <button class="btn btn-success" id="exportarexcel_vprod" onclick="exportardatos()">Exportar datos</button>
                             </div>
-                        </div>i
+                        </div>
                     </div>
                 </div>
                 <!-- AQUÍ TERMINA EL MODAL PARA IMPORTAR EXCEL -->
@@ -400,7 +423,7 @@
                                 <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#vprod_modexcel">Importar excel</button>
                             </div>
                             <div style="padding-left: 10px;">
-                                <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#vprod_exportarexcel">
+                                <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#vprod_exportarexcel" id="btnexcel_vprod" name="btnexcel_vprod">
                                     Exportar Excel
                                 </button>
                             </div>

@@ -1,3 +1,12 @@
+const datefechas = $('#datefechas');
+const datefechasdos = $('#datefechasdos');
+const datemes = $('#datemes');
+const totaldatos = $('#totaldatos');
+const lbldatefechas = $('#lbldatefechas');
+const lbldatefechasdos = $('#lbldatefechasdos');
+const lbldatemes = $('#lbldatemes');
+const lbltotaldatos = $('#lbltotaldatos');
+
 $(document).ready(function() {
     //CONFIGURACIÓN DE LA DATATABLES
     var table = $("#tabla_vprod").DataTable({
@@ -387,18 +396,6 @@ $(document).ready(function() {
         }
     });
 
-    
-    // flatpickr('#datemes', {
-    //     plugins: [
-    //         new monthSelectPlugin({
-    //             shorthand: true, // Displays the months in shorthand (Jan, Feb, Mar, etc.)
-    //             dateFormat: "Y-m", // Format to return to input
-    //             altFormat: "F Y", // Format to display in input
-    //             theme: 'dark'
-    //         })
-    //     ]
-    // });
-
     $('#datefechas').datepicker({
         language: 'es'
     });
@@ -415,18 +412,134 @@ $(document).ready(function() {
         language: 'es'
     });
 
-    $('#cancelexcel_vprod').click(function() {
+    $('#editfecha_vprod').datepicker({
+        language: 'es'
+    });
+
+    var fechactual = new Date().toISOString().split('T')[0];
+    console.log('FECHA ACTUAL:', fechactual);
+    $('#fecha_vprod').val(fechactual);
+
+    datefechasdos.prop('disabled', true).css('opacity', 0.5);
+    lbldatefechasdos.prop('disabled', true).css('opacity', 0.5);
+
+    datefechas.on('change', function(){
+        if($(this).val()){
+            $(this).prop('disabled', true).css('opacity', 0.5);
+            lbldatefechas.prop('disabled', true).css('opacity', 0.5);
+            datefechasdos.prop('disabled', false).css('opacity', 1);
+            lbldatefechasdos.prop('disabled', false).css('opacity', 1);
+        }
+    });
+
+    datefechas.on('click', () => excepciones([datefechas, lbldatefechas]));
+    datemes.on('click', () => excepciones([datemes, lbldatemes]));
+    totaldatos.on('change', () => excepciones([totaldatos, lbltotaldatos]));
+
+    $('#btnexcel_vprod, #cancelexcel_vprod').click(function() {
         $('#datefechas').val('');
         $('#datefechasdos').val('');
         $('#datemes').val('');
+        $('#totaldatos').prop('checked', false);
+
+        $('#datefechasdos').prop('disabled', true).css('opacity', 0.5);
+        $('#lbldatefechasdos').prop('disabled', true).css('opacity', 0.5);
+
+        const inputs = ['#datefechas', '#datemes', '#totaldatos'];
+        const spans = ['#lbldatefechas', '#lbldatemes', '#lbltotaldatos'];
+
+        inputs.forEach(input => {
+            $(input).prop('disabled', false).css('opacity', 1);
+        });
+
+        spans.forEach(span => {
+            $(span).prop('disabled', false).css('opacity', 1);
+        });
     });
+
+    $('#datefechas').change(function() {
+        var mindate = $(this).val();
+        $('#datefechasdos').attr('min', mindate);
+    });
+
+    // $('#exportarexcel_vprod').click(function() {
+    //     const todoslosdatos = $('input[name="totaldatos"]:checked').val();
+    //     const fechauno = $('#datefechas').val();
+    //     const fechados = $('#datefechasdos').val();
+    //     const meses = $('#datemes').val();
+
+    //     let alertaexportacion;
+
+    //     if (todoslosdatos === 'total'){
+    //         alertaexportacion = 'Exportando todos los datos';
+    //     } else if (fechauno && fechados){
+    //         alertaexportacion = `Exportando datos desde ${fechauno} hasta ${fechados}`;
+    //     } else if (meses){
+    //         alertaexportacion = `Exportando datos del mes ${meses}`;
+    //     } else{
+    //         alertaexportacion = 'Por favor, selecciona una opción de exportación válida';
+    //         alert(alertaexportacion);
+    //         return;
+    //     }
+
+    //     $.ajax({
+    //         url: 'cproducto/exportar_vprod',
+    //         type: 'POST',
+    //         data:{
+    //             todoslosdatos:todoslosdatos,
+    //             fechauno:fechauno,
+    //             fechados:fechados,
+    //             meses:meses
+    //         },
+    //         success: function(response){
+    //             console.log('Respuesta datos:', response);
+    //             alert(alertaexportacion + '\nExportación exitosa');
+    //         },
+    //         error: function(xhr, status, error){
+    //             console.error('Error al exportar', error);
+    //         }
+    //     });
+    // });
 });
 
-// $(document).on("click", "#cancelexcel_vprod", function(e) {
-//     e.preventDefault();
+function exportardatos()
+{
+    var fechauno = $('#datefechas').val();
+    var fechados = $('#datefechasdos').val();
+    var meses = $('#datemes').val();
+    var todoslosdatos = $('#totaldatos').prop('checked');
 
-//     alert('Boton funcionando');
-// });
+    if(fechauno && fechados)
+    {
+        exportarporfechas(fechauno, fechados);
+    }   else if(meses){
+            exportarpormes(meses);
+        } else if (todoslosdatos){
+            exportartodoslosdatos();
+        }
+    else
+    {
+        alert('Por favor, selecciona una opción');
+    }
+}
+
+function exportarporfechas(fechainicio, fechafin)
+{
+    var url = "cproductos/exportar_vprod_fechas"
+    window.location.href = url + "?fechainicio=" + fechainicio + "&fechafin=" + fechafin;
+}
+
+function exportarpormes(mes)
+{
+    var url = "cproductos/exportar_vprod_meses";
+    window.location.href = url + "?mes=" + mes;
+}
+
+function exportartodoslosdatos()
+{
+    var url = "cproductos/exportar_vprod";
+    window.location.href = url;
+}
 
 $(document).on('click', '#vprod_registrar', function(e){
     e.preventDefault();
@@ -443,6 +556,7 @@ $(document).on('click', '#vprod_registrar', function(e){
     var preciotienda = $('#preciotienda').val();
     var codigofiscal = $('#codigofiscal').val();
     var estado_prod = $('#estado_prod').val();
+    var fecha_vprod = $('#fecha_vprod').val();
 
     if(modelo == "" || marca == "" || titulo == "" || codigofiscal == ""){
         alert("Se requiere llenar algunos campos obligatorios");
@@ -464,7 +578,8 @@ $(document).on('click', '#vprod_registrar', function(e){
                 preciointegrado:preciointegrado,
                 preciotienda:preciotienda,
                 codigofiscal:codigofiscal,
-                estado_prod:estado_prod
+                estado_prod:estado_prod,
+                fecha_vprod:fecha_vprod
             },
             success: function(data){
                 console.log("Resultado de agregarproductos:", data);
@@ -567,6 +682,32 @@ $(document).on('click', '#vprod_actualizar', function(e){
     }
 });
 
+function excepciones(excepciones)
+{
+    const inputs = [datefechas, datefechasdos, datemes, totaldatos];
+    const labels = [lbldatefechas, lbldatefechasdos, lbldatemes, lbltotaldatos];
+    inputs.forEach(input => {
+        if(!excepciones.includes(input))
+        {
+            input.prop('disabled', true).val('');
+        }
+        else
+        {
+            input.prop('disabled', false);
+        }
+    });
+
+    labels.forEach(label => {
+        if(!excepciones.includes(label)){
+            label.addClass('disabled').css('opacity', 0.5);
+        }
+        else
+        {
+            label.removeClass('disabled').css('opacity', 1);
+        }
+    });
+}
+
 function vprod_editar(id)
 {
     $('#vprod_formeditar')[0].reset();
@@ -588,6 +729,7 @@ function vprod_editar(id)
             $('[name="editpreciointegrado"]').val(data.preciointegrado);
             $('[name="editpreciotienda"]').val(data.preciotienda);
             $('[name="editcodigofiscal"]').val(data.codigofiscal);
+            $('[name="editfecha_vprod"]').val(data.fecha_vprod);
 
             if(data.estado_prod == 'Activo'){
                 $('#edit_estado_lblprod').text('Activo');
@@ -631,7 +773,6 @@ function resetbtnconversion()
     conversionvprodusd = false;
     conversionvprodmxn = true;
 }
-
 
 var dropdown_vprod = document.querySelectorAll('#dropdown_vproductos');
 

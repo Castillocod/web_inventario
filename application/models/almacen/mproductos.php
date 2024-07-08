@@ -204,5 +204,29 @@ class mproductos extends CI_Model
         $query = $this->db->get('almacen_productos');
         return $query->result_array();
     }
+
+    public function exportar_vprod()
+    {
+        $this->db->order_by('id');
+        $query = $this->db->get('almacen_productos');
+        return $query->result();
+    }
+
+    public function exportar_vprod_fechas($fechainicio, $fechafin)
+    {
+        $this->db->where('fecha >=', $fechainicio);
+        $this->db->where('fecha <=', $fechafin);
+        $this->db->order_by('id');
+        $query = $this->db->get('almacen_productos');
+        return $query->result();
+    }
+
+    public function exportar_vprod_meses($mes)
+    {
+        $this->db->where('MONTH(fecha)', $mes);
+        $this->db->order_by('id');
+        $query = $this->db->get('almacen_productos');
+        return $query->result();
+    }
 }
 ?>

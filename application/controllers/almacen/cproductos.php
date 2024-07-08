@@ -8,7 +8,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class cproductos extends CI_Controller
 {
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->load->model('almacen/mproductos');
@@ -110,6 +110,7 @@ class cproductos extends CI_Controller
             $this->form_validation->set_rules('preciotienda', 'Preciotienda');
             $this->form_validation->set_rules('codigofiscal', 'Codigofiscal', 'required|trim');
             $this->form_validation->set_rules('estado_prod', 'Estado_prod');
+            $this->form_validation->set_rules('fecha_vprod', 'Fecha_vprod', 'required');
 
             $this->form_validation->set_message(array(
                 "required" => "<strong>{field}</strong> debe ser completado",
@@ -385,6 +386,186 @@ class cproductos extends CI_Controller
         $mpdf = new Mpdf\Mpdf();
         $mpdf->WriteHTML($html);
         $mpdf->Output();
+    }
+
+    public function exportar_vprod()
+    {
+        $this->load->library('excel');
+        $objeto = new PHPExcel();
+
+        $objeto->setActiveSheetIndex(0);
+
+        $columnas_tabla = array(
+            'Modelo',
+            'Marca',
+            'Categoria',
+            'Titulo',
+            'Stock',
+            'Precio Lista',
+            'Precio Especial',
+            'Precio Original',
+            'Precio Integrado',
+            'Precio Tienda',
+            'Codigo Fiscal',
+            'Estado'
+        );
+
+        $columna = 0;
+
+        foreach($columnas_tabla as $fila)
+        {
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow($columna, 1, $fila);
+            $columna++;
+        }
+
+        $datos_vproductos = $this->mproductos->exportar_vprod();   
+
+        $celda_excel = 2;
+
+        foreach($datos_vproductos as $row)
+        {
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(0, $celda_excel, $row->modelo);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(1, $celda_excel, $row->marca);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(2, $celda_excel, $row->titulo);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(3, $celda_excel, $row->stock);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(4, $celda_excel, $row->preciolista);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(5, $celda_excel, $row->precioespecial);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(6, $celda_excel, $row->preciooriginal);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(7, $celda_excel, $row->preciointegrado);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(8, $celda_excel, $row->preciotienda);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(9, $celda_excel, $row->codigofiscal);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(10, $celda_excel, $row->estado_prod);
+            $celda_excel++;
+        }
+
+        $objeto_documento = PHPExcel_IOFactory::createWriter($objeto, 'Excel2007');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment:filename="Productos.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $objeto_documento->save('php://output');
+    }
+
+    public function exportar_vprod_fechas()
+    {
+        $fechainicio = $this->input->get('fechainicio');
+        $fechafin = $this->input->get('fechafin');
+
+        if(!$fechainicio || !$fechafin){
+            show_error('Fechas no validas');
+        }
+
+        $this->load->library('excel');
+        $objeto = new PHPExcel();
+        $objeto->setActiveSheetIndex(0);
+
+        $columnas_tabla = array(
+            'Modelo',
+            'Marca',
+            'Categoria',
+            'Titulo',
+            'Stock',
+            'Precio Lista',
+            'Precio Especial',
+            'Precio Original',
+            'Precio Integrado',
+            'Precio Tienda',
+            'Codigo Fiscal',
+            'Estado'
+        );
+
+        $columna = 0;
+
+        foreach($columnas_tabla as $fila)
+        {
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow($columna, 1, $fila);
+            $columna++;
+        }
+
+        $datos_vproductos = $this->mproductos->exportar_vprod_fechas($fechainicio, $fechafin);
+        $celda_excel = 2;
+
+        foreach ($datos_vproductos as $row) {
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(0, $celda_excel, $row->modelo);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(1, $celda_excel, $row->marca);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(2, $celda_excel, $row->titulo);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(3, $celda_excel, $row->stock);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(4, $celda_excel, $row->preciolista);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(5, $celda_excel, $row->precioespecial);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(6, $celda_excel, $row->preciooriginal);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(7, $celda_excel, $row->preciointegrado);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(8, $celda_excel, $row->preciotienda);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(9, $celda_excel, $row->codigofiscal);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(10, $celda_excel, $row->estado_prod);
+            $celda_excel++;
+        }
+
+        $objeto_documento = PHPExcel_IOFactory::createWriter($objeto, 'Excel2007');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Productos.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $objeto_documento->save('php://output');
+    }
+
+    public function exportar_vprod_meses()
+    {
+        $mes = $this->input->get('mes');
+
+        if(!$mes){
+            show_error('Mes no valido');
+        }
+
+        $this->load->library('excel');
+        $objeto = new PHPExcel();
+        $objeto->setActiveSheetIndex(0);
+
+        $columnas_tabla = array(
+            'Modelo',
+            'Marca',
+            'Categoria',
+            'Titulo',
+            'Stock',
+            'Precio Lista',
+            'Precio Especial',
+            'Precio Original',
+            'Precio Integrado',
+            'Precio Tienda',
+            'Codigo Fiscal',
+            'Estado'
+        );
+
+        $columna = 0;
+
+        foreach($columnas_tabla as $fila){
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow($columna, 1, $fila);
+            $columna++;
+        }
+
+        $datos_vproductos = $this->mproductos->exportar_vprod_meses($mes);
+        $celda_excel = 2;
+
+        foreach($datos_vproductos as $row){
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(0, $celda_excel, $row->modelo);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(1, $celda_excel, $row->marca);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(2, $celda_excel, $row->titulo);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(3, $celda_excel, $row->stock);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(4, $celda_excel, $row->preciolista);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(5, $celda_excel, $row->precioespecial);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(6, $celda_excel, $row->preciooriginal);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(7, $celda_excel, $row->preciointegrado);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(8, $celda_excel, $row->preciotienda);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(9, $celda_excel, $row->codigofiscal);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(10, $celda_excel, $row->estado_prod);
+            $celda_excel++;
+        }
+
+        $objeto_documento = PHPExcel_IOFactory::createWriter($objeto, 'Excel2007');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Productos.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $objeto_documento->save('php://output');
     }
 }
 ?>
