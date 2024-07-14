@@ -19,6 +19,7 @@
                 <th width='45px' bordercolor='#ccc' bgcolor='#f2f2f2' style='text-align:center; font-size:25px; font-weight: bold;'>ID</th>
                 <th width='45px' bordercolor='#ccc' bgcolor='#f2f2f2' style='text-align:center; font-size:25px; font-weight: bold;'>Modelo</th>
                 <th width='45px' bordercolor='#ccc' bgcolor='#f2f2f2' style='text-align:center; font-size:25px; font-weight: bold;'>Marca</th>
+                <th width='45px' bordercolor='#ccc' bgcolor='#f2f2f2' style='text-align:center; font-size:25px; font-weight: bold;'>Categoria</th>
                 <th width='45px' bordercolor='#ccc' bgcolor='#f2f2f2' style='text-align:center; font-size:25px; font-weight: bold;'>Titulo</th>
                 <th width='45px' bordercolor='#ccc' bgcolor='#f2f2f2' style='text-align:center; font-size:25px; font-weight: bold;'>Stock</th> <!-- Aquí se indicará la cantidad de productos que hay y si hay menos de 10 mostrara un mensaje "Por agotarse", cuando haya cero "Agotado" -->
                 <th width='45px' bordercolor='#ccc' bgcolor='#f2f2f2' style='text-align:center; font-size:25px; font-weight: bold;'>Precio Lista</th>
@@ -36,6 +37,7 @@
                 <td style="font-size: 20px; text-align: center;"><?= $row['id']?></td>
                 <td style="font-size: 20px; text-align: center;"><?= $row['modelo']?></td>
                 <td style="font-size: 20px; text-align: center;"><?= $row['marca']?></td>
+                <td style="font-size: 20px; text-align: center;"><?= $row['categoria']?></td>
                 <td style="font-size: 20px; text-align: center;"><?= $row['titulo']?></td>
                 <td style="font-size: 20px; text-align: center;"><?= $row['stock']?></td>
                 <td style="font-size: 20px; text-align: center;"><?= $row['preciolista']?></td>

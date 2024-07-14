@@ -81,5 +81,14 @@
     opacity: 1;
 }
 
+.disabled_dropdown .select{
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.disabled_dropdown .menu{
+    display: none;
+}
+
 /* Aquí termina el dropdown CSS */
 

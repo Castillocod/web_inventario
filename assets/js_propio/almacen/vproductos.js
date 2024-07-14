@@ -1,3 +1,4 @@
+//INTERACTIVIDAD - OPCIONES DE EXPORTAR EXCEL POR TIEMPO
 const datefechas = $('#datefechas');
 const datefechasdos = $('#datefechasdos');
 const datemes = $('#datemes');
@@ -6,10 +7,25 @@ const lbldatefechas = $('#lbldatefechas');
 const lbldatefechasdos = $('#lbldatefechasdos');
 const lbldatemes = $('#lbldatemes');
 const lbltotaldatos = $('#lbltotaldatos');
+//INTERACTIVIDAD - OPCIONES DE EXPORTAR EXCEL POR TIEMPO
+
+//INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
+const unofecha_actvprod = $('#fechauno_actvprod');
+const lblunofecha_actvprod = $('#lblfechauno_actvprod');
+const dosfecha_actvprod = $('#fechados_actvprod');
+const lbldosfecha_actvprod = $('#lblfechados_actvprod');
+const meses_actvprod = $('#mes_actvprod');
+const lblmeses_actvprod = $('#lblmes_actvprod');
+const totales_actvprod = $('#total_actvprod');
+const lbltotales_actvprod = $('#lbltotal_actvprod');
+//INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
 
 $(document).ready(function() {
     //CONFIGURACIÓN DE LA DATATABLES
     var table = $("#tabla_vprod").DataTable({
+        language:{
+            'emptyTable': 'No hay datos disponibles'
+        },
         'processing': true,
         'serverSide': true,
         'ordering': false,
@@ -67,9 +83,9 @@ $(document).ready(function() {
                 var estado_vprod = cellData.trim();
                 $(td).html('<span id="celda_estado_vprod" style="font-weight: bold; font-size: 11px;">'+cellData+'</span>');
 
-                if(estado_vprod === 'Activo'){
+                if(estado_vprod === 'ACTIVO'){
                     $(td).find('span').addClass('badge badge-success');
-                } else if (estado_vprod === 'Inactivo'){
+                } else if (estado_vprod === 'INACTIVO'){
                     $(td).find('span').addClass('badge badge-warning');
                 }
             }},
@@ -98,131 +114,131 @@ $(document).ready(function() {
         }
     });
 
-    new $.fn.dataTable.Buttons(table, {
-        buttons: [
-            // {
-            //     extend: 'copy',
-            //     text: 'Copy',
-            //     className: 'btn btn-secondary',
-            //     action: function(e, dt, node, config){
-            //         $.fn.dataTable.ext.buttons.copyHtml5.action.call(this, e, dt, node, config);
-            //     }
-            // },
-            // {
-            //     extend: 'csv',
-            //     text: 'CSV',
-            //     className: 'btn btn-secondary',
-            //     action: function(e, dt, node, config){
-            //         $.fn.dataTable.ext.buttons.csvHtml5.action.call(this, e, dt, node, config);
-            //     }
-            // },
-            {
-                extend: 'excel',
-                text: 'Excel',
-                className: 'btn btn-success',
-                action: function(e, dt, node, config)
-                {
-                    $.ajax({
-                        url: 'cproductos/allproductosexcel',
-                        type: 'GET',
-                        dataType: 'JSON',
-                        success: function(data)
-                        {
+    // // new $.fn.dataTable.Buttons(table, {
+    // //     buttons: [
+    // //         // {
+    // //         //     extend: 'copy',
+    // //         //     text: 'Copy',
+    // //         //     className: 'btn btn-secondary',
+    // //         //     action: function(e, dt, node, config){
+    // //         //         $.fn.dataTable.ext.buttons.copyHtml5.action.call(this, e, dt, node, config);
+    // //         //     }
+    // //         // },
+    // //         // {
+    // //         //     extend: 'csv',
+    // //         //     text: 'CSV',
+    // //         //     className: 'btn btn-secondary',
+    // //         //     action: function(e, dt, node, config){
+    // //         //         $.fn.dataTable.ext.buttons.csvHtml5.action.call(this, e, dt, node, config);
+    // //         //     }
+    // //         // },
+    // //         {
+    // //             extend: 'excel',
+    // //             text: 'Excel',
+    // //             className: 'btn btn-success',
+    // //             action: function(e, dt, node, config)
+    // //             {
+    // //                 $.ajax({
+    // //                     url: 'cproductos/allproductosexcel',
+    // //                     type: 'GET',
+    // //                     dataType: 'JSON',
+    // //                     success: function(data)
+    // //                     {
 
 
-                            var excelproductos = data.data;
-                            var ws_data = [];
-                            var header = [];
+    // //                         var excelproductos = data.data;
+    // //                         var ws_data = [];
+    // //                         var header = [];
 
-                            // Obtener encabezados de la tabla
-                            table.columns().header().to$().each(function() {
-                                header.push($(this).text());
-                            });
-                            ws_data.push(header);
+    // //                         // Obtener encabezados de la tabla
+    // //                         table.columns().header().to$().each(function() {
+    // //                             header.push($(this).text());
+    // //                         });
+    // //                         ws_data.push(header);
 
-                            // Llenar datos de la tabla
-                            $.each(excelproductos, function(i, row) {
-                                var rowData = [];
-                                table.columns().header().to$().each(function(j) {
-                                    rowData.push(row[table.column(j).dataSrc()]);
-                                });
-                                ws_data.push(rowData);
-                            });
+    // //                         // Llenar datos de la tabla
+    // //                         $.each(excelproductos, function(i, row) {
+    // //                             var rowData = [];
+    // //                             table.columns().header().to$().each(function(j) {
+    // //                                 rowData.push(row[table.column(j).dataSrc()]);
+    // //                             });
+    // //                             ws_data.push(rowData);
+    // //                         });
 
-                            // Crear hoja de trabajo y libro
-                            var ws = XLSX.utils.aoa_to_sheet(ws_data);
-                            var wb = XLSX.utils.book_new();
-                            XLSX.utils.book_append_sheet(wb, ws, 'Productos');
+    // //                         // Crear hoja de trabajo y libro
+    // //                         var ws = XLSX.utils.aoa_to_sheet(ws_data);
+    // //                         var wb = XLSX.utils.book_new();
+    // //                         XLSX.utils.book_append_sheet(wb, ws, 'Productos');
 
-                            // Descargar archivo Excel
-                            XLSX.writeFile(wb, 'Productos.xlsx');
+    // //                         // Descargar archivo Excel
+    // //                         XLSX.writeFile(wb, 'Productos.xlsx');
 
 
 
-                            // var excelproductos = data.data;
-                            // var tabla_allproductos = $('<table>').attr('id', 'tabla_allproductos');
+    // //                         // var excelproductos = data.data;
+    // //                         // var tabla_allproductos = $('<table>').attr('id', 'tabla_allproductos');
 
-                            // var thead = $('<thead>').appendTo(tabla_allproductos); 
-                            // var headerrow = $('<tr>').appendTo(thead);
-                            // table.columns().header().to$().each(function() {
-                            //     $('<th>').text($(this).text()).appendTo(headerrow);
-                            // });
+    // //                         // var thead = $('<thead>').appendTo(tabla_allproductos); 
+    // //                         // var headerrow = $('<tr>').appendTo(thead);
+    // //                         // table.columns().header().to$().each(function() {
+    // //                         //     $('<th>').text($(this).text()).appendTo(headerrow);
+    // //                         // });
 
-                            // var tbody = $('<tbody>').appendTo(tabla_allproductos);
-                            // $.each(excelproductos, function(i, row){
-                            //     var datarow = $('<tr>').appendTo(tbody);
-                            //     table.columns().header().to$().each(function(j){
-                            //         $('<td>').text(row[table.column(j).dataSrc()]).appendTo(datarow);
-                            //     });
-                            // });
-                            // $.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e, $.extend({}, dt, {settings: {aoData: tabla_allproductos.find('tr').toArray()}}), node, config);
+    // //                         // var tbody = $('<tbody>').appendTo(tabla_allproductos);
+    // //                         // $.each(excelproductos, function(i, row){
+    // //                         //     var datarow = $('<tr>').appendTo(tbody);
+    // //                         //     table.columns().header().to$().each(function(j){
+    // //                         //         $('<td>').text(row[table.column(j).dataSrc()]).appendTo(datarow);
+    // //                         //     });
+    // //                         // });
+    // //                         // $.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e, $.extend({}, dt, {settings: {aoData: tabla_allproductos.find('tr').toArray()}}), node, config);
 
-                            // var temptable = $(tabla_allproductos).DataTable({
-                            //     dom: 'Bfrtip',
-                            //     buttons: [
-                            //         {
-                            //             extend: 'excelHtml5',
-                            //             exportOptions:{
-                            //                 columns: ':visible'
-                            //             }
-                            //         }
-                            //     ]
-                            // });
+    // //                         // var temptable = $(tabla_allproductos).DataTable({
+    // //                         //     dom: 'Bfrtip',
+    // //                         //     buttons: [
+    // //                         //         {
+    // //                         //             extend: 'excelHtml5',
+    // //                         //             exportOptions:{
+    // //                         //                 columns: ':visible'
+    // //                         //             }
+    // //                         //         }
+    // //                         //     ]
+    // //                         // });
 
-                            // temptable.button('.buttons-excel').trigger();
-                        },
-                        error: function(xhr, error, code)
-                        {
-                            alert('Error al hacer la petición');
-                            console.error('Error', error);
-                            console.code('Codigo', code);
-                            console.xhr('xhr', xhr);
+    // //                         // temptable.button('.buttons-excel').trigger();
+    // //                     },
+    // //                     error: function(xhr, error, code)
+    // //                     {
+    // //                         alert('Error al hacer la petición');
+    // //                         console.error('Error', error);
+    // //                         console.code('Codigo', code);
+    // //                         console.xhr('xhr', xhr);
         
-                            if(xhr.responseText){
-                                console.error('Respuesta del error', xhr.responseText);
-                            }
-                        }
-                    });
-                }
-            },
-            // {
-            //     extend: 'pdf',
-            //     text: 'Pdf',
-            //     className: 'btn btn-secondary',
-            //     action: function(e, dt, node, config){
-            //         $.fn.dataTable.ext.buttons.pdfHtml5.action.call(this, e, dt, node, config);
-            //     }
-            // },
-            // {
-            //     extend: 'print',
-            //     text: 'Print',
-            //     className: 'btn btn-secondary',
-            //     action: function(e, dt, node, config){
-            //         $.fn.dataTable.ext.buttons.print.action.call(this, e, dt, node, config);
-            //     }
-            // }
-        ]
-    });
+    // //                         if(xhr.responseText){
+    // //                             console.error('Respuesta del error', xhr.responseText);
+    // //                         }
+    // //                     }
+    // //                 });
+    // //             }
+    // //         },
+    // //         // {
+    // //         //     extend: 'pdf',
+    // //         //     text: 'Pdf',
+    // //         //     className: 'btn btn-secondary',
+    // //         //     action: function(e, dt, node, config){
+    // //         //         $.fn.dataTable.ext.buttons.pdfHtml5.action.call(this, e, dt, node, config);
+    // //         //     }
+    // //         // },
+    // //         // {
+    // //         //     extend: 'print',
+    // //         //     text: 'Print',
+    // //         //     className: 'btn btn-secondary',
+    // //         //     action: function(e, dt, node, config){
+    // //         //         $.fn.dataTable.ext.buttons.print.action.call(this, e, dt, node, config);
+    // //         //     }
+    // //         // }
+    // //     ]
+    // // });
 
     $('#dt-search-0').on('keyup', function(){
         table.search(this.value).draw();
@@ -260,6 +276,36 @@ $(document).ready(function() {
             $('#content_pagination').append(pagination);
     });
     //CONFIGURACIÓN DE LA DATATABLES
+
+    //COMPROBACIÓN DE DATOS
+    $.ajax({
+        url: 'cproductos/comprobacionprod',
+        type: 'GET',
+        dataType: 'JSON',
+        success: function(data){
+            if(!data){
+                $('#btnexcel_vprod').prop('disabled', true);
+                $('[name="tabla_vprod_length"]').prop('disabled', true);
+                $('#btn_vproductosmxn').prop('disabled', true);
+                $('#btn_vproductosusd').prop('disabled', true);
+                $('#dropdown_vproductos').addClass('disabled_dropdown_vprod');
+                $('[name="dt_buscar_vprod"]').prop('disabled', true);
+
+            }
+            else{
+                $('#btnexcel_vprod').prop('disabled', false);
+                $('[name="tabla_vprod_length"]').prop('disabled', false);
+                $('#btn_vproductosmxn').prop('disabled', false);
+                $('#btn_vproductosusd').prop('disabled', false);
+                $('#dropdown_vproductos').removeClass('disabled_dropdown_vprod');
+                $('[name="dt_buscar_vprod"]').prop('disabled', false);
+            }
+        },
+        error: function(status, xhr, error){
+            console.error("Error al comprobar datos:", error);
+        }
+    });
+    //COMPROBACIÓN DE DATOS
 
     var porcentajeintegrador;
     var porcentajetienda;
@@ -322,18 +368,18 @@ $(document).ready(function() {
         });
     }
 
-    $('#estado_lblprod').text('Inactivo');
-    $('#estado_prod').val('Inactivo');
+    $('#estado_lblprod').text('INACTIVO');
+    $('#estado_prod').val('INACTIVO');
     $('#switchestadoproductos').addClass('switch-inactivo');
 
     $('#switchestadoproductos').change(function(){
         if($(this).prop('checked')){
-            $('#estado_lblprod').text('Activo');
-            $('#estado_prod').val('Activo');
+            $('#estado_lblprod').text('ACTIVO');
+            $('#estado_prod').val('ACTIVO');
         }
         else{
-            $('#estado_lblprod').text('Inactivo');
-            $('#estado_prod').val('Inactivo');
+            $('#estado_lblprod').text('INACTIVO');
+            $('#estado_prod').val('INACTIVO');
         }
     });
 
@@ -363,12 +409,12 @@ $(document).ready(function() {
 
     $('#edit_switchestadoproductos').change(function() {
         if($(this).prop('checked')){
-            $('#edit_estado_lblprod').text('Activo');
-            $('#edit_estado_prod').val('Activo');
+            $('#edit_estado_lblprod').text('ACTIVO');
+            $('#edit_estado_prod').val('ACTIVO');
         }
         else{
-            $('#edit_estado_lblprod').text('Inactivo');
-            $('#edit_estado_prod').val('Inactivo');
+            $('#edit_estado_lblprod').text('INACTIVO');
+            $('#edit_estado_prod').val('INACTIVO');
         }
     });
 
@@ -395,31 +441,65 @@ $(document).ready(function() {
             $('#editpreciotienda').val('');
         }
     });
+    
+    //CONFIGURACIÓN DE LA EXPORTACIÓN EXCEL POR TIEMPO
+    $.ajax({
+        url: 'cproductos/ultimafecha',
+        type: 'GET',
+        dataType: 'JSON',
+        success: function(data){
+            var ultimafecha = data.ultimafecha;
+            var primerfecha = data.primerfecha;
+            var ultimomes = data.ultimomes;
+            var primermes = data.primermes;
 
-    $('#datefechas').datepicker({
-        language: 'es'
-    });
+            $('#datefechas').datepicker({
+                language: 'es',
+                format: 'yyyy-mm-dd',
+                endDate: ultimafecha,
+                startDate: primerfecha,
+                autoclose: true
+            }).on('changeDate', function(selected){
+                var fechainicial = new Date(selected.date.valueOf());
+                $('#datefechasdos').datepicker('setStartDate', fechainicial);
+            });
+        
+            $('#datefechasdos').datepicker({
+                language: 'es',
+                format: 'yyyy-mm-dd',
+                endDate: ultimafecha,
+                autoclose: true
+            });
 
-    $('#datefechasdos').datepicker({
-        language: 'es'
-    });
-
-    $('#datemes').datepicker({
-        format: 'mm/yyyy',
-        startView: 'months',
-        minViewMode: 'months',
-        autoclose: true,
-        language: 'es'
+            $('#datemes').datepicker({
+                format: 'yyyy-mm',
+                startView: 'months',
+                minViewMode: 'months',
+                startDate: primermes,   
+                endDate: ultimomes,
+                autoclose: true,
+                language: 'es'
+            });
+        },
+        error: function(status, xhr, error){
+            console.error('Error al obtener la última fecha', error);
+        }
     });
 
     $('#editfecha_vprod').datepicker({
-        language: 'es'
+        language: 'es',
+        format: 'yyyy-mm-dd',
+        autoclose: true
     });
 
+    //FECHA AUTOMÁTICA
     var fechactual = new Date().toISOString().split('T')[0];
-    console.log('FECHA ACTUAL:', fechactual);
     $('#fecha_vprod').val(fechactual);
+    //FECHA AUTOMÁTICA
 
+    //CONFIGURACIÓN DE LA EXPORTACIÓN EXCEL POR TIEMPO
+
+    //INTERACTIVIDAD - OPCIONES DE EXPORTAR EXCEL POR TIEMPO
     datefechasdos.prop('disabled', true).css('opacity', 0.5);
     lbldatefechasdos.prop('disabled', true).css('opacity', 0.5);
 
@@ -456,52 +536,131 @@ $(document).ready(function() {
             $(span).prop('disabled', false).css('opacity', 1);
         });
     });
+    //INTERACTIVIDAD - OPCIONES DE EXPORTAR EXCEL POR TIEMPO
 
-    $('#datefechas').change(function() {
-        var mindate = $(this).val();
-        $('#datefechasdos').attr('min', mindate);
+    //CONFIGURACIÓN DE REPORTE ACTIVOS DE PRODUCTOS
+    $.ajax({
+        url: 'cproductos/fechas_actvprod',
+        type: 'GET',
+        dataType: 'JSON',
+        success: function(data){
+            var fechauno_actvprod = data.fechauno_actvprod;
+            var fechados_actvprod = data.fechados_actvprod;
+            var mesuno_actvprod = data.mes_actvprod;
+            var mesdos_actvprod = data.mesdos_actvprod;
+
+            $('#fechauno_actvprod').datepicker({
+                autoclose: true,
+                language: 'es',
+                format: 'yyyy-mm-dd',
+                startDate: fechauno_actvprod,
+                endDate: fechados_actvprod,
+            }).on('changeDate', function(selected){
+                var fechauno = new Date(selected.date.valueOf());
+                $('#fechados_actvprod').datepicker('setStartDate', fechauno);
+            });
+
+            $('#fechados_actvprod').datepicker({
+                autoclose: true,
+                language: 'es',
+                format: 'yyyy-mm-dd',
+                endDate: fechados_actvprod
+            });
+
+            $('#mes_actvprod').datepicker({
+                autoclose: true,
+                language: 'es',
+                format: 'yyyy-mm',
+                startView: 'months',
+                minViewMode: 'months',
+                startDate: mesuno_actvprod,
+                endDate: mesdos_actvprod
+            });
+        },
+        error: function(status, xhr, error){
+            console.error('Ocurrio al obtener las fechas:', error);
+        }
+    });
+    //CONFIGURACIÓN DE REPORTE ACTIVOS DE PRODUCTOS
+
+    //INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
+    dosfecha_actvprod.prop('disabled', true).css('opacity', 0.5);
+    lbldosfecha_actvprod.prop('disabled', true).css('opacity', 0.5);
+
+    unofecha_actvprod.on('change', function(){
+        if($(this).val()){
+            $(this).prop('disabled', true).css('opacity', 0.5);
+            lblunofecha_actvprod.prop('disabled', true).css('opacity', 0.5);
+            dosfecha_actvprod.prop('disabled', false).css('opacity', 1);
+            lbldosfecha_actvprod.prop('disabled', false).css('opacity', 1);
+        }
     });
 
-    // $('#exportarexcel_vprod').click(function() {
-    //     const todoslosdatos = $('input[name="totaldatos"]:checked').val();
-    //     const fechauno = $('#datefechas').val();
-    //     const fechados = $('#datefechasdos').val();
-    //     const meses = $('#datemes').val();
+    unofecha_actvprod.on('click', () => except_actvprod([unofecha_actvprod, lblunofecha_actvprod]));
+    meses_actvprod.on('click', () => except_actvprod([meses_actvprod, lblmeses_actvprod]));
+    totales_actvprod.on('change', () => except_actvprod([totales_actvprod, lbltotales_actvprod]));
 
-    //     let alertaexportacion;
+    $('#btnactivos_actvprod, #cancelar_actvprod').click(function() {
+        $('#fechauno_actvprod').val('');
+        $('#fechados_actvprod').val('');
+        $('#mes_actvprod').val('');
+        $('#total_actvprod').prop('checked', false);
 
-    //     if (todoslosdatos === 'total'){
-    //         alertaexportacion = 'Exportando todos los datos';
-    //     } else if (fechauno && fechados){
-    //         alertaexportacion = `Exportando datos desde ${fechauno} hasta ${fechados}`;
-    //     } else if (meses){
-    //         alertaexportacion = `Exportando datos del mes ${meses}`;
-    //     } else{
-    //         alertaexportacion = 'Por favor, selecciona una opción de exportación válida';
-    //         alert(alertaexportacion);
-    //         return;
-    //     }
+        $('#fechados_actvprod').prop('disabled', true).css('opacity', 0.5);
+        $('#lblfechados_actvprod').prop('disabled', true).css('opacity', 0.5);
 
-    //     $.ajax({
-    //         url: 'cproducto/exportar_vprod',
-    //         type: 'POST',
-    //         data:{
-    //             todoslosdatos:todoslosdatos,
-    //             fechauno:fechauno,
-    //             fechados:fechados,
-    //             meses:meses
-    //         },
-    //         success: function(response){
-    //             console.log('Respuesta datos:', response);
-    //             alert(alertaexportacion + '\nExportación exitosa');
-    //         },
-    //         error: function(xhr, status, error){
-    //             console.error('Error al exportar', error);
-    //         }
-    //     });
-    // });
+        const inputs = ['#fechauno_actvprod', '#mes_actvprod', '#total_actvprod'];
+        const spans = ['#lblfechauno_actvprod', '#lblmes_actvprod', '#lbltotal_actvprod'];
+
+        inputs.forEach(input => {
+            $(input).prop('disabled', false).css('opacity', 1);
+        });
+
+        spans.forEach(span => {
+            $(span).prop('disabled', false).css('opacity', 1);
+        });
+    });
+    //INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
 });
 
+
+function reporteactivos_vprod()
+{
+    var fechauno_actvprod = $('#fechauno_actvprod').val();
+    var fechados_actvprod = $('#fechados_actvprod').val();
+    var mes_actvprod = $('#mes_actvprod').val();
+    var total_actvprod = $('#total_actvprod').prop('checked');
+
+    if(fechauno_actvprod && fechados_actvprod){
+        activos_vprod_fechas(fechados_actvprod, fechados_actvprod);
+    }   else if(mes_actvprod){
+            activos_vprod_meses(mes_actvprod);
+        } else if(total_actvprod){
+            totalactivos_vprod(total_actvprod);
+        }
+    else{
+        alert('Por favor, seleccione una opción');
+    }
+}
+
+function activos_vprod_fechas(fechauno_actvprod, fechados_actvprod)
+{
+    var url = 'cproductos/pdf_actvprodfechas';
+    window.location.href = url + "?fechauno=" + fechauno_actvprod + "&fechados=" + fechados_actvprod;
+}
+
+function activos_vprod_meses(mes_actvprod)
+{
+    var url = 'cproductos/pdf_actvprodmeses';
+    window.location.href = url + "?mes=" + mes_actvprod;
+}
+
+function totalactivos_vprod(total_actvprod)
+{
+    var url = 'cproductos/pdf_actvprodtotales';
+    window.location.href = url;
+}
+//CONFIGURACIÓN DE LA EXPORTACIÓN EXCEL POR TIEMPO
 function exportardatos()
 {
     var fechauno = $('#datefechas').val();
@@ -519,7 +678,7 @@ function exportardatos()
         }
     else
     {
-        alert('Por favor, selecciona una opción');
+        alert('Por favor, seleccione una opción');
     }
 }
 
@@ -540,7 +699,63 @@ function exportartodoslosdatos()
     var url = "cproductos/exportar_vprod";
     window.location.href = url;
 }
+//CONFIGURACIÓN DE LA EXPORTACIÓN EXCEL POR TIEMPO
 
+//INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
+function except_actvprod(except_actvprod)
+{
+    const inputs = [unofecha_actvprod, dosfecha_actvprod, meses_actvprod, totales_actvprod];
+    const labels = [lblunofecha_actvprod, lbldosfecha_actvprod, lblmeses_actvprod, lbltotales_actvprod];
+
+    inputs.forEach(input => {
+        if(!except_actvprod.includes(input)){
+            input.prop('disabled', true).css('opacity', 0.5).val('');
+        }
+        else{
+            input.prop('disabled', false);
+        }
+    });
+
+    labels.forEach(label => {
+        if(!except_actvprod.includes(label)){
+            label.addClass('disabled').css('opacity', 0.5);
+        }
+        else{
+            label.removeClass('disabled').css('opacity', 1);
+        }
+    });
+}
+//INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
+
+//INTERACTIVIDAD - OPCIONES DE EXPORTAR EXCEL POR TIEMPO
+function excepciones(excepciones)
+{
+    const inputs = [datefechas, datefechasdos, datemes, totaldatos];
+    const labels = [lbldatefechas, lbldatefechasdos, lbldatemes, lbltotaldatos];
+    inputs.forEach(input => {
+        if(!excepciones.includes(input))
+        {
+            input.prop('disabled', true).css('opacity', 0.5).val('');
+        }
+        else
+        {
+            input.prop('disabled', false);
+        }
+    });
+
+    labels.forEach(label => {
+        if(!excepciones.includes(label)){
+            label.addClass('disabled').css('opacity', 0.5);
+        }
+        else
+        {
+            label.removeClass('disabled').css('opacity', 1);
+        }
+    });
+}
+//INTERACTIVIDAD - OPCIONES DE EXPORTAR EXCEL POR TIEMPO
+
+//CRUD DE VPRODUCTOS
 $(document).on('click', '#vprod_registrar', function(e){
     e.preventDefault();
 
@@ -616,97 +831,87 @@ $(document).on('click', '#vprod_registrar', function(e){
 $(document).on('click', '#vprod_actualizar', function(e){
     e.preventDefault();
 
-    var editid = $('#editid').val();
-    var editmodelo = $('#editmodelo').val();
-    var editmarca = $('#editmarca').val();
-    var editcategoria = $('#editcategoria').val();
-    var edittitulo = $('#edittitulo').val();
-    var editstock = $('#editstock').val();
-    var editpreciolista = $('#editpreciolista').val();
-    var editprecioespecial = $('#editprecioespecial').val();
-    var editpreciooriginal = $('#editpreciooriginal').val();
-    var editpreciointegrado = $('#editpreciointegrado').val();
-    var editpreciotienda = $('#editpreciotienda').val();
-    var editcodigofiscal = $('#editcodigofiscal').val();
-    var edit_estado_prod = $('#edit_estado_prod').val();
-
-    if(editmodelo == "" || editmarca == "" || edittitulo == "" || editcodigofiscal == "" || editcategoria == ""){
-        alert('Se requieren llenar algunos campos obligatorios');
-    }
-    else{
-        $.ajax({
-            url: 'cproductos/actualizarproductos',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                editid:editid,
-                editmodelo:editmodelo,
-                editmarca:editmarca,
-                editcategoria:editcategoria,
-                edittitulo:edittitulo,
-                editstock:editstock,
-                editpreciolista:editpreciolista,
-                editprecioespecial:editprecioespecial,
-                editpreciooriginal:editpreciooriginal,
-                editpreciointegrado:editpreciointegrado,
-                editpreciotienda:editpreciotienda,
-                editcodigofiscal:editcodigofiscal,
-                edit_estado_prod:edit_estado_prod
-            },
-            success: function(data){
-                if(data.responce == 'success'){
-                    $('#vprod_modeditar').modal('hide');
-                    Swal.fire({
-                        title: "Producto Actualizado",
-                        text: "Producto actualizado con éxito",
-                        icon: "success",
-                        showConfirmButton: false,
-                        allowOutsideClick: false,
-                        timer: 1500,
-                    }).then((result) => {
-                        if (result.dismiss === Swal.DismissReason.timer) {
-                            window.location.href = "cproductos";
-                        }
-                    });
-                }
-                else{
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Algo salio mal al actualizar",
-                        allowOutsideClick: false,
-                    });
-                }
+    Swal.fire({
+		title: "¿Desea actualizar los datos?",
+		text: "Esta opción no puede revertirse",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#0DC408",
+		confirmButtonText: "Aceptar",
+		cancelButtonColor: "#d33",
+		cancelButtonText: "Cancelar",
+		allowOutsideClick: false,
+	}).then((result) => {
+		if (result.isConfirmed) {
+            var editid = $('#editid').val();
+            var editmodelo = $('#editmodelo').val();
+            var editmarca = $('#editmarca').val();
+            var editcategoria = $('#editcategoria').val();
+            var edittitulo = $('#edittitulo').val();
+            var editstock = $('#editstock').val();
+            var editpreciolista = $('#editpreciolista').val();
+            var editprecioespecial = $('#editprecioespecial').val();
+            var editpreciooriginal = $('#editpreciooriginal').val();
+            var editpreciointegrado = $('#editpreciointegrado').val();
+            var editpreciotienda = $('#editpreciotienda').val();
+            var editcodigofiscal = $('#editcodigofiscal').val();
+            var edit_estado_prod = $('#edit_estado_prod').val();
+            var editfecha_vprod = $('#editfecha_vprod').val();
+        
+            if(editmodelo == "" || editmarca == "" || edittitulo == "" || editcodigofiscal == "" || editcategoria == ""){
+                alert('Se requieren llenar algunos campos obligatorios');
             }
-        });
-    }
+            else{
+                $.ajax({
+                    url: 'cproductos/actualizarproductos',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        editid:editid,
+                        editmodelo:editmodelo,
+                        editmarca:editmarca,
+                        editcategoria:editcategoria,
+                        edittitulo:edittitulo,
+                        editstock:editstock,
+                        editpreciolista:editpreciolista,
+                        editprecioespecial:editprecioespecial,
+                        editpreciooriginal:editpreciooriginal,
+                        editpreciointegrado:editpreciointegrado,
+                        editpreciotienda:editpreciotienda,
+                        editcodigofiscal:editcodigofiscal,
+                        edit_estado_prod:edit_estado_prod,
+                        editfecha_vprod:editfecha_vprod
+                    },
+                    success: function(data){
+                        if(data.responce == 'success'){
+                            $('#vprod_modeditar').modal('hide');
+                            Swal.fire({
+                                title: "Producto Actualizado",
+                                text: "Producto actualizado con éxito",
+                                icon: "success",
+                                showConfirmButton: false,
+                                allowOutsideClick: false,
+                                timer: 1500,
+                            }).then((result) => {
+                                if (result.dismiss === Swal.DismissReason.timer) {
+                                    window.location.href = "cproductos";
+                                }
+                            });
+                        }
+                        else{
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Algo salio mal al actualizar",
+                                allowOutsideClick: false,
+                            });
+                        }
+                    }
+                });
+            }
+		}
+	});
 });
-
-function excepciones(excepciones)
-{
-    const inputs = [datefechas, datefechasdos, datemes, totaldatos];
-    const labels = [lbldatefechas, lbldatefechasdos, lbldatemes, lbltotaldatos];
-    inputs.forEach(input => {
-        if(!excepciones.includes(input))
-        {
-            input.prop('disabled', true).val('');
-        }
-        else
-        {
-            input.prop('disabled', false);
-        }
-    });
-
-    labels.forEach(label => {
-        if(!excepciones.includes(label)){
-            label.addClass('disabled').css('opacity', 0.5);
-        }
-        else
-        {
-            label.removeClass('disabled').css('opacity', 1);
-        }
-    });
-}
 
 function vprod_editar(id)
 {
@@ -731,14 +936,14 @@ function vprod_editar(id)
             $('[name="editcodigofiscal"]').val(data.codigofiscal);
             $('[name="editfecha_vprod"]').val(data.fecha_vprod);
 
-            if(data.estado_prod == 'Activo'){
-                $('#edit_estado_lblprod').text('Activo');
-                $('#edit_estado_prod').val('Activo');
+            if(data.estado_prod == 'ACTIVO'){
+                $('#edit_estado_lblprod').text('ACTIVO');
+                $('#edit_estado_prod').val('ACTIVO');
                 $('#edit_switchestadoproductos').removeClass('switch-inactivo').addClass('switch-activo').prop('checked', true);
             }
             else{
-                $('#edit_estado_lblprod').text('Inactivo');
-                $('#edit_estado_prod').val('Inactivo');
+                $('#edit_estado_lblprod').text('INACTIVO');
+                $('#edit_estado_prod').val('INACTIVO');
                 $('#edit_switchestadoproductos').removeClass('switch-activo').addClass('switch-inactivo').prop('checked', false);
             }
             $('#vprod_modeeditar').modal();
@@ -756,9 +961,9 @@ function mensajeborrar_vprod(id)
 		text: "Esta opción no puede revertirse",
 		icon: "warning",
 		showCancelButton: true,
-		confirmButtonColor: "#3085d6",
+		confirmButtonColor: "#d33",
 		confirmButtonText: "Eliminar",
-		cancelButtonColor: "#d33",
+		cancelButtonColor: "#3085d6",
 		cancelButtonText: "Cancelar",
 		allowOutsideClick: false,
 	}).then((result) => {
@@ -767,55 +972,53 @@ function mensajeborrar_vprod(id)
 		}
 	});
 }
+//CRUD DE VPRODUCTOS
 
-function resetbtnconversion()
-{
-    conversionvprodusd = false;
-    conversionvprodmxn = true;
-}
-
-var dropdown_vprod = document.querySelectorAll('#dropdown_vproductos');
-
+//CONFIGURACIÓN DROPDOWN_VPRODUCTOS
 document.addEventListener('click', function(event){
-    dropdown_vprod.forEach(dropdown => {
-        const select = dropdown.querySelector('.select');
-        const caret = dropdown.querySelector('.caret');
-        const menu = dropdown.querySelector('.menu');
+    const dropdowns = document.querySelectorAll('#dropdown_vproductos');
+    dropdowns.forEach(dropdown => {
+        const select = dropdown.querySelector('.select_vprod');
+        const caret = dropdown.querySelector('.caret_vprod');
+        const menu = dropdown.querySelector('.menu_vprod');
 
         if(!dropdown.contains(event.target)){
-            select.classList.remove('select-clicked');
-            caret.classList.remove('caret-rotate');
-            menu.classList.remove('menu-open');
+            select.classList.remove('select_clicked_vprod');
+            caret.classList.remove('caret_rotate_vprod');
+            menu.classList.remove('menu_vprod_open');
         }
     });
 });
 
+const dropdown_vprod = document.querySelectorAll('#dropdown_vproductos');
+
 dropdown_vprod.forEach(dropdown => {
-    const select = dropdown.querySelector('.select');
-    const caret = dropdown.querySelector('.caret');
-    const menu = dropdown.querySelector('.menu');
-    const options = dropdown.querySelectorAll('.menu li a');
-    const selected = dropdown.querySelector('.selected');
+    const select = dropdown.querySelector('.select_vprod');
+    const caret = dropdown.querySelector('.caret_vprod');
+    const menu = dropdown.querySelector('.menu_vprod');
+    const options = dropdown.querySelectorAll('.menu_vprod li button');
+    const selected = dropdown.querySelector('.selected_vprod');
 
     select.addEventListener('click', () => {
-        select.classList.toggle('select-clicked');
-        caret.classList.toggle('caret-rotate');
-        menu.classList.toggle('menu-open');
+        select.classList.toggle('select_clicked_vprod');
+        caret.classList.toggle('caret_rotate_vprod');
+        menu.classList.toggle('menu_vprod_open');
     });
 
     options.forEach(option => {
         option.addEventListener('click', () => {
-            caret.classList.remove('caret-rotate');
-            menu.classList.remove('menu-open');
+            caret.classList.remove('caret_rotate_vprod');
+            menu.classList.remove('menu_vprod_open');
 
             options.forEach(option => {
-                select.classList.toggle('select-clicked');
+                select.classList.toggle('select_clicked_vprod');
             });
 
             option.classList.add('active');
         });
     });
 });
+//CONFIGURACIÓN DROPDOWN_VPRODUCTOS
 
 
 

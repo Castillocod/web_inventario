@@ -81,11 +81,11 @@
                                     <div class="row d-flex justify-content-between">
                                         <div class="col-5">
                                             <label for="preciointegrado" class="form-label">Precio Integrador</label>
-                                            <input type="text" name="preciointegrado" value="" id="preciointegrado" placeholder="Precio Integrado" class="form-control" readonly>
+                                            <input type="text" name="preciointegrado" value="" id="preciointegrado" placeholder="Precio Integrado" class="form-control" style="pointer-events:none;" readonly>
                                         </div>
                                         <div class="col-5">
                                             <label for="preciotienda" class="form-label">Precio Tienda</label>
-                                            <input type="text" name="preciotienda" value="" id="preciotienda" placeholder="Precio de Tienda" class="form-control" readonly>
+                                            <input type="text" name="preciotienda" value="" id="preciotienda" placeholder="Precio de Tienda" class="form-control" style="pointer-events:none;" readonly>
                                         </div>
                                     </div><br>
                                     <div class="row d-flex justify-content-between">
@@ -95,12 +95,12 @@
                                         </div>
                                         <div class="col-5">
                                             <label for="fecha_vprod" class="form-label">Fecha</label>
-                                            <input type="text" name="fecha_vprod" id="fecha_vprod" placeholder="Fecha" class="form-control" readonly>
+                                            <input type="text" name="fecha_vprod" id="fecha_vprod" placeholder="Fecha" class="form-control" style="pointer-events: none;" readonly>
                                         </div>
                                     </div><br>
                                     <div class="mb-3">
                                         <label for="estado" style="padding-right: 60px">Estado</label>
-                                        <div class="form-check form-switch" >
+                                        <div class="form-check form-switch d-flex align-items-center">
                                             <input class="form-check-input" type="checkbox" id="switchestadoproductos">
                                             <label id="estado_lblprod" name="estado_label" class="form-check-label" value=""></label>
                                             <input type="hidden" id="estado_prod" name="estado_prod" value="">
@@ -184,11 +184,11 @@
                                     <div class="row d-flex justify-content-between">
                                         <div class="col-5">
                                             <label for="editpreciointegrado" class="form-label">Precio Integrador</label>
-                                            <input type="text" name="editpreciointegrado" id="editpreciointegrado" placeholder="Precio Integrado" class="form-control" readonly>
+                                            <input type="text" name="editpreciointegrado" id="editpreciointegrado" placeholder="Precio Integrado" class="form-control" style="pointer-events:none;" readonly>
                                         </div>
                                         <div class="col-5">
                                             <label for="editpreciotienda" class="form-label">Precio Tienda</label>
-                                            <input type="text" name="editpreciotienda" id="editpreciotienda" placeholder="Precio de Tienda" class="form-control" readonly>
+                                            <input type="text" name="editpreciotienda" id="editpreciotienda" placeholder="Precio de Tienda" class="form-control" style="pointer-events:none;" readonly>
                                         </div>
                                     </div><br>
                                     <div class="row d-flex justify-content-between">
@@ -201,13 +201,14 @@
                                             <input type="text" name="editfecha_vprod" id="editfecha_vprod" placeholder="Fecha" class="form-control">
                                         </div>
                                     </div><br>
-                                    <div class="mb-3">
+                                    <div class="col-12">
                                         <label for="edit_estado" style="padding-right: 60px">Estado</label>
-                                        <div class="form-check form-switch" >
+                                         
+                                        <div class="form-check form-switch d-flex align-items-center">
                                             <input class="form-check-input" type="checkbox" id="edit_switchestadoproductos">
-                                            <label id="edit_estado_lblprod" name="edit_estado_lblprod" class="form-check-label" value=""></label>
-                                            <input type="hidden" id="edit_estado_prod" name="edit_estado_prod" value="">
-                                        </div>
+                                            <span style="font-weight:normal;" id="edit_estado_lblprod" name="edit_estado_lblprod" class="form-check-label" value=""></span>                                
+                                            <input type="hidden" id="edit_estado_prod" name="edit_estado_prod" value=""> 
+                                        </div>                                                                                 
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
@@ -271,7 +272,7 @@
                     </div>
                 </div>
                 <!-- AQUÍ TERMINA EL MODAL PARA IMPORTAR EXCEL -->
-                 <!-- AQUÍ INICIA EL MODAL PARA EXPORTAR POR MES Y DIAS -->
+                <!-- AQUÍ INICIA EL MODAL PARA EXPORTAR POR MES Y DIAS -->
                 <div class="modal fade" id="vprod_exportarexcel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog col-xl">
                         <div class="modal-content">
@@ -330,25 +331,84 @@
                         </div>
                     </div>
                 </div>
-                <!-- AQUÍ TERMINA EL MODAL PARA IMPORTAR EXCEL -->
+                <!-- AQUÍ TERMINA EL MODAL PARA EXPORTAR POR MES Y DIAS -->
+                 <!-- AQUÍ INICIA EL MODAL PARA REPORTES DE ACTIVOS POR MES Y DIAS -->
+                <div class="modal fade" id="reportespdf_actvprod" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog col-xl">
+                        <div class="modal-content">
+                            <div class="modal-header d-block">
+                                <h4 class="modal-title text-center">
+                                    Reportes de Productos Activos
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <center><h4>Selecciona el tipo de reporte</h4></center>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte por Fechas</legend></fieldset>
+                                    <div class="row d-flex justify-content-between">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechauno_actvprod"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechauno_actvprod" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechados_actvprod"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechados_actvprod" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte por Mes</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblmes_actvprod"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="mes_actvprod" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte Total</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <label for="">
+                                                <input type="radio" name="total_actvprod" id="total_actvprod" value="">
+                                                <span style="font-weight:bold; font-family:Arial, Helvetica, sans-serif;" id="lbltotal_actvprod">Total de Datos</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" data-bs-dismiss="modal" id="cancelar_actvprod">Cancelar</button>
+                                <button class="btn btn-success" id="crear_actvprod" onclick="reporteactivos_vprod()">Crear Reporte</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- AQUÍ TERMINA EL MODAL PARA REPORTES DE ACTIVOS POR MES Y DIAS --></thead>
                 <div class="row dt-search">
                     <div>
                         <label for="dt-search-0">Buscar:</label>
                     </div>
                     <div class="col-3">
-                        <input type="search" class="form-control" id="dt-search-0" placeholder="Escriba para buscar..." aria-controls="tabla_vprod">
+                        <input type="search" class="form-control" id="dt-search-0" name="dt_buscar_vprod" placeholder="Escriba para buscar..." aria-controls="tabla_vprod">
                     </div>
                     <div class="col-9 d-flex justify-content-end">
                         <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vprod_agregarproductos">Agregar productos</a>
                         <div style="padding-left: 10px">
-                            <div class="dropdown" id="dropdown_vproductos">
-                                <div class="select">
-                                    <span class="selected">Imprimir reportes</span>
-                                    <div class="caret"></div>
+                            <div class="dropdown_vprod" id="dropdown_vproductos">
+                                <div class="select_vprod">
+                                    <span class="selected_vprod">Imprimir reportes</span>
+                                    <div class="caret_vprod"></div>
                                 </div>
-                                <ul class="menu">
-                                    <li><a class="dropdown-item" href="<?= base_url() ?>almacen/cproductos/pdf_activos"><i class="fa-regular fa-file-pdf"></i>&nbspProductos Activos</a></li>
-                                    <li><a class="dropdown-item" href="<?= base_url() ?>almacen/cproductos/pdf_inactivos"><i class="fa-regular fa-file-pdf"></i>&nbspProductos Inactivos</a></li>
+                                <ul class="menu_vprod">
+                                    <li><button class="btn btn-default" id="btnactivos_actvprod" data-bs-toggle="modal" data-bs-target="#reportespdf_actvprod"><i class="fa-regular fa-file-pdf"></i>&nbspProductos Activos</></li>
+                                    <li><button class="btn btn-default"><i class="fa-regular fa-file-pdf"></i>&nbspProductos Inactivos</butt></li>
                                 </ul>
                             </div>
                         </div>
@@ -356,10 +416,12 @@
                 </div><br>
                 <div class="row">
                     <div class="d-flex justify-content-between">
-                        <div class="col-3 text-center">
-                            <label for="">MONEDA</label>
-                            <button class="btn btn-sm btn-success" id="btn_vproductosmxn" name="btn_vproductosmxn">MXN</button>
-                            <button class="btn btn-sm btn-primary" id="btn_vproductosusd" name="btn_vproductosusd">USD</button>
+                        <div class="col-6 text-center d-flex justify-content-start">
+                            <div>
+                                <label for="">MONEDA</label>
+                                <button class="btn btn-sm btn-success" id="btn_vproductosmxn" name="btn_vproductosmxn">MXN</button>
+                                <button class="btn btn-sm btn-primary" id="btn_vproductosusd" name="btn_vproductosusd">USD</button>
+                            </div>
                         </div>
                         <div class="dt-length text-center">
                             <div class="input-group">

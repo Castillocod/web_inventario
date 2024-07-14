@@ -179,6 +179,7 @@ class cproductos extends CI_Controller
             $this->form_validation->set_rules('editpreciotienda', 'Preciotienda');
             $this->form_validation->set_rules('editcodigofiscal', 'Codigofiscal', 'required|trim');
             $this->form_validation->set_rules('edit_estado_prod', 'Estado');
+            $this->form_validation->set_rules('editfecha_vprod', 'Fecha_vprod', 'required');
 
             $this->form_validation->set_message(array(
                 "required" => "<strong>{field}</strong> debe ser completado",
@@ -206,6 +207,7 @@ class cproductos extends CI_Controller
                 $data['preciotienda'] = $this->input->post('editpreciotienda');
                 $data['codigofiscal'] = $this->input->post('editcodigofiscal');
                 $data['estado_prod'] = $this->input->post('edit_estado_prod');
+                $data['fecha_vprod'] = $this->input->post('editfecha_vprod');
 
                 if($this->mproductos->actualizarproductos($data))
                 {
@@ -251,7 +253,6 @@ class cproductos extends CI_Controller
     public function obtenerformulas()
     {
         $formulas = $this->mproductos->obtenerformulas();
-
         echo json_encode($formulas);
     }
 
@@ -292,6 +293,7 @@ class cproductos extends CI_Controller
                     $preciotienda = $preciointegrado * $porcentajetienda;
                     $codigofiscal = $spreadsheet->getActiveSheet()->getCell('K'.$row->getRowIndex());
                     $estado_prod = $spreadsheet->getActiveSheet()->getCell('L'.$row->getRowIndex());
+                    $fecha_vprod = date('Y-m-d');
 
                     $productostock = $this->mproductos->productostock($modelo, $marca, $titulo, $codigofiscal);
 
@@ -314,7 +316,8 @@ class cproductos extends CI_Controller
                             'preciointegrado' => $preciointegrado,
                             'preciotienda' => $preciotienda,
                             'codigofiscal' => $codigofiscal,
-                            'estado_prod' => $estado_prod
+                            'estado_prod' => $estado_prod,
+                            'fecha_vprod' => $fecha_vprod
                         );
                         $this->db->insert('almacen_productos', $datosdocumento);
                     }
@@ -325,7 +328,7 @@ class cproductos extends CI_Controller
             }
             else
             {
-                $this->session->set_Flashdata('error', 'Ha ocurrido un error al importar');
+                $this->session->set_flashdata('error', 'Ha ocurrido un error al importar');
                 redirect(base_url('almacen/cproductos'));
             }
         }
@@ -364,15 +367,30 @@ class cproductos extends CI_Controller
         }
     }
 
-    public function allproductosexcel()
+    public function pdf_actvprodfechas()
     {
-        $excelproductos = $this->mproductos->allproductosexcel();
-        echo json_encode($excelproductos);
+        $fechauno_actvprod = $this->input->get('fechauno_actvprod');
+        $fechados_actvprod = $this->input->get('fechados_actvprod');
+        $data['almacen_productos'] = $this->mproductos->pdf_actvprodfechas($fechauno_actvprod, $fechados_actvprod);
+        $html = $this->load->view('almacen/reportes_vproductos/rep_activos_vprod', $data, true);
+        $mpdf = new Mpdf\Mpdf();
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
     }
 
-    public function pdf_activos()
+    public function pdf_actvprodmeses()
     {
-        $data['almacen_productos'] = $this->mproductos->pdf_activos();
+        $mes_actvprod = $this->input->get('mes_actvprod');
+        $data['almacen_productos'] = $this->mproductos->pdf_actvprodmeses($mes_actvprod);
+        $html = $this->load->view('almacen/reportes_vproductos/rep_activos_vprod', $data, true);
+        $mpdf = new Mpdf\Mpdf();
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+    }
+
+    public function pdf_actvprodtotales()
+    {
+        $data['almacen_productos'] = $this->mproductos->pdf_actvprodtotales();
         $html = $this->load->view('almacen/reportes_vproductos/rep_activos_vprod', $data, true);
         $mpdf = new Mpdf\Mpdf();
         $mpdf->WriteHTML($html);
@@ -381,6 +399,8 @@ class cproductos extends CI_Controller
 
     public function pdf_inactivos()
     {
+        $fechauno_inactvprod = $this->input->get('fechauno_inactvprod');
+        $fechados_inactvprod = $this->input->get('fechados_inactvprod');
         $data['almacen_productos'] = $this->mproductos->pdf_inactivos();
         $html = $this->load->view('almacen/reportes_vproductos/rep_inactivos_vprod', $data, true);
         $mpdf = new Mpdf\Mpdf();
@@ -407,7 +427,8 @@ class cproductos extends CI_Controller
             'Precio Integrado',
             'Precio Tienda',
             'Codigo Fiscal',
-            'Estado'
+            'Estado',
+            'Fecha de Registro'
         );
 
         $columna = 0;
@@ -426,21 +447,23 @@ class cproductos extends CI_Controller
         {
             $objeto->getActiveSheet()->setCellValueByColumnAndRow(0, $celda_excel, $row->modelo);
             $objeto->getActiveSheet()->setCellValueByColumnAndRow(1, $celda_excel, $row->marca);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(2, $celda_excel, $row->titulo);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(3, $celda_excel, $row->stock);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(4, $celda_excel, $row->preciolista);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(5, $celda_excel, $row->precioespecial);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(6, $celda_excel, $row->preciooriginal);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(7, $celda_excel, $row->preciointegrado);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(8, $celda_excel, $row->preciotienda);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(9, $celda_excel, $row->codigofiscal);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(10, $celda_excel, $row->estado_prod);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(2, $celda_excel, $row->categoria);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(3, $celda_excel, $row->titulo);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(4, $celda_excel, $row->stock);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(5, $celda_excel, $row->preciolista);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(6, $celda_excel, $row->precioespecial);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(7, $celda_excel, $row->preciooriginal);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(8, $celda_excel, $row->preciointegrado);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(9, $celda_excel, $row->preciotienda);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(10, $celda_excel, $row->codigofiscal);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(11, $celda_excel, $row->estado_prod);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(12, $celda_excel, $row->fecha_vprod);
             $celda_excel++;
         }
 
         $objeto_documento = PHPExcel_IOFactory::createWriter($objeto, 'Excel2007');
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment:filename="Productos.xlsx"');
+        header('Content-Disposition: attachment; filename="Productos.xlsx"');
         header('Cache-Control: max-age=0');
 
         $objeto_documento->save('php://output');
@@ -471,7 +494,8 @@ class cproductos extends CI_Controller
             'Precio Integrado',
             'Precio Tienda',
             'Codigo Fiscal',
-            'Estado'
+            'Estado',
+            'Fecha de Registro'
         );
 
         $columna = 0;
@@ -488,21 +512,23 @@ class cproductos extends CI_Controller
         foreach ($datos_vproductos as $row) {
             $objeto->getActiveSheet()->setCellValueByColumnAndRow(0, $celda_excel, $row->modelo);
             $objeto->getActiveSheet()->setCellValueByColumnAndRow(1, $celda_excel, $row->marca);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(2, $celda_excel, $row->titulo);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(3, $celda_excel, $row->stock);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(4, $celda_excel, $row->preciolista);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(5, $celda_excel, $row->precioespecial);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(6, $celda_excel, $row->preciooriginal);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(7, $celda_excel, $row->preciointegrado);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(8, $celda_excel, $row->preciotienda);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(9, $celda_excel, $row->codigofiscal);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(10, $celda_excel, $row->estado_prod);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(2, $celda_excel, $row->categoria);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(3, $celda_excel, $row->titulo);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(4, $celda_excel, $row->stock);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(5, $celda_excel, $row->preciolista);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(6, $celda_excel, $row->precioespecial);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(7, $celda_excel, $row->preciooriginal);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(8, $celda_excel, $row->preciointegrado);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(9, $celda_excel, $row->preciotienda);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(10, $celda_excel, $row->codigofiscal);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(11, $celda_excel, $row->estado_prod);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(12, $celda_excel, $row->fecha_vprod);
             $celda_excel++;
         }
 
         $objeto_documento = PHPExcel_IOFactory::createWriter($objeto, 'Excel2007');
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="Productos.xlsx"');
+        header('Content-Disposition: attachment; filename="Productos.xlsx"');
         header('Cache-Control: max-age=0');
 
         $objeto_documento->save('php://output');
@@ -532,7 +558,8 @@ class cproductos extends CI_Controller
             'Precio Integrado',
             'Precio Tienda',
             'Codigo Fiscal',
-            'Estado'
+            'Estado',
+            'Fecha de Registro'
         );
 
         $columna = 0;
@@ -548,24 +575,61 @@ class cproductos extends CI_Controller
         foreach($datos_vproductos as $row){
             $objeto->getActiveSheet()->setCellValueByColumnAndRow(0, $celda_excel, $row->modelo);
             $objeto->getActiveSheet()->setCellValueByColumnAndRow(1, $celda_excel, $row->marca);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(2, $celda_excel, $row->titulo);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(3, $celda_excel, $row->stock);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(4, $celda_excel, $row->preciolista);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(5, $celda_excel, $row->precioespecial);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(6, $celda_excel, $row->preciooriginal);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(7, $celda_excel, $row->preciointegrado);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(8, $celda_excel, $row->preciotienda);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(9, $celda_excel, $row->codigofiscal);
-            $objeto->getActiveSheet()->setCellValueByColumnAndRow(10, $celda_excel, $row->estado_prod);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(2, $celda_excel, $row->categoria);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(3, $celda_excel, $row->titulo);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(4, $celda_excel, $row->stock);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(5, $celda_excel, $row->preciolista);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(6, $celda_excel, $row->precioespecial);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(7, $celda_excel, $row->preciooriginal);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(8, $celda_excel, $row->preciointegrado);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(9, $celda_excel, $row->preciotienda);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(10, $celda_excel, $row->codigofiscal);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(11, $celda_excel, $row->estado_prod);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(12, $celda_excel, $row->fecha_vprod);
             $celda_excel++;
         }
 
         $objeto_documento = PHPExcel_IOFactory::createWriter($objeto, 'Excel2007');
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="Productos.xlsx"');
+        header('Content-Disposition: attachment; filename="Productos.xlsx"');
         header('Cache-Control: max-age=0');
 
         $objeto_documento->save('php://output');
+    }
+
+    public function ultimafecha()
+    {
+        $ultimafecha = $this->mproductos->ultimafecha();
+        $primerfecha = $this->mproductos->primerfecha();
+        $primermes = $this->mproductos->primermes();
+        $ultimomes = $this->mproductos->ultimomes();
+        echo json_encode(array(
+            'ultimafecha' => $ultimafecha,
+            'primerfecha' => $primerfecha,
+            'ultimomes' => $ultimomes,
+            'primermes' => $primermes
+        ));
+    }
+
+    public function comprobacionprod()
+    {
+        $comprobacionprod = $this->mproductos->comprobacionprod();
+        echo json_encode($comprobacionprod > 0);
+    }
+
+    public function fechas_actvprod()
+    {
+        $fechauno_actvprod = $this->mproductos->fechauno_actvprod();
+        $fechados_actvprod = $this->mproductos->fechados_actvprod();
+        $mesuno_actvprod = $this->mproductos->mesuno_actvprod();
+        $mesdos_actvprod = $this->mproductos->mesdos_actvprod();
+
+        echo json_encode(array(
+            'fechauno_actvprod' => $fechauno_actvprod,
+            'fechados_actvprod' => $fechados_actvprod,
+            'mesuno_actvprod' => $mesuno_actvprod,
+            'mesdos_actvprod' => $mesdos_actvprod
+        ));
     }
 }
 ?>
