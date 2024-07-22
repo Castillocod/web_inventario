@@ -529,12 +529,10 @@ $(document).ready(function() {
 
     $('#btnexcel_vprod, #cancelexcel_vprod').click(function() {
         $('#datefechas').val('');
-        $('#datefechasdos').val('');
+        $('#datefechasdos').val('').prop('disabled', true).css('opacity', 0.5);
+        $('#lbldatefechasdos').prop('disabled', true).css('opacity', 0.5);
         $('#datemes').val('');
         $('#totaldatos').prop('checked', false);
-
-        $('#datefechasdos').prop('disabled', true).css('opacity', 0.5);
-        $('#lbldatefechasdos').prop('disabled', true).css('opacity', 0.5);
 
         const inputs = ['#datefechas', '#datemes', '#totaldatos'];
         const spans = ['#lbldatefechas', '#lbldatemes', '#lbltotaldatos'];
@@ -613,12 +611,10 @@ $(document).ready(function() {
 
     $('#btnactivos_actvprod, #cancelar_actvprod').click(function() {
         $('#fechauno_actvprod').val('');
-        $('#fechados_actvprod').val('');
+        $('#fechados_actvprod').val('').prop('disabled', true).css('opacity', 0.5);
+        $('#lblfechados_actvprod').prop('disabled', true).css('opacity', 0.5);
         $('#mes_actvprod').val('');
         $('#total_actvprod').prop('checked', false);
-
-        $('#fechados_actvprod').prop('disabled', true).css('opacity', 0.5);
-        $('#lblfechados_actvprod').prop('disabled', true).css('opacity', 0.5);
 
         const inputs = ['#fechauno_actvprod', '#mes_actvprod', '#total_actvprod'];
         const spans = ['#lblfechauno_actvprod', '#lblmes_actvprod', '#lbltotal_actvprod'];
@@ -657,6 +653,7 @@ $(document).ready(function() {
 
             $('#fechados_inactvprod').datepicker({
                 language: 'es',
+                autoclose: true,
                 format: 'yyyy-mm-dd',
                 endDate: ultimafecha
             });
@@ -696,12 +693,10 @@ $(document).ready(function() {
 
     $('#btninactivos_inactvprod, #cancelar_inactvprod').click(function() {
         $('#fechauno_inactvprod').val('');
-        $('#fechados_inactvprod').val('');
+        $('#fechados_inactvprod').val('').prop('disabled', true).css('opacity', 0.5);
+        $('#lblfechados_inactvprod').prop('disabled', true).css('opacity', 0.5);
         $('#mes_inactvprod').val('');
         $('#total_inactvprod').prop('checked', false);
-
-        $('#fechados_inactvprod').prop('disabled', true).css('opacity', 0.5);
-        $('#lblfechados_inactvprod').prop('disabled', true).css('opacity', 0.5);
 
         const inputs = ['#fechauno_inactvprod', '#mes_inactvprod', '#total_inactvprod'];
         const spans = ['#lblfechauno_inactvprod', '#lblmes_inactvprod', '#lbltotal_inactvprod'];

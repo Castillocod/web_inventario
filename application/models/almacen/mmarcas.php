@@ -120,7 +120,7 @@ class mmarcas extends CI_Model
 
     public function ultimomes()
     {
-        $this->db->seelect('MAX(DATE_FORMAT(fecha_vmarcas, "%Y-%m")) as mes');
+        $this->db->select('MAX(DATE_FORMAT(fecha_vmarcas, "%Y-%m")) as mes');
         $query = $this->db->get('almacen_marcas');
         return $query->row()->mes;
     }
