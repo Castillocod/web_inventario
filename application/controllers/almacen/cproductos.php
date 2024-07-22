@@ -369,23 +369,41 @@ class cproductos extends CI_Controller
 
     public function pdf_actvprodfechas()
     {
-        $fechauno_actvprod = $this->input->get('fechauno_actvprod');
-        $fechados_actvprod = $this->input->get('fechados_actvprod');
-        $data['almacen_productos'] = $this->mproductos->pdf_actvprodfechas($fechauno_actvprod, $fechados_actvprod);
-        $html = $this->load->view('almacen/reportes_vproductos/rep_activos_vprod', $data, true);
-        $mpdf = new Mpdf\Mpdf();
-        $mpdf->WriteHTML($html);
-        $mpdf->Output();
+        $fechauno_actvprod = $this->input->get('fechauno_act_vprod');
+        $fechados_actvprod = $this->input->get('fechados_act_vprod');
+
+        if($fechauno_actvprod && $fechados_actvprod)
+        {
+            $data['almacen_productos'] = $this->mproductos->pdf_actvprodfechas($fechauno_actvprod, $fechados_actvprod);
+            $html = $this->load->view('almacen/reportes_vproductos/rep_activos_vprod', $data, true);
+            $mpdf = new Mpdf\Mpdf();
+            $mpdf->WriteHTML($html);
+            $mpdf->Output();
+        }
+        else
+        {
+            echo "Fallo al recibir las fechas";
+        }
+        
     }
 
     public function pdf_actvprodmeses()
     {
         $mes_actvprod = $this->input->get('mes_actvprod');
-        $data['almacen_productos'] = $this->mproductos->pdf_actvprodmeses($mes_actvprod);
-        $html = $this->load->view('almacen/reportes_vproductos/rep_activos_vprod', $data, true);
-        $mpdf = new Mpdf\Mpdf();
-        $mpdf->WriteHTML($html);
-        $mpdf->Output();
+
+        if($mes_actvprod)
+        {
+            $data['almacen_productos'] = $this->mproductos->pdf_actvprodmeses($mes_actvprod);
+            $html = $this->load->view('almacen/reportes_vproductos/rep_activos_vprod', $data, true);
+            $mpdf = new Mpdf\Mpdf();
+            $mpdf->WriteHTML($html);
+            $mpdf->Output();
+        }
+        else
+        {
+            echo "Fallo al recibir las fechas";
+        }
+        
     }
 
     public function pdf_actvprodtotales()
@@ -397,11 +415,46 @@ class cproductos extends CI_Controller
         $mpdf->Output();
     }
 
-    public function pdf_inactivos()
+    public function pdf_inactvprodfechas()
     {
         $fechauno_inactvprod = $this->input->get('fechauno_inactvprod');
         $fechados_inactvprod = $this->input->get('fechados_inactvprod');
-        $data['almacen_productos'] = $this->mproductos->pdf_inactivos();
+
+        if($fechauno_inactvprod && $fechados_inactvprod)
+        {
+            $data['almacen_productos'] = $this->mproductos->pdf_inactvprodfechas($fechauno_inactvprod, $fechados_inactvprod);
+            $html = $this->load->view('almacen/reportes_vproductos/rep_inactivos_vprod', $data, true);
+            $mpdf = new Mpdf\Mpdf();
+            $mpdf->WriteHTML($html);
+            $mpdf->Output();
+        }
+        else
+        {
+            echo "Fallo al recibir las fechas";
+        }
+        
+    }
+
+    public function pdf_inactvprodmeses()
+    {
+        $mes_inactvprod = $this->input->get('mes_inactvprod');
+        if($mes_inactvprod)
+        {
+            $data['almacen_productos'] = $this->mproductos->pdf_inactvprodmeses($mes_inactvprod);
+            $html = $this->load->view('almacen/reportes_vproductos/rep_inactivos_vprod', $data, true);
+            $mpdf = new Mpdf\Mpdf();
+            $mpdf->WriteHTML($html);
+            $mpdf->Output();
+        }
+        else
+        {
+            echo "Fallo al recibir las fechas";
+        }
+    }
+
+    public function pdf_inactvprodtotales()
+    {
+        $data['almacen_productos'] = $this->mproductos->pdf_inactvprodtotales();
         $html = $this->load->view('almacen/reportes_vproductos/rep_inactivos_vprod', $data, true);
         $mpdf = new Mpdf\Mpdf();
         $mpdf->WriteHTML($html);
@@ -597,7 +650,7 @@ class cproductos extends CI_Controller
         $objeto_documento->save('php://output');
     }
 
-    public function ultimafecha()
+    public function fechasmeses_vprod()
     {
         $ultimafecha = $this->mproductos->ultimafecha();
         $primerfecha = $this->mproductos->primerfecha();
@@ -615,21 +668,6 @@ class cproductos extends CI_Controller
     {
         $comprobacionprod = $this->mproductos->comprobacionprod();
         echo json_encode($comprobacionprod > 0);
-    }
-
-    public function fechas_actvprod()
-    {
-        $fechauno_actvprod = $this->mproductos->fechauno_actvprod();
-        $fechados_actvprod = $this->mproductos->fechados_actvprod();
-        $mesuno_actvprod = $this->mproductos->mesuno_actvprod();
-        $mesdos_actvprod = $this->mproductos->mesdos_actvprod();
-
-        echo json_encode(array(
-            'fechauno_actvprod' => $fechauno_actvprod,
-            'fechados_actvprod' => $fechados_actvprod,
-            'mesuno_actvprod' => $mesuno_actvprod,
-            'mesdos_actvprod' => $mesdos_actvprod
-        ));
     }
 }
 ?>

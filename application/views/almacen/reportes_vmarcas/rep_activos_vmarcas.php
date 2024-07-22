@@ -24,9 +24,9 @@
                 <tbody>
                     <?php foreach($almacen_marcas as $row) { ?>
                     <tr>
-                        <td style="font-size: 20px; text-align: center;"><?= $row['id']?></td>
-                        <td style="font-size: 20px; text-align: center;"><?= $row['marca']?></td>
-                        <td style="font-size: 20px; text-align: center;"><?= $row['estado_vmarcas']?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->id?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->marca?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->estado_vmarcas?></td>
                     </tr>
                     <?php } ?>
                 </tbody>

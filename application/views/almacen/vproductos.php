@@ -61,31 +61,50 @@
                                     <div class="row d-flex justify-content-between">
                                         <div class="col-5">
                                             <label for="stock" class="form-label">Stock</label>
-                                            <input type="number" name="stock" id="stock" placeholder="Stock" class="form-control">
+                                            <div class="input-group">
+                                                <span class="form-control col-3"><i class="fa-solid fa-box-archive"></i></span>
+                                                <input type="number" name="stock" id="stock" placeholder="Stock" class="form-control">
+                                            </div>                                            
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-6">
                                             <label for="preciolista" class="form-label">Precio Lista</label>
-                                            <input type="text" name="preciolista" id="preciolista" placeholder="Precio de lista" class="form-control">
+                                            <div class="input-group">
+                                                <span class="form-control col-2"><i class="fa-solid fa-dollar-sign"></i></span>
+                                                <input type="text" name="preciolista" id="preciolista" placeholder="Precio de lista" class="form-control">
+                                            </div>                                            
                                         </div>
                                     </div><br>
                                     <div class="row d-flex justify-content-between">
-                                        <div class="col-5">
+                                        <div class="col-6">
                                             <label for="precioespecial" class="form-label">Precio Especial</label>
-                                            <input type="text" name="precioespecial" id="precioespecial" placeholder="Precio Especial" class="form-control">
+                                            <div class="input-group">
+                                                <span class="form-control col-2"><i class="fa-solid fa-dollar-sign"></i></span>
+                                                <input type="text" name="precioespecial" id="precioespecial" placeholder="Precio Especial" class="form-control">
+                                            </div>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-6">
                                             <label for="preciooriginal" class="form-label">Precio Original</label>
-                                            <input type="text" name="preciooriginal" id="preciooriginal" placeholder="Precio Original" class="form-control">
+                                            <div class="input-group">
+                                                <span class="form-control col-2"><i class="fa-solid fa-dollar-sign"></i></span>
+                                                <input type="text" name="preciooriginal" id="preciooriginal" placeholder="Precio Original" class="form-control">
+                                            </div>                                            
                                         </div>
                                     </div><br>
                                     <div class="row d-flex justify-content-between">
-                                        <div class="col-5">
+                                        <div class="col-6">
                                             <label for="preciointegrado" class="form-label">Precio Integrador</label>
-                                            <input type="text" name="preciointegrado" value="" id="preciointegrado" placeholder="Precio Integrado" class="form-control" style="pointer-events:none;" readonly>
+                                            <div class="input-group">
+                                                <span class="form-control col-2"><i class="fa-solid fa-dollar-sign"></i></span>
+                                                <input type="text" name="preciointegrado" value="" id="preciointegrado" placeholder="Precio Integrado" class="form-control" style="pointer-events:none;" readonly>
+                                            </div>
+                                            
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-6">
                                             <label for="preciotienda" class="form-label">Precio Tienda</label>
-                                            <input type="text" name="preciotienda" value="" id="preciotienda" placeholder="Precio de Tienda" class="form-control" style="pointer-events:none;" readonly>
+                                            <div class="input-group">
+                                                <span class="form-control col-2"><i class="fa-solid fa-dollar-sign"></i></span>   
+                                                <input type="text" name="preciotienda" value="" id="preciotienda" placeholder="Precio de Tienda" class="form-control" style="pointer-events:none;" readonly>
+                                            </div>                                    
                                         </div>
                                     </div><br>
                                     <div class="row d-flex justify-content-between">
@@ -98,14 +117,14 @@
                                             <input type="text" name="fecha_vprod" id="fecha_vprod" placeholder="Fecha" class="form-control" style="pointer-events: none;" readonly>
                                         </div>
                                     </div><br>
-                                    <div class="mb-3">
+                                    <div class="col-12">
                                         <label for="estado" style="padding-right: 60px">Estado</label>
                                         <div class="form-check form-switch d-flex align-items-center">
                                             <input class="form-check-input" type="checkbox" id="switchestadoproductos">
                                             <label id="estado_lblprod" name="estado_label" class="form-check-label" value=""></label>
                                             <input type="hidden" id="estado_prod" name="estado_prod" value="">
                                         </div>
-                                    </div>
+                                    </div><br>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="vprod_regcancelar">Cancelar</button>
                                         <button type="submit" class="btn btn-primary" id="vprod_registrar">Registrar producto</button>
@@ -164,31 +183,49 @@
                                     <div class="row d-flex justify-content-between">
                                         <div class="col-5">
                                             <label for="editstock" class="form-label">Stock</label>
-                                            <input type="number" name="editstock" id="editstock" placeholder="Stock" class="form-control">
+                                            <div class="input-group">
+                                                <span class="form-control col-3"><i class="fa-solid fa-box-archive"></i></span>
+                                                <input type="number" name="editstock" id="editstock" placeholder="Stock" class="form-control">
+                                            </div>                                            
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-6">
                                             <label for="editpreciolista" class="form-label">Precio Lista</label>
-                                            <input type="text" name="editpreciolista" id="editpreciolista" placeholder="Precio de lista" class="form-control">
+                                            <div class="input-group">
+                                                <span class="form-control col-2"><i class="fa-solid fa-dollar-sign"></i></span>
+                                                <input type="text" name="editpreciolista" id="editpreciolista" placeholder="Precio de lista" class="form-control">
+                                            </div>
                                         </div>
                                     </div><br>
                                     <div class="row d-flex justify-content-between">
-                                        <div class="col-5">
+                                        <div class="col-6">
                                             <label for="editprecioespecial" class="form-label">Precio Especial</label>
-                                            <input type="text" name="editprecioespecial" id="editprecioespecial" placeholder="Precio Especial" class="form-control">
+                                            <div class="input-group">
+                                                <span class="form-control col-2"><i class="fa-solid fa-dollar-sign"></i></span>
+                                                <input type="text" name="editprecioespecial" id="editprecioespecial" placeholder="Precio Especial" class="form-control">
+                                            </div>                                            
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-6">
                                             <label for="editpreciooriginal" class="form-label">Precio Original</label>
-                                            <input type="text" name="editpreciooriginal" id="editpreciooriginal" placeholder="Precio Original" class="form-control">
+                                            <div class="input-group">
+                                                <span class="form-control col-2"><i class="fa-solid fa-dollar-sign"></i></span>
+                                                <input type="text" name="editpreciooriginal" id="editpreciooriginal" placeholder="Precio Original" class="form-control">
+                                            </div>
                                         </div>
                                     </div><br>
                                     <div class="row d-flex justify-content-between">
-                                        <div class="col-5">
+                                        <div class="col-6">
                                             <label for="editpreciointegrado" class="form-label">Precio Integrador</label>
-                                            <input type="text" name="editpreciointegrado" id="editpreciointegrado" placeholder="Precio Integrado" class="form-control" style="pointer-events:none;" readonly>
+                                            <div class="input-group">
+                                                <span class="form-control col-2"><i class="fa-solid fa-dollar-sign"></i></span>
+                                                <input type="text" name="editpreciointegrado" id="editpreciointegrado" placeholder="Precio Integrado" class="form-control" style="pointer-events:none;" readonly>
+                                            </div>                            
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-6">
                                             <label for="editpreciotienda" class="form-label">Precio Tienda</label>
-                                            <input type="text" name="editpreciotienda" id="editpreciotienda" placeholder="Precio de Tienda" class="form-control" style="pointer-events:none;" readonly>
+                                            <div class="input-group">
+                                                <span class="form-control col-2"><i class="fa-solid fa-dollar-sign"></i></span>
+                                                <input type="text" name="editpreciotienda" id="editpreciotienda" placeholder="Precio de Tienda" class="form-control" style="pointer-events:none;" readonly>
+                                            </div>                                            
                                         </div>
                                     </div><br>
                                     <div class="row d-flex justify-content-between">
@@ -203,13 +240,12 @@
                                     </div><br>
                                     <div class="col-12">
                                         <label for="edit_estado" style="padding-right: 60px">Estado</label>
-                                         
                                         <div class="form-check form-switch d-flex align-items-center">
                                             <input class="form-check-input" type="checkbox" id="edit_switchestadoproductos">
                                             <span style="font-weight:normal;" id="edit_estado_lblprod" name="edit_estado_lblprod" class="form-check-label" value=""></span>                                
                                             <input type="hidden" id="edit_estado_prod" name="edit_estado_prod" value=""> 
                                         </div>                                                                                 
-                                    </div>
+                                    </div><br>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                         <button type="submit" class="btn btn-primary" id="vprod_actualizar">Actualizar</button>
@@ -236,8 +272,8 @@
                                     <input type="file" name="file_excel" required />
                                     </div>
                                     <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                                    <button class="btn btn-success" type="submit" name="excel_submit">Importar</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                        <button class="btn btn-success" type="submit" name="excel_submit">Importar</button>
                                     </div>
                                     <?php if($this->session->flashdata('importado')) { ?>
                                         <script>
@@ -332,7 +368,7 @@
                     </div>
                 </div>
                 <!-- AQUÍ TERMINA EL MODAL PARA EXPORTAR POR MES Y DIAS -->
-                 <!-- AQUÍ INICIA EL MODAL PARA REPORTES DE ACTIVOS POR MES Y DIAS -->
+                <!-- AQUÍ INICIA EL MODAL PARA REPORTES DE ACTIVOS POR MES Y DIAS -->
                 <div class="modal fade" id="reportespdf_actvprod" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog col-xl">
                         <div class="modal-content">
@@ -390,7 +426,66 @@
                         </div>
                     </div>
                 </div>
-                <!-- AQUÍ TERMINA EL MODAL PARA REPORTES DE ACTIVOS POR MES Y DIAS --></thead>
+                <!-- AQUÍ TERMINA EL MODAL PARA REPORTES DE ACTIVOS POR MES Y DIAS -->
+                <!-- AQUÍ INICIA EL MODAL PARA REPORTES DE INACTIVOS POR MES Y DIAS -->
+                <div class="modal fade" id="reportespdf_inactvprod" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog col-xl">
+                        <div class="modal-content">
+                            <div class="modal-header d-block">
+                                <h4 class="modal-title text-center">
+                                    Reportes de Productos Inactivos
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <center><h4>Selecciona el tipo de reporte</h4></center>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte por Fechas</legend></fieldset>
+                                    <div class="row d-flex justify-content-between">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechauno_inactvprod"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechauno_inactvprod" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechados_inactvprod"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechados_inactvprod" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte por Mes</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblmes_inactvprod"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="mes_inactvprod" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte Total</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <label for="">
+                                                <input type="radio" name="total_actvprod" id="total_inactvprod" value="">
+                                                <span style="font-weight:bold; font-family:Arial, Helvetica, sans-serif;" id="lbltotal_inactvprod">Total de Datos</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" data-bs-dismiss="modal" id="cancelar_inactvprod">Cancelar</button>
+                                <button class="btn btn-success" id="crear_inactvprod" onclick="reporteinactivos_vprod()">Crear Reporte</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- AQUÍ TERMINA EL MODAL PARA REPORTES DE INACTIVOS POR MES Y DIAS -->
                 <div class="row dt-search">
                     <div>
                         <label for="dt-search-0">Buscar:</label>
@@ -407,8 +502,8 @@
                                     <div class="caret_vprod"></div>
                                 </div>
                                 <ul class="menu_vprod">
-                                    <li><button class="btn btn-default" id="btnactivos_actvprod" data-bs-toggle="modal" data-bs-target="#reportespdf_actvprod"><i class="fa-regular fa-file-pdf"></i>&nbspProductos Activos</></li>
-                                    <li><button class="btn btn-default"><i class="fa-regular fa-file-pdf"></i>&nbspProductos Inactivos</butt></li>
+                                    <li><button class="btn btn-default" id="btnactivos_actvprod" data-bs-toggle="modal" data-bs-target="#reportespdf_actvprod"><i class="fa-regular fa-file-pdf"></i>&nbspProductos Activos</button></li>
+                                    <li><button class="btn btn-default" id="btninactivos_inactvprod" data-bs-toggle="modal" data-bs-target="#reportespdf_inactvprod"><i class="fa-regular fa-file-pdf"></i>&nbspProductos Inactivos</button></li>
                                 </ul>
                             </div>
                         </div>

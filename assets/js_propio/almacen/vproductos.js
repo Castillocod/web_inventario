@@ -20,6 +20,17 @@ const totales_actvprod = $('#total_actvprod');
 const lbltotales_actvprod = $('#lbltotal_actvprod');
 //INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
 
+//INTERACTIVIDAD - OPCIONES DE REPORTES DE INACTIVOS
+const unofecha_inactvprod = $('#fechauno_inactvprod');
+const lblunofecha_inactvprod = $('#lblfechauno_inactvprod');
+const dosfecha_inactvprod = $('#fechados_inactvprod');
+const lbldosfecha_inactvprod = $('#lblfechados_inactvprod');
+const meses_inactvprod = $('#mes_inactvprod');
+const lblmeses_inactvprod = $('#lblmes_inactvprod');
+const totales_inactvprod = $('#total_inactvprod');
+const lbltotales_inactvprod = $('#lbltotal_inactvprod');
+//INTERACTIVIDAD - OPCIONES DE REPORTES DE INACTIVOS
+
 $(document).ready(function() {
     //CONFIGURACIÓN DE LA DATATABLES
     var table = $("#tabla_vprod").DataTable({
@@ -257,9 +268,9 @@ $(document).ready(function() {
     //     table.button('.buttons-csv').trigger();
     // });
 
-    $('#btn-excel').on('click', function(){
-        table.button('.buttons-excel').trigger();
-    });
+    // $('#btn-excel').on('click', function(){
+    //     table.button('.buttons-excel').trigger();
+    // });
 
     // $('#btn-pdf').on('click', function(){
     //     table.button('.buttons-pdf').trigger();
@@ -444,7 +455,7 @@ $(document).ready(function() {
     
     //CONFIGURACIÓN DE LA EXPORTACIÓN EXCEL POR TIEMPO
     $.ajax({
-        url: 'cproductos/ultimafecha',
+        url: 'cproductos/fechasmeses_vprod',
         type: 'GET',
         dataType: 'JSON',
         success: function(data){
@@ -540,14 +551,14 @@ $(document).ready(function() {
 
     //CONFIGURACIÓN DE REPORTE ACTIVOS DE PRODUCTOS
     $.ajax({
-        url: 'cproductos/fechas_actvprod',
+        url: 'cproductos/fechasmeses_vprod',
         type: 'GET',
         dataType: 'JSON',
         success: function(data){
-            var fechauno_actvprod = data.fechauno_actvprod;
-            var fechados_actvprod = data.fechados_actvprod;
-            var mesuno_actvprod = data.mes_actvprod;
-            var mesdos_actvprod = data.mesdos_actvprod;
+            var fechauno_actvprod = data.primerfecha;
+            var fechados_actvprod = data.ultimafecha;
+            var mesuno_actvprod  = data.primermes;
+            var mesdos_actvprod = data.ultimomes;
 
             $('#fechauno_actvprod').datepicker({
                 autoclose: true,
@@ -578,7 +589,7 @@ $(document).ready(function() {
             });
         },
         error: function(status, xhr, error){
-            console.error('Ocurrio al obtener las fechas:', error);
+            console.error('Ocurrio un error al obtener las fechas:', error);
         }
     });
     //CONFIGURACIÓN DE REPORTE ACTIVOS DE PRODUCTOS
@@ -621,45 +632,91 @@ $(document).ready(function() {
         });
     });
     //INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
+
+    //CONFIGURACIÓN DE REPORTE INACTIVOS DE PRODUCTOS
+    $.ajax({
+        url: 'cproductos/fechasmeses_vprod',
+        type: 'GET',
+        dataType: 'JSON',
+        success: function(data){
+            var primerfecha = data.primerfecha;
+            var ultimafecha = data.ultimafecha;
+            var primermes = data.primermes;
+            var ultimomes = data.ultimomes;
+
+            $('#fechauno_inactvprod').datepicker({
+                language: 'es',
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                startDate: primerfecha,
+                endDate: ultimafecha
+            }).on('changeDate', function(selected){
+                var fechauno = new Date(selected.date.valueOf());
+                $('#fechados_inactvprod').datepicker('setStartDate', fechauno);
+            });
+
+            $('#fechados_inactvprod').datepicker({
+                language: 'es',
+                format: 'yyyy-mm-dd',
+                endDate: ultimafecha
+            });
+
+            $('#mes_inactvprod').datepicker({
+                autoclose: true,
+                language: 'es',
+                format: 'yyyy-mm',
+                startView: 'months',
+                minViewMode: 'months',
+                startDate: primermes,
+                endDate: ultimomes
+            });
+        },
+        error: function(status, xhr, error){
+            console.error('Ocurrio un error al obtener las fechas:', error);
+        }
+    });
+    //CONFIGURACIÓN DE REPORTE INACTIVOS DE PRODUCTOS
+
+    //INTERACTIVIDAD - OPCIONES DE REPORTES DE INACTIVOS
+    dosfecha_inactvprod.prop('disabled', true).css('opacity', 0.5);
+    lbldosfecha_inactvprod.prop('disabled', true).css('opacity', 0.5);
+
+    unofecha_inactvprod.on('change', function(){
+        if($(this).val()){
+            $(this).prop('disabled', true).css('opacity', 0.5);
+            lblunofecha_inactvprod.prop('disabled', true).css('opacity', 0.5);
+            dosfecha_inactvprod.prop('disabled', false).css('opacity', 1);
+            lbldosfecha_inactvprod.prop('disabled', false).css('opacity', 1);
+        }
+    });
+
+    unofecha_inactvprod.on('click', () => except_inactvprod([unofecha_inactvprod, lblunofecha_inactvprod]));
+    meses_inactvprod.on('click', () => except_inactvprod([meses_inactvprod, lblmeses_inactvprod]));
+    totales_inactvprod.on('change', () => except_inactvprod([totales_inactvprod, lbltotales_inactvprod]));
+
+    $('#btninactivos_inactvprod, #cancelar_inactvprod').click(function() {
+        $('#fechauno_inactvprod').val('');
+        $('#fechados_inactvprod').val('');
+        $('#mes_inactvprod').val('');
+        $('#total_inactvprod').prop('checked', false);
+
+        $('#fechados_inactvprod').prop('disabled', true).css('opacity', 0.5);
+        $('#lblfechados_inactvprod').prop('disabled', true).css('opacity', 0.5);
+
+        const inputs = ['#fechauno_inactvprod', '#mes_inactvprod', '#total_inactvprod'];
+        const spans = ['#lblfechauno_inactvprod', '#lblmes_inactvprod', '#lbltotal_inactvprod'];
+
+        inputs.forEach(input => {
+            $(input).prop('disabled', false).css('opacity', 1);
+        });
+
+        spans.forEach(span => {
+            $(span).prop('disabled', false).css('opacity', 1);
+        });
+    });
+    //INTERACTIVIDAD - OPCIONES DE REPORTES DE INACTIVOS
 });
 
-
-function reporteactivos_vprod()
-{
-    var fechauno_actvprod = $('#fechauno_actvprod').val();
-    var fechados_actvprod = $('#fechados_actvprod').val();
-    var mes_actvprod = $('#mes_actvprod').val();
-    var total_actvprod = $('#total_actvprod').prop('checked');
-
-    if(fechauno_actvprod && fechados_actvprod){
-        activos_vprod_fechas(fechados_actvprod, fechados_actvprod);
-    }   else if(mes_actvprod){
-            activos_vprod_meses(mes_actvprod);
-        } else if(total_actvprod){
-            totalactivos_vprod(total_actvprod);
-        }
-    else{
-        alert('Por favor, seleccione una opción');
-    }
-}
-
-function activos_vprod_fechas(fechauno_actvprod, fechados_actvprod)
-{
-    var url = 'cproductos/pdf_actvprodfechas';
-    window.location.href = url + "?fechauno=" + fechauno_actvprod + "&fechados=" + fechados_actvprod;
-}
-
-function activos_vprod_meses(mes_actvprod)
-{
-    var url = 'cproductos/pdf_actvprodmeses';
-    window.location.href = url + "?mes=" + mes_actvprod;
-}
-
-function totalactivos_vprod(total_actvprod)
-{
-    var url = 'cproductos/pdf_actvprodtotales';
-    window.location.href = url;
-}
 //CONFIGURACIÓN DE LA EXPORTACIÓN EXCEL POR TIEMPO
 function exportardatos()
 {
@@ -701,31 +758,83 @@ function exportartodoslosdatos()
 }
 //CONFIGURACIÓN DE LA EXPORTACIÓN EXCEL POR TIEMPO
 
-//INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
-function except_actvprod(except_actvprod)
+//CONFIGURACIÓN - FUNCIONES DE REPORTES DE ACTIVOS
+function reporteactivos_vprod()
 {
-    const inputs = [unofecha_actvprod, dosfecha_actvprod, meses_actvprod, totales_actvprod];
-    const labels = [lblunofecha_actvprod, lbldosfecha_actvprod, lblmeses_actvprod, lbltotales_actvprod];
+    var fechauno_actvprod = $('#fechauno_actvprod').val();
+    var fechados_actvprod = $('#fechados_actvprod').val();
+    var mes_actvprod = $('#mes_actvprod').val();
+    var total_actvprod = $('#total_actvprod').prop('checked');
 
-    inputs.forEach(input => {
-        if(!except_actvprod.includes(input)){
-            input.prop('disabled', true).css('opacity', 0.5).val('');
+    if(fechauno_actvprod && fechados_actvprod){
+        activos_vprod_fechas(fechauno_actvprod, fechados_actvprod);
+    }   else if(mes_actvprod){
+            activos_vprod_meses(mes_actvprod);
+        } else if(total_actvprod){
+            totalactivos_vprod();
         }
-        else{
-            input.prop('disabled', false);
-        }
-    });
-
-    labels.forEach(label => {
-        if(!except_actvprod.includes(label)){
-            label.addClass('disabled').css('opacity', 0.5);
-        }
-        else{
-            label.removeClass('disabled').css('opacity', 1);
-        }
-    });
+    else{
+        alert('Por favor, seleccione una opción');
+    }
 }
-//INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
+
+function activos_vprod_fechas(fechauno_act_vprod, fechados_act_vprod)
+{
+    var url = 'cproductos/pdf_actvprodfechas';
+    window.location.href = url + "?fechauno_act_vprod=" + fechauno_act_vprod + "&fechados_act_vprod=" + fechados_act_vprod;
+}
+
+function activos_vprod_meses(mes_actvprod)
+{
+    var url = 'cproductos/pdf_actvprodmeses';
+    window.location.href = url + "?mes_actvprod=" + mes_actvprod;
+}
+
+function totalactivos_vprod()
+{
+    var url = 'cproductos/pdf_actvprodtotales';
+    window.location.href = url;
+}
+//CONFIGURACIÓN - FUNCIONES DE REPORTES DE ACTIVOS
+
+//CONFIGURACIÓN - FUNCIONES DE REPORTES DE INACTIVOS
+function reporteinactivos_vprod()
+{
+    var fechauno_inactvprod = $('#fechauno_inactvprod').val();
+    var fechados_inactvprod = $('#fechados_inactvprod').val();
+    var mes_inactvprod = $('#mes_inactvprod').val();
+    var total_inactvprod = $('#total_inactvprod').prop('checked');
+
+    if(fechauno_inactvprod && fechados_inactvprod){
+        inactivos_vprod_fechas(fechauno_inactvprod, fechados_inactvprod);
+    } else if (mes_inactvprod){
+        inactivos_vprod_meses(mes_inactvprod);
+    } else if (total_inactvprod){
+        totalinactivos_vprod();
+    }
+    else{
+        alert('Por favor, seleccione una opción');
+    }
+}
+
+function inactivos_vprod_fechas(fechauno_inactvprod, fechados_inactvprod)
+{
+    var url = 'cproductos/pdf_inactvprodfechas';
+    window.location.href = url + '?fechauno_inactvprod=' + fechauno_inactvprod + '&fechados_inactvprod=' + fechados_inactvprod;
+}
+
+function inactivos_vprod_meses(mes_inactvprod)
+{
+    var url = 'cproductos/pdf_inactvprodmeses';
+    window.location.href = url + '?mes_inactvprod=' + mes_inactvprod;
+}
+
+function totalinactivos_vprod()
+{
+    var url = 'cproductos/pdf_inactvprodtotales';
+    window.location.href = url;
+}
+//CONFIGURACIÓN - FUNCIONES DE REPORTES DE INACTIVOS
 
 //INTERACTIVIDAD - OPCIONES DE EXPORTAR EXCEL POR TIEMPO
 function excepciones(excepciones)
@@ -754,6 +863,58 @@ function excepciones(excepciones)
     });
 }
 //INTERACTIVIDAD - OPCIONES DE EXPORTAR EXCEL POR TIEMPO
+
+//INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
+function except_actvprod(except_actvprod)
+{
+    const inputs = [unofecha_actvprod, dosfecha_actvprod, meses_actvprod, totales_actvprod];
+    const labels = [lblunofecha_actvprod, lbldosfecha_actvprod, lblmeses_actvprod, lbltotales_actvprod];
+
+    inputs.forEach(input => {
+        if(!except_actvprod.includes(input)){
+            input.prop('disabled', true).css('opacity', 0.5).val('');
+        }
+        else{
+            input.prop('disabled', false);
+        }
+    });
+
+    labels.forEach(label => {
+        if(!except_actvprod.includes(label)){
+            label.addClass('disabled').css('opacity', 0.5);
+        }
+        else{
+            label.removeClass('disabled').css('opacity', 1);
+        }
+    });
+}
+//INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
+
+//INTERACTIVIDAD - OPCIONES DE REPORTES DE INACTIVOS
+function except_inactvprod(except_inactvprod)
+{
+    const inputs = [unofecha_inactvprod, dosfecha_inactvprod, meses_inactvprod, totales_inactvprod];
+    const labels = [lblunofecha_inactvprod, lbldosfecha_inactvprod, lblmeses_inactvprod, lbltotales_inactvprod];
+
+    inputs.forEach(input => {
+        if(!except_inactvprod.includes(input)){
+            input.prop('disabled', true).css('opacity', 0.5).val('');
+        }
+        else{
+            input.prop('disabled', false);
+        }
+    });
+
+    labels.forEach(label => {
+        if(!except_inactvprod.includes(label)){
+            label.addClass('disabled').css('opacity', 0.5);
+        }
+        else{
+            label.removeClass('disabled').css('opacity', 1);
+        }
+    });
+}
+//INTERACTIVIDAD - OPCIONES DE REPORTES DE INACTIVOS
 
 //CRUD DE VPRODUCTOS
 $(document).on('click', '#vprod_registrar', function(e){

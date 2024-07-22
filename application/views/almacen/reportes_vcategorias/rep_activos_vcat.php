@@ -24,9 +24,9 @@
         <tbody>
             <?php foreach($almacen_categorias as $row) { ?>
             <tr>
-                <td style="font-size: 20px; text-align: center;"><?= $row['id']?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row['categoria']?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row['estado_vcat']?></td>
+                <td style="font-size: 20px; text-align: center;"><?= $row->id?></td>
+                <td style="font-size: 20px; text-align: center;"><?= $row->categoria?></td>
+                <td style="font-size: 20px; text-align: center;"><?= $row->estado_vcat?></td>
             </tr>
             <?php } ?>
         </tbody>

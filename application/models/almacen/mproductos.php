@@ -191,7 +191,7 @@ class mproductos extends CI_Model
         $this->db->where('fecha_vprod <=', $fechados_actvprod);
         $this->db->where('estado_prod', 'ACTIVO');
         $query = $this->db->get('almacen_productos');
-        return $query->result_array();
+        return $query->result();
     }
 
     public function pdf_actvprodmeses($mes_actvprod)
@@ -199,21 +199,38 @@ class mproductos extends CI_Model
         $this->db->where('DATE_FORMAT(fecha_vprod, "%Y-%m") =', $mes_actvprod);
         $this->db->where('estado_prod', 'ACTIVO');
         $query = $this->db->get('almacen_productos');
-        return $query->result_array();
+        return $query->result();
     }
 
     public function pdf_actvprodtotales()
     {
         $this->db->where('estado_prod', 'ACTIVO');
         $query = $this->db->get('almacen_productos');
-        return $query->result_array();
+        return $query->result();
     }
 
-    public function pdf_inactivos()
+    public function pdf_inactvprodfechas($fechauno_inactvprod, $fechados_inactvprod)
+    {
+        $this->db->where('fecha_vprod >=', $fechauno_inactvprod);
+        $this->db->where('fecha_vprod <=', $fechados_inactvprod);
+        $this->db->where('estado_prod', 'INACTIVO');
+        $query = $this->db->get('almacen_productos');
+        return $query->result();
+    }
+
+    public function pdf_inactvprodmeses($mes_inactvprod)
+    {
+        $this->db->where('DATE_FORMAT(fecha_vprod, "%Y-%m") =', $mes_inactvprod);
+        $this->db->where('estado_prod', 'INACTIVO');
+        $query = $this->db->get('almacen_productos');
+        return $query->result();
+    }
+
+    public function pdf_inactvprodtotales()
     {
         $this->db->where('estado_prod', 'INACTIVO');
         $query = $this->db->get('almacen_productos');
-        return $query->result_array();
+        return $query->result();
     }
 
     public function allproductosexcel()
@@ -283,38 +300,6 @@ class mproductos extends CI_Model
     {
         $query = $this->db->get('almacen_productos');
         return $query->num_rows();
-    }
-
-    public function fechauno_actvprod()
-    {
-        // $this->db->where('estado_prod', 'ACTIVO');
-        $this->db->select_min('fecha_vprod');
-        $query = $this->db->get('almacen_productos');
-        return $query->row()->fecha_vprod;
-    }
-
-    public function fechados_actvprod()
-    {
-        // $this->db->where('estado_prod', 'ACTIVO');
-        $this->db->select_max('fecha_vprod');
-        $query = $this->db->get('almacen_productos');
-        return $query->row()->fecha_vprod;
-    }
-
-    public function mesuno_actvprod()
-    {
-        // $this->db->where('estado_prod', 'ACTIVO');
-        $this->db->select('MIN(DATE_FORMAT(fecha_vprod, "%Y-%m")) as mes');
-        $query = $this->db->get('almacen_productos');
-        return $query->row()->mes;
-    }
-
-    public function mesdos_actvprod()
-    {
-        // $this->db->where('estado_prod', 'ACTIVO');
-        $this->db->select('MAX(DATE_FORMAT(fecha_vprod, "%Y-%m")) as mes');
-        $query = $this->db->get('almacen_productos');
-        return $query->row()->mes;
     }
 }
 ?>
