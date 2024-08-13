@@ -256,11 +256,11 @@ class cproductos extends CI_Controller
         echo json_encode($formulas);
     }
 
-    public function excelproductos()
+    public function importexcel_vprod()
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $doc_estado = $this->productosexcelimport();
+            $doc_estado = $this->vprod_importexcel();
             if($doc_estado != false)
             {
                 $doc_nombre = 'assets/documentos/imports/'.$doc_estado;
@@ -342,7 +342,7 @@ class cproductos extends CI_Controller
         }
     }
 
-    function productosexcelimport()
+    function vprod_importexcel()
     {
         $subirexcel = 'assets/documentos/imports/';
         if(!is_dir($subirexcel))

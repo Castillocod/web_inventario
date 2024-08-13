@@ -267,7 +267,7 @@
                                 </h4>
                             </div>
                             <div class="modal-body">
-                                <form action="<?= base_url()?>almacen/cproductos/excelproductos" enctype="multipart/form-data" method="post">
+                                <form action="<?= base_url()?>almacen/cproductos/importexcel_vprod" enctype="multipart/form-data" method="post">
                                     <div class="mb-3">
                                     <input type="file" name="file_excel" required />
                                     </div>

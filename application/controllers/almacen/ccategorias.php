@@ -70,12 +70,20 @@ class ccategorias extends CI_Controller
 
         echo json_encode($datos_json);
     }
+
+    public function comprobacionvcat()
+    {
+        $comprobacionvcat = $this->mcategorias->comprobacionvcat();
+        echo json_encode($comprobacionvcat > 0);
+    }
+
     public function agregarcategorias()
     {
         if($this->input->is_ajax_request())
         {
             $this->form_validation->set_rules('categoria', 'Categoria', 'required|trim');
             $this->form_validation->set_rules('estado_vcat', 'Estado', 'trim');
+            $this->form_validation->set_rules('fecha_vcat', 'Fecha_vcat', 'required');
 
             $this->form_validation->set_message(array(
                 "required" => "<strong>{field}</strong> debe ser completado",
@@ -116,6 +124,7 @@ class ccategorias extends CI_Controller
         {
             $this->form_validation->set_rules('editcategoria', 'Categoria', 'required|trim');
             $this->form_validation->set_rules('edit_estado_vcat', 'Estado', 'trim');
+            $this->form_validation->set_rules('editfecha_vcat', 'Fecha_vcat', 'required');
 
             $this->form_validation->set_message(array(
                 "required" => "<strong>{field}</strong> debe ser completado",
@@ -133,6 +142,7 @@ class ccategorias extends CI_Controller
                 $data['id'] = $this->input->post('editid');
                 $data['categoria'] = $this->input->post('editcategoria');
                 $data['estado_vcat'] = $this->input->post('edit_estado_vcat');
+                $data['fecha_vcat'] = $this->input->post('editfecha_vcat');
 
                 if($this->mcategorias->actualizarcategorias($data))
                 {
@@ -175,11 +185,11 @@ class ccategorias extends CI_Controller
         } 
     }
 
-    public function categoriasexcel()
+    public function importexcel_vcat()
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $doc_estado = $this->categoriasexcelimport();
+            $doc_estado = $this->vcat_importexcel();
             if($doc_estado != false)
             {
                 $doc_nombre = 'assets/documentos/imports/'.$doc_estado;
@@ -225,7 +235,7 @@ class ccategorias extends CI_Controller
         }
     }
 
-    public function categoriasexcelimport()
+    public function vcat_importexcel()
     {
         $subirexcel = 'assets/documentos/imports/';
         if(!is_Dir($subirexcel))
@@ -250,22 +260,249 @@ class ccategorias extends CI_Controller
         }
     }
 
-    public function pdf_categorias_activas()
+    public function excelfechas_vcat()
     {
-        $data['almacen_categorias'] = $this->mcategorias->pdf_categorias_activas();
+        $fechauno_excelvcat = $this->input->get('fechauno');
+        $fechados_excelvcat = $this->input->get('fechados');
+
+        if(!$fechauno_excelvcat || !$fechados_excelvcat)
+        {
+            show_error('Fechas no validas');
+        }
+
+        $this->load->library('excel');
+        $objeto = new PHPExcel();
+        $objeto->setActiveSheetIndex(0);
+
+        $columnas_tabla = array(
+            'ID',
+            'Categoria',
+            'Estado',
+            'Fecha de Registro'
+        );
+
+        $columna = 0;
+
+        foreach($columnas_tabla as $fila)
+        {
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow($columna, 1, $fila);
+            $columna++;
+        }
+
+        $datos_vcat = $this->mcategorias->excelfechas_vcat($fechauno_excelvcat, $fechados_excelvcat); 
+        $celda_excel = 2;
+
+        foreach($datos_vcat as $row)
+        {
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(0, $celda_excel, $row->id);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(1, $celda_excel, $row->categoria);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(2, $celda_excel, $row->estado_vcat);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(3, $celda_excel, $row->fecha_vcat);
+            $celda_excel++;
+        }
+
+        $objeto_documento = PHPExcel_IOFactory::createWriter($objeto, 'Excel2007');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename="Categorias.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $objeto_documento->save('php://output');
+    }
+
+    public function excelmes_vcat()
+    {
+        $mes_excelvcat = $this->input->get('mes');
+
+        if(!$mes_excelvcat)
+        {
+            show_error('Mes no valido');
+        }
+
+        $this->load->library('excel');
+        $objeto = new PHPExcel();
+        $objeto->setActiveSheetIndex(0);
+
+        $columnas_tabla = array(
+            'ID',
+            'Categoria',
+            'Estado',
+            'Fecha de Registro'
+        );
+
+        $columna = 0;
+
+        foreach($columnas_tabla as $fila)
+        {
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow($columna, 1, $fila);
+            $columna++;
+        }
+
+        $datos_vcat = $this->mcategorias->excelmes_vcat($mes_excelvcat);
+        $celda_excel = 2;
+
+        foreach($datos_vcat as $row)
+        {
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(0, $celda_excel, $row->id);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(1, $celda_excel, $row->categoria);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(2, $celda_excel, $row->estado_vcat);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(3, $celda_excel, $row->fecha_vcat);
+            $celda_excel++;
+        }
+
+        $objeto_documento = PHPExcel_IOFactory::createWriter($objeto, 'Excel2007');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename="Categorias.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $objeto_documento->save('php://output');
+    }
+
+    public function exceltotal_vcat()
+    {
+        $this->load->library('excel');
+        $objeto = new PHPExcel();
+        $objeto->setActiveSheetIndex(0);
+
+        $columnas_tabla = array(
+            'ID',
+            'Categoria',
+            'Estado',
+            'Fecha de Registro'
+        );
+
+        $columna = 0;
+
+        foreach($columnas_tabla as $fila)
+        {
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow($columna, 1, $fila);
+            $columna++;
+        }
+
+        $datos_vcat = $this->mcategorias->exceltotal_vcat();
+        $celda_excel = 2;
+
+        foreach($datos_vcat as $row)
+        {
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(0, $celda_excel, $row->id);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(1, $celda_excel, $row->categoria);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(2, $celda_excel, $row->estado_vcat);
+            $objeto->getActiveSheet()->setCellValueByColumnAndRow(3, $celda_excel, $row->fecha_vcat);
+            $celda_excel++;
+        }
+
+        $objeto_documento = PHPExcel_IOFactory::createWriter($objeto, 'Excel2007');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename="total_categorias.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $objeto_documento->save('php://output');
+    }
+
+    public function pdfactfechas_vcat()
+    {
+        $fechauno_actvcat = $this->input->get('fechauno');
+        $fechados_actvcat = $this->input->get('fechados');
+
+        if($fechauno_actvcat && $fechados_actvcat)
+        {
+            $data['almacen_categorias'] = $this->mcategorias->pdfactfechas_vcat($fechauno_actvcat, $fechados_actvcat);
+            $html = $this->load->view('almacen/reportes_vcategorias/rep_activos_vcat', $data, true);
+            $mpdf = new \Mpdf\Mpdf();
+            $mpdf->writeHTML($html);
+            $mpdf->Output();
+        }
+        else
+        {
+            echo 'Fallo al recibir las fechas';
+        }
+    }
+
+    public function pdfactmes_vcat()
+    {
+        $mes_actvcat = $this->input->get('mes');
+
+        if($mes_actvcat)
+        {
+            $data['almacen_categorias'] = $this->mcategorias->pdfactmes_vcat($mes_actvcat);
+            $html = $this->load->view('almacen/reportes_vcategorias/rep_activos_vcat', $data, true);
+            $mpdf = new \Mpdf\Mpdf();
+            $mpdf->writeHTML($html);
+            $mpdf->Output();
+        }
+        else
+        {
+            echo 'Fallo al recibir el mes';
+        }
+    }
+
+    public function pdfacttotal_vcat()
+    {
+        $data['almacen_categorias'] = $this->mcategorias->pdfacttotal_vcat();
         $html = $this->load->view('almacen/reportes_vcategorias/rep_activos_vcat', $data, true);
         $mpdf = new \Mpdf\Mpdf();
-        $mpdf->writeHTML($html);
+        $mpdf->WriteHTML($html);
         $mpdf->Output();
     }
 
-    public function pdf_categorias_inactivas()
+    public function pdfinactfechas_vcat()
     {
-        $data['almacen_categorias'] = $this->mcategorias->pdf_categorias_inactivas();
+        $fechauno_inactvcat = $this->input->get('fechauno');
+        $fechados_inactvcat = $this->input->get('fechados');
+
+        if($fechauno_inactvcat && $fechados_inactvcat)
+        {
+            $data['almacen_categorias'] = $this->mcategorias->pdfinactfechas_vcat($fechauno_inactvcat, $fechados_inactvcat);
+            $html = $this->load->view('almacen/reportes_vcategorias/rep_inactivos_vcat', $data, true);
+            $mpdf = new \Mpdf\Mpdf();
+            $mpdf->writeHTML($html);
+            $mpdf->Output();
+        }
+        else
+        {
+            echo 'Fallo al recibir las fechas';
+        }
+    }
+
+    public function pdfinactmes_vcat()
+    {
+        $mes_inactvcat = $this->input->get('mes');
+
+        if($mes_inactvcat)
+        {
+            $data['almacen_categorias'] = $this->mcategorias->pdfinactmes_vcat($mes_inactvcat);
+            $html = $this->load->view('almacen/reportes_vcategorias/rep_inactivos_vcat', $data, true);
+            $mpdf = new \Mpdf\Mpdf();
+            $mpdf->WriteHTML($html);
+            $mpdf->Output();
+        }
+        else
+        {
+            echo 'Fallo al recibir el mes';
+        }
+    }
+
+    public function pdfinacttotal_vcat()
+    {
+        $data['almacen_categorias'] = $this->mcategorias->pdfinacttotal_vcat();
         $html = $this->load->view('almacen/reportes_vcategorias/rep_inactivos_vcat', $data, true);
         $mpdf = new \Mpdf\Mpdf();
-        $mpdf->writeHTML($html);
+        $mpdf->WriteHTML($html);
         $mpdf->Output();
+    }
+
+    public function fechasmeses_vcat()
+    {
+        $primerfecha = $this->mcategorias->primerfecha();
+        $ultimafecha = $this->mcategorias->ultimafecha();
+        $primermes = $this->mcategorias->primermes();
+        $ultimomes = $this->mcategorias->ultimomes();
+
+        echo json_encode(array(
+            'primerfecha' => $primerfecha,
+            'ultimafecha' => $ultimafecha,
+            'primermes' => $primermes,
+            'ultimomes' => $ultimomes
+        ));
     }
 }
 ?>

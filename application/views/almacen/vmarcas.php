@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="container" style="padding-top: 8px;">
-    <div class="card">
+        <div class="card">
             <div class="card-body">
                 <div class="panel-heading d-flex justify-content-center">
                     <h3 class="panel-title">Marcas de Productos</h3>
@@ -107,7 +107,7 @@
                                 </h4>
                             </div>
                             <div class="modal-body">
-                                <form action="<?= base_url()?>almacen/cmarcas/marcasexcel" enctype="multipart/form-data" method="post">
+                                <form action="<?= base_url()?>almacen/cmarcas/importexcel_vmarcas" enctype="multipart/form-data" method="post">
                                     <div class="mb-3">
                                     <input type="file" name="file_excel" required />
                                     </div>
@@ -148,7 +148,7 @@
                     </div>
                 </div>
                 <!-- AQUÍ TERMINA EL MODAL PARA IMPORTAR EXCEL -->
-                 <!-- AQUÍ INICIA EL MODAL PARA EXPORTAR POR MES Y DIAS -->
+                <!-- AQUÍ INICIA EL MODAL PARA EXPORTAR POR MES Y DIAS -->
                 <div class="modal fade" id="vmarcas_exportarexcel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog col-xl">
                         <div class="modal-content">
@@ -201,13 +201,13 @@
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-danger" data-bs-dismiss="modal" id="cancelar_excelvmarcas">Cancelar</button>
-                                <button class="btn btn-success" id="crear_excelvmarcas" onclick="exportar_excelvmarcas()">Exportar datos</button>
+                                <button class="btn btn-success" id="crear_excelvmarcas" onclick="exportarexcel_vmarcas()">Exportar datos</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- AQUÍ TERMINA EL MODAL PARA EXPORTAR POR MES Y DIAS -->
-                 <!-- AQUÍ INICIA EL MODAL PARA REPORTES DE ACTIVOS POR MES Y DIAS -->
+                <!-- AQUÍ INICIA EL MODAL PARA REPORTES DE ACTIVOS POR MES Y DIAS -->
                 <div class="modal fade" id="reportespdf_actvmarcas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog col-xl">
                         <div class="modal-content">

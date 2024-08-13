@@ -124,6 +124,78 @@ class mmarcas extends CI_Model
         $query = $this->db->get('almacen_marcas');
         return $query->row()->mes;
     }
+
+    public function excelfechas_vmarcas($fechauno_excelvmarcas, $fechados_excelvmarcas)
+    {
+        $this->db->where('fecha_vmarcas >=', $fechauno_excelvmarcas);
+        $this->db->where('fecha_vmarcas <=', $fechados_excelvmarcas);
+        $this->db->order_by('id');
+        $query = $this->db->get('almacen_marcas');
+        return $query->result();
+    }
+
+    public function excelmes_vmarcas($mes_excelvmarcas)
+    {
+        $this->db->where('DATE_FORMAT(fecha_vmarcas, "%Y-%m") =', $mes_excelvmarcas);
+        $this->db->order_by('id');
+        $query = $this->db->get('almacen_marcas');
+        return $query->result();
+    }
+
+    public function exceltotal_vmarcas()
+    {
+        $this->db->order_by('id');
+        $query = $this->db->get('almacen_marcas');
+        return $query->result();
+    }
+
+    public function pdfactfechas_vmarcas($fechauno_actvmarcas, $fechados_actvmarcas)
+    {
+        $this->db->where('fecha_vmarcas >=', $fechauno_actvmarcas);
+        $this->db->where('fecha_vmarcas <=', $fechados_actvmarcas);
+        $this->db->where('estado_vmarcas', 'ACTIVO');
+        $query = $this->db->get('almacen_marcas');
+        return $query->result();
+    }
+
+    public function pdfactmes_vmarcas($mes_actvmarcas)
+    {
+        $this->db->where('DATE_FORMAT(fecha_vmarcas, "%Y-%m") =', $mes_actvmarcas);
+        $this->db->where('estado_vmarcas', 'ACTIVO');
+        $query = $this->db->get('almacen_marcas');
+        return $query->result();
+    }
+
+    public function pdfacttotal_vmarcas()
+    {
+        $this->db->where('estado_vmarcas', 'ACTIVO');
+        $query = $this->db->get('almacen_marcas');
+        return $query->result();
+    }
+
+    public function pdfinactfechas_vmarcas($fechauno_inactvmarcas, $fechados_inactvmarcas)
+    {
+        $this->db->where('fecha_vmarcas >=', $fechauno_inactvmarcas);
+        $this->db->where('fecha_vmarcas <=', $fechados_inactvmarcas);
+        $this->db->where('estado_vmarcas', 'INACTIVO');
+        $query = $this->db->get('almacen_marcas');
+        return $query->result();
+    }
+
+    public function pdfinactmes_vmarcas($mes_inactvmarcas)
+    {
+        $this->db->where('DATE_FORMAT(fecha_vmarcas, "%Y-%m") =', $mes_inactvmarcas);
+        $this->db->where('estado_vmarcas', 'INACTIVO');
+        $query = $this->db->get('almacen_marcas');
+        return $query->result();
+    }
+
+    public function pdfinacttotal_vmarcas()
+    {
+        $this->db->where('estado_vmarcas', 'INACTIVO');
+        $query = $this->db->get('almacen_marcas');
+        return $query->result();
+    }
 }
 
 ?>

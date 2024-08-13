@@ -58,14 +58,14 @@ $(document).ready(function()
         },
         'columns':[
             {'data': 'id', 'createdCell': function(td, cellData, rowData, row, col){
-                $(td).addClass('');
+                $(td).addClass('text-center');
             }},
             {'data': 'marca', 'createdCell': function(td, cellDate, rowData, row, col){
-                $(td).addClass('');
+                $(td).addClass('text-center');
             }},
             {'data': 'estado_vmarcas', 'createdCell': function(td, cellData, rowData, row, col){
                 var estado_vmarcas = cellData.trim();
-                $(td).html('<span id="celda_estado_vmarcas" style="font-weight: bold; font-size:11px">'+cellData+'</span>');
+                $(td).addClass('text-center').html('<span id="celda_estado_vmarcas" style="font-weight: bold; font-size:11px">'+cellData+'</span>');
 
                 if(estado_vmarcas === 'ACTIVO'){
                     $(td).find('span').addClass('badge badge-success');
@@ -81,7 +81,7 @@ $(document).ready(function()
                     var id = rowData.id;
                     var botoneditar_vmarcas = `<button class="btn btn-sm btn-warning fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#vmarcas_modeditar" onclick="vmarcas_editar(${id})" value=""></button>`;
                     var botoneliminar_vmarcas = `<button onclick="mensajeborrar_vmarcas(${id})" class="btn btn-sm btn-danger fa-solid fa-trash-can"></button>`;
-                    $(td).html(botoneditar_vmarcas+'&nbsp'+botoneliminar_vmarcas);
+                    $(td).addClass('text-center').html(botoneditar_vmarcas+'<span style="margin-left: 5px;"></span>'+botoneliminar_vmarcas);
                 }
             }
         ],
@@ -122,13 +122,13 @@ $(document).ready(function()
             if(!data){
                 $('#btnexcel_vmarcas').prop('disabled', true);
                 $('[name="tabla_vmarcas_length"]').prop('disabled', true);
-                $('#dropdown_vmarcas').addClass('disabled_dropdown_vmarcas');
+                $('#dropdowns_vmarcas').addClass('disabled_dropdown_vmarcas');
                 $('[name="dt_buscar_vmarcas"]').prop('disabled', true);
             }
             else{
                 $('#btnexcel_vmarcas').prop('disabled', false);
                 $('[name="tabla_vmarcas_length"]').prop('disabled', false);
-                $('#dropdown_vmarcas').removeClass('disabled_dropdown_vmarcas');
+                $('#dropdowns_vmarcas').removeClass('disabled_dropdown_vmarcas');
                 $('[name="dt_buscar_vmarcas"]').prop('disabled', false);   
             }
         },
@@ -176,7 +176,7 @@ $(document).ready(function()
             format: 'yyyy-mm-dd'
     });
 
-   //CONFIGURACIÓN DE LA EXPORTACIÓN EXCEL POR TIEMPO
+   //CONFIGURACIÓN DE LOS DATETIME
     $.ajax({
         url: 'cmarcas/fechasmeses_vmarcas',
         type: 'GET',
@@ -208,6 +208,63 @@ $(document).ready(function()
             $('#mes_excelvmarcas').datepicker({
                 language: 'es',
                 autoClose: true,
+                format: 'yyyy-mm',
+                startView: 'months',
+                minViewMode: 'months',
+                startDate: primermes,
+                endDate: ultimomes
+            });
+
+            $('#fechauno_actvmarcas').datepicker({
+                language: 'es',
+                autoClose: true,
+                format: 'yyyy-mm-dd',
+                startDate: primerfecha,
+                endDate: ultimafecha
+            }).on('changeDate', function(selected){
+                var fechauno = new Date(selected.date.valueOf());
+                $('#fechados_actvmarcas').datepicker('setStartDate', fechauno);
+            });
+
+            $('#fechados_actvmarcas').datepicker({
+                language: 'es',
+                autoClose: true,
+                format: 'yyyy-mm-dd',
+                endDate: ultimafecha
+            });
+
+            $('#mes_actvmarcas').datepicker({
+                autoClose: true,
+                language: 'es',
+                format: 'yyyy-mm',
+                startView: 'months',
+                minViewMode: 'months',
+                startDate: primermes,
+                endDate: ultimomes
+            });
+
+            $('#fechauno_inactvmarcas').datepicker({
+                language: 'es',
+                autoClose: true,
+                format: 'yyyy-mm-dd',
+                startDate: primerfecha,
+                endDate: ultimafecha
+            }).on('changeDate', function(selected){
+                var fechauno = new Date(selected.date.valueOf());
+                $('#fechados_inactvmarcas').datepicker('setStartDate', fechauno);
+            });
+
+            $('#fechados_inactvmarcas').datepicker({
+                language: 'es',
+                autoClose: true,
+                format: 'yyyy-mm-dd',
+                endDate: ultimafecha
+            });
+
+            $('#mes_inactvmarcas').datepicker({
+                language: 'es',
+                autoClose: true,
+                format: 'yyyy-mm',
                 startView: 'months',
                 minViewMode: 'months',
                 startDate: primermes,
@@ -218,7 +275,7 @@ $(document).ready(function()
             console.error('Error al obtener las fechas:', error);
         }
     });
-    //CONFIGURACIÓN DE LA EXPORTACIÓN EXCEL POR TIEMPO
+    //CONFIGURACIÓN DE LOS DATETIME
 
     //INTERACTIVIDAD - OPCIONES DE EXPORTAR EXCEL POR TIEMPO
     dosfecha_excelvmarcas.prop('disabled', true).css('opacity', 0.5);
@@ -257,51 +314,6 @@ $(document).ready(function()
     });
     //INTERACTIVIDAD - OPCIONES DE EXPORTAR EXCEL POR TIEMPO
 
-    //CONFIGURACIÓN DE REPORTE ACTIVOS DE MARCAS
-    $.ajax({
-        url: 'cmarcas/fechasmeses_vmarcas',
-        type: 'GET',
-        dataType: 'JSON',
-        success: function(data){
-            var primerfecha = data.primerfecha;
-            var ultimafecha = data.ultimafecha;
-            var primermes = data.primermes;
-            var ultimomes = data.ultimomes;
-
-            $('#fechauno_actvmarcas').datepicker({
-                language: 'es',
-                autoClose: true,
-                format: 'yyyy-mm-dd',
-                startDate: primerfecha,
-                endDate: ultimafecha
-            }).on('changeDate', function(selected){
-                var fechauno = new Date(selected.date.valueOf());
-                $('#fechados_actvmarcas').datepicker('setStartDate', fechauno);
-            });
-
-            $('#fechados_actvmarcas').datepicker({
-                language: 'es',
-                autoClose: true,
-                format: 'yyyy-mm-dd',
-                endDate: ultimafecha
-            });
-
-            $('#mes_actvprod').datepicker({
-                autoClose: true,
-                language: 'es',
-                format: 'yyyy-mm',
-                startView: 'months',
-                minViewMode: 'months',
-                startDate: primermes,
-                endDate: ultimomes
-            });
-        },
-        error: function(xhr, status, error){
-            console.error('Ocurrio un error al obtener las fechas:', error);
-        }
-    });
-    //CONFIGURACIÓN DE REPORTE ACTIVOS DE MARCAS
-
     //INTERACTIVDAD - OPCIONES DE REPORTES DE ACTIVOS
     dosfecha_actvmarcas.prop('disabled', true).css('opacity', 0.5);
     lbldosfecha_actvmarcas.prop('disabled', true).css('opacity', 0.5);
@@ -338,51 +350,6 @@ $(document).ready(function()
         });
     });
     //INTERACTIVDAD - OPCIONES DE REPORTES DE ACTIVOS
-
-    //CONFIGURACIÓN DE REPORTE INACTIVOS DE MARCAS
-    $.ajax({
-        url: 'cmarcas/fechasmeses_vmarcas',
-        type: 'GET',
-        dataType: 'JSON',
-        success: function(data){
-            var primerfecha = data.primerfecha;
-            var ultimafecha = data.ultimafeca;
-            var primermes = data.primermes;
-            var ultimomes = data.ultimomes;
-
-            $('#fechauno_inactvmarcas').datepicker({
-                language: 'es',
-                autoClose: true,
-                format: 'yyyy-mm-dd',
-                startDate: primerfecha,
-                endDate: ultimafecha
-            }).on('changeDate', function(selected){
-                var fechauno = new Date(selected.date.valueOf());
-                $('#fechados_inactvmarcas').datepicker('setStartDate', fechauno);
-            });
-
-            $('#fechados_inactvmarcas').datepicker({
-                language: 'es',
-                autoClose: true,
-                format: 'yyyy-mm-dd',
-                endDate: ultimafecha
-            });
-
-            $('#mes_inactvmarcas').datepicker({
-                language: 'es',
-                autoClose: true,
-                format: 'yyyy-mm',
-                startView: 'months',
-                minViewMode: 'months',
-                startDate: primermes,
-                endDate: ultimomes
-            });
-        },
-        error: function(status, xhr, error){
-            console.error('Ocurrio un error al obtener las fechas:', error);
-        }
-    });
-    //CONFIGURACIÓN DE REPORTE INACTIVOS DE MARCAS
 
     //INTERACTIVIDAD - OPCIONES DE REPORTES DE INACTIVOS
     dosfecha_inactvmarcas.prop('disabled', true).css('opacity', 0.5);
@@ -632,7 +599,7 @@ $(document).on('click', '#vmarcas_registrar', function(e) {
     var estado_vmarcas = $('#estado_vmarcas').val();
     var fecha_vmarcas = $('#fecha_vmarcas').val();
 
-    if(marca == "")
+    if(marca == "" || fecha_vmarcas == "")
     {
         alert('Se requiere llenar algunos campos');
     }
@@ -701,7 +668,7 @@ $(document).on('click', '#vmarcas_actualizar', function(e) {
             var edit_estado_vmarcas = $('#edit_estado_vmarcas').val();
             var editfecha_vmarcas = $('#editfecha_vmarcas').val();
 
-            if(editmarca == "")
+            if(editmarca == "" || editfecha_vmarcas == "")
             {
                 alert('Se requieren llenar algunos campos');
             }
@@ -815,7 +782,7 @@ document.addEventListener('click', function(event){
         const menu = dropdown.querySelector('.menu_vmarcas');
 
         if(!dropdown.contains(event.target)){
-            select.classList.remove('select_clicker_vmarcas');
+            select.classList.remove('select_clicked_vmarcas');
             caret.classList.remove('caret_rotate_vmarcas');
             menu.classList.remove('menu_vmarcas_open');
         }

@@ -36,14 +36,13 @@
 
   <!--Datetime librerias-->
   <link rel="stylesheet" href="<?= base_url() ?>assets/librerias_flatpickr/flatpickr.min.css">
-  <link rel="stylesheet" href="<?= base_url() ?>assets/librerias_flatpickr/monthselect/style.css">
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="<?= base_url() ?>assets/librerias_flatpickr/monthselect/style.css">  
+  <link rel="stylesheet" href="<?= base_url() ?>assets/libreria_datepicker/bootstrap-datepicker.min.css">
 
   <!-- CSS Propio -->
-  <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/almacen.css">
+  <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/almacen.css"> -->
   <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/css_ajax.css"> -->
-  <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/reportes_vproductos.css">
+  <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/reportes_vproductos.css"> -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/almacen/vproductos.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/almacen/vcategorias.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/almacen/vmarcas.css">

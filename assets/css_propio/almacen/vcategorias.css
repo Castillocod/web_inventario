@@ -1,0 +1,92 @@
+.dropdown_vcat{
+    position: relative;
+    width: 150px;
+}
+
+.dropdown_vcat * {
+    box-sizing: border-box;
+}
+
+.select_vcat{
+    background: #ff0000;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 2px #ff0000 solid;
+    border-radius: 4px;
+    padding-left: 5px;
+    padding-right: 2px;
+    height: 40px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.select_clicked_vcat{
+    border: 2px #db4b4b solid;
+    box-shadow: 0 0 0.8em #26489a;
+}
+
+.select_vcat:hover{
+    background: #db4b4b;
+    border: 2px #db4b4b solid;
+}
+
+.caret_vcat{
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #fff;
+    transition: 0.3s;
+    margin-left: 6px;
+}
+
+.caret_rotate_vcat{
+    transform: rotate(180deg);
+}
+
+.menu_vcat{
+    list-style: none;
+    padding: 0.2em 0.5em;
+    background: #ffffff;
+    border: 1px #545556 solid;
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
+    border-radius: 0.5em;
+    color: #000000;
+    position: absolute;
+    top: 45px;
+    left: 620px;
+    width: 200px;
+    opacity: 0;
+    display: none;
+    transition: 0.2s;
+    z-index: 1;
+}
+
+.menu_vcat li button{
+    text-align: left;
+    padding: 0.7em 0.5em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    width: 185px;
+}
+
+.menu_vcat li button:hover{
+    background: #e1e1e4;
+}
+
+.menu_vcat_open{
+    display: block;
+    opacity: 1;
+}
+
+.disabled_dropdown_vcat .select_vcat{
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.disabled_dropdown_vcat .menu_vcat{
+    display: none;
+}

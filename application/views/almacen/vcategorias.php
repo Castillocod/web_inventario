@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="container" style="padding-top: 8px;">
-    <div class="card">
+        <div class="card">
             <div class="card-body">
                 <div class="panel-heading d-flex justify-content-center">
                     <h3 class="panel-title">Categorias de Productos</h3>
@@ -28,6 +28,10 @@
                                         <div class="col-6">
                                             <label for="categoria" class="form-label">Categoría</label>
                                             <input type="text" name="categoria" id="categoria" class="form-control" placeholder="Categoría">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="fecha_vcat" class="form-label">Fecha</label>
+                                            <input type="text" name="fecha_vcat" id="fecha_vcat" placeholder="Fecha" class="form-control" style="pointer-events: none;" readonly>
                                         </div>
                                     </div><br>
                                     <div class="mb-3">
@@ -69,6 +73,10 @@
                                             <label for="editcategoria" class="form-label">Categoria</label>
                                             <input type="text" name="editcategoria" id="editcategoria" class="form-control" placeholder="Categoría">
                                         </div>
+                                        <div class="col-6">
+                                            <label for="editfecha_vcat">Fecha</label>
+                                            <input type="text" name="editfecha_vcat" id="editfecha_vcat" class="form-control" placeholder="Fecha">
+                                        </div>
                                     </div><br>
                                     <div class="mb-3">
                                         <label for="edit_estado_cat" style="padding-right: 60px">Estado</label>
@@ -99,7 +107,7 @@
                                 </h4>
                             </div>
                             <div class="modal-body">
-                                <form action="<?= base_url()?>almacen/ccategorias/categoriasexcel" enctype="multipart/form-data" method="post">
+                                <form action="<?= base_url()?>almacen/ccategorias/importexcel_vcat" enctype="multipart/form-data" method="post">
                                     <div class="mb-3">
                                     <input type="file" name="file_excel" required />
                                     </div>
@@ -140,24 +148,201 @@
                     </div>
                 </div>
                 <!-- AQUÍ TERMINA EL MODAL PARA IMPORTAR EXCEL -->
-                <div class="row">
+                 <!-- AQUÍ INICIA EL MODAL PARA EXPORTAR POR MES Y DIAS -->
+                <div class="modal fade" id="vcat_exportarexcel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog col-xl">
+                        <div class="modal-content">
+                            <div class="modal-header d-block">
+                                <h4 class="modal-title text-center">
+                                    Exportación por Tiempo
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <center><h4>Selecciona el tipo de exportación</h4></center>
+                                <div class="col-12">
+                                    <fieldset><legend>Datos por Fecha</legend></fieldset>
+                                    <div class="row d-flex justify-content-between">                                    
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechauno_excelvcat"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechauno_excelvcat" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechados_excelvcat"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechados_excelvcat" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Datos por Mes</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblmes_excelvcat"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="mes_excelvcat" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Todos los Datos</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <label for="">
+                                                <input type="radio" name="total_excelvcat" id="total_excelvcat" value="">
+                                                <span style="font-weight:bold; font-family:Arial, Helvetica, sans-serif;" id="lbltotal_excelvcat">Total de Datos</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" data-bs-dismiss="modal" id="cancelar_excelvcat">Cancelar</button>
+                                <button class="btn btn-success" id="crear_excelvcat" onclick="exportarexcel_vcat()">Exportar datos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- AQUÍ TERMINA EL MODAL PARA EXPORTAR POR MES Y DIAS -->
+                 <!-- AQUÍ INICIA EL MODAL PARA REPORTES DE ACTIVOS POR MES Y DIAS -->
+                <div class="modal fade" id="reportespdf_actvcat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog col-xl">
+                        <div class="modal-content">
+                            <div class="modal-header d-block">
+                                <h4 class="modal-title text-center">
+                                    Reportes de Categorias Activas
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <center><h4>Selecciona el tipo de reporte</h4></center>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte por Fechas</legend></fieldset>
+                                    <div class="row d-flex justify-content-between">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechauno_actvcat"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechauno_actvcat" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechados_actvcat"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechados_actvcat" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte por Mes</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblmes_actvcat"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="mes_actvcat" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte Total</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <label for="">
+                                                <input type="radio" name="total_actvcat" id="total_actvcat" value="">
+                                                <span style="font-weight:bold; font-family:Arial, Helvetica, sans-serif;" id="lbltotal_actvcat">Total de Datos</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" data-bs-dismiss="modal" id="cancelar_actvcat">Cancelar</button>
+                                <button class="btn btn-success" id="crear_actvcat" onclick="reporteactivos_vcat()">Crear Reporte</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- AQUÍ TERMINA EL MODAL PARA REPORTES DE ACTIVOS POR MES Y DIAS -->
+                <!-- AQUÍ INICIA EL MODAL PARA REPORTES DE INACTIVOS POR MES Y DIAS -->
+                <div class="modal fade" id="reportespdf_inactvcat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog col-xl">
+                        <div class="modal-content">
+                            <div class="modal-header d-block">
+                                <h4 class="modal-title text-center">
+                                    Reportes de Categorias Inactivas
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <center><h4>Selecciona el tipo de reporte</h4></center>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte por Fechas</legend></fieldset>
+                                    <div class="row d-flex justify-content-between">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechauno_inactvcat"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechauno_inactvcat" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechados_inactvcat"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechados_inactvcat" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte por Mes</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblmes_inactvcat"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="mes_inactvcat" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte Total</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <label for="">
+                                                <input type="radio" name="total_actvcat" id="total_inactvcat" value="">
+                                                <span style="font-weight:bold; font-family:Arial, Helvetica, sans-serif;" id="lbltotal_inactvcat">Total de Datos</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" data-bs-dismiss="modal" id="cancelar_inactvcat">Cancelar</button>
+                                <button class="btn btn-success" id="crear_inactvcat" onclick="reporteinactivos_vcat()">Crear Reporte</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- AQUÍ TERMINA EL MODAL PARA REPORTES DE INACTIVOS POR MES Y DIAS -->
+                <div class="row dt-search">
                     <div>
                         <label for="dt-search-0">Buscar:</label>
                     </div>
                     <div class="col-3">
-                        <input type="search" class="form-control" id="dt-search-0" placeholder="Escriba para buscar..." aria-controls="tabla_vcat">
+                        <input type="search" class="form-control" id="dt-search-0" name="dt_buscar_vcat" placeholder="Escriba para buscar..." aria-controls="tabla_vcat">
                     </div>
                     <div class="col-9 d-flex justify-content-end">
-                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vcat_agregarcategorias">Agregar Categoría</a>
+                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vcat_agregarcategorias">Registrar Categorias</a>
                         <div style="padding-left: 10px">
-                            <div class="dropdown" id="dropdown_vcategorias">
-                                <div class="select">
-                                    <span class="selected">Imprimir reportes</span>
-                                    <div class="caret"></div>
+                            <div class="dropdown_cat" id="dropdown_vcategorias">
+                                <div class="select_vcat">
+                                    <span class="selected_vcat">Imprimir reportes</span>
+                                    <div class="caret_vcat"></div>
                                 </div>
-                                <ul class="menu">
-                                    <li><a class="dropdown-item" href="<?= base_url() ?>almacen/ccategorias/pdf_categorias_activas"><i class="fa-regular fa-file-pdf"></i>&nbspCategorias Activas</a></li>
-                                    <li><a class="dropdown-item" href="<?= base_url() ?>almacen/ccategorias/pdf_categorias_inactivas"><i class="fa-regular fa-file-pdf"></i>&nbspCategorias Inactivas</a></li>
+                                <ul class="menu_vcat">
+                                    <li><button class="btn btn-default" id="btnactivos_actvcat" data-bs-toggle="modal" data-bs-target="#reportespdf_actvcat"><i class="fa-regular fa-file-pdf"></i>&nbspCategorias Activas</button></li>
+                                    <li><button class="btn btn-default" id="btninactivos_inactvcat" data-bs-toggle="modal" data-bs-target="#reportespdf_inactvcat"><i class="fa-regular fa-file-pdf"></i>&nbspCategorias Inactivas</button></li>
                                 </ul>
                             </div>
                         </div>
@@ -191,13 +376,10 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <!-- <button class="btn btn-sm btn-warning fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#vcat_modeditar" onclick="vcat_editar()" value=""></button>
-                                    <button onclick="mensajeborrar_vcat()" class="btn btn-sm btn-danger fa-solid fa-trash-can"></button> -->
-                                </td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -210,13 +392,12 @@
                                 <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#vcat_modexcel">Importar excel</button>
                             </div>
                             <div style="padding-left: 10px;">
-                                <button class="btn btn-sm btn-success buttons-excel buttons-html5" id="btn-excel" name="" tabindex="0" aria-controls="tabla_vcat" type="button">
+                                <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#vcat_exportarexcel" id="btnexcel_vcat" name="btnexcel_vcat">
                                     <span>Exportar Excel</span>
                                 </button>
                             </div>
                         </div> 
                         <div class="d-flex justify-content-end" id="pagination_categorias">
-                            
                         </div>
                     </div>
                 </div>

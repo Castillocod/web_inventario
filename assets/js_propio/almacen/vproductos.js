@@ -57,42 +57,42 @@ $(document).ready(function() {
         },
         'columns': [
             {'data': 'id', 'createdCell': function(td, cellData, rowData, row, col){
-                $(td).addClass('');
+                $(td).addClass('text-center');
             }},
             {'data': 'modelo', 'createdCell': function(td, cellData, rowData, row, col){
-                $(td).addClass('');
+                $(td).addClass('text-center');
             }},
             {'data': 'marca', 'createdCell': function(td, cellData, rowData, row, col){
-                $(td).addClass('');
+                $(td).addClass('text-center');
             }},
             // {'data': 'categoria'},
             {'data': 'titulo', 'createdCell': function(td, cellData, rowData, row, col){
-                $(td).addClass('');
+                $(td).addClass('text-center');
             }},
             {'data': 'stock', 'createdCell': function(td, cellData, rowData, row, col){
-                $(td).addClass('');
+                $(td).addClass('text-center');
             }},
             {'data': 'preciolista', 'createdCell': function(td, cellData, rowData, row, col){
-                $(td).addClass('preciosvproductos').attr('data-preciosvproductos', cellData);
+                $(td).addClass('preciosvproductos text-center').attr('data-preciosvproductos', cellData);
             }},
             {'data': 'precioespecial', 'createdCell': function(td, cellData, rowData, row, col){
-                $(td).addClass('preciosvproductos').attr('data-preciosvproductos', cellData);
+                $(td).addClass('preciosvproductos text-center').attr('data-preciosvproductos', cellData);
             }},
             {'data': 'preciooriginal', 'createdCell': function(td, cellData, rowData, row, col){
-                $(td).addClass('preciosvproductos').attr('data-preciosvproductos', cellData);
+                $(td).addClass('preciosvproductos text-center').attr('data-preciosvproductos', cellData);
             }},
             {'data': 'preciointegrado', 'createdCell': function(td, cellData, rowData, row, col){
-                $(td).addClass('preciosvproductos').attr('data-preciosvproductos', cellData);
+                $(td).addClass('preciosvproductos text-center').attr('data-preciosvproductos', cellData);
             }},
             {'data': 'preciotienda', 'createdCell': function(td, cellData, rowData, row, col){
-                $(td).addClass('preciosvproductos').attr('data-preciosvproductos', cellData);
+                $(td).addClass('preciosvproductos text-center').attr('data-preciosvproductos', cellData);
             }},
             {'data': 'codigofiscal', 'createdCell': function(td, cellData, rowData, row, col){
-                $(td).addClass('');
+                $(td).addClass('text-center');
             }},
             {'data': 'estado_prod', 'createdCell': function(td, cellData, rowData, row, col){
                 var estado_vprod = cellData.trim();
-                $(td).html('<span id="celda_estado_vprod" style="font-weight: bold; font-size: 11px;">'+cellData+'</span>');
+                $(td).addClass('text-center').html('<span id="celda_estado_vprod" style="font-weight: bold; font-size: 11px;">'+cellData+'</span>');
 
                 if(estado_vprod === 'ACTIVO'){
                     $(td).find('span').addClass('badge badge-success');
@@ -108,7 +108,7 @@ $(document).ready(function() {
                     var id = rowData.id;
                     var botoneditar_vprod = `<button class="btn btn-sm btn-warning fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#vprod_modeditar" onclick="vprod_editar(${id})"></button>`;
                     var botoneliminar_vprod = `<button onclick="mensajeborrar_vprod(${id})" class="btn btn-sm btn-danger fa-solid fa-trash-can"></button>`;
-                    $(td).html(botoneditar_vprod + '<div style="padding-top: 3px;">' + botoneliminar_vprod + '</div>');
+                    $(td).addClass('text-center').html(botoneditar_vprod + '<div style="padding-top: 3px;">' + botoneliminar_vprod + '</div>');
                 }
             }
         ],
@@ -453,7 +453,7 @@ $(document).ready(function() {
         }
     });
     
-    //CONFIGURACIÓN DE LA EXPORTACIÓN EXCEL POR TIEMPO
+    //CONFIGURACIÓN DE LOS DATETIME
     $.ajax({
         url: 'cproductos/fechasmeses_vprod',
         type: 'GET',
@@ -491,11 +491,68 @@ $(document).ready(function() {
                 autoclose: true,
                 language: 'es'
             });
+
+            $('#fechauno_actvprod').datepicker({
+                autoclose: true,
+                language: 'es',
+                format: 'yyyy-mm-dd',
+                startDate: primerfecha,
+                endDate: ultimafecha,
+            }).on('changeDate', function(selected){
+                var fechauno = new Date(selected.date.valueOf());
+                $('#fechados_actvprod').datepicker('setStartDate', fechauno);
+            });
+
+            $('#fechados_actvprod').datepicker({
+                autoclose: true,
+                language: 'es',
+                format: 'yyyy-mm-dd',
+                endDate: ultimafecha
+            });
+
+            $('#mes_actvprod').datepicker({
+                autoclose: true,
+                language: 'es',
+                format: 'yyyy-mm',
+                startView: 'months',
+                minViewMode: 'months',
+                startDate: primermes,
+                endDate: ultimomes
+            });
+            
+            $('#fechauno_inactvprod').datepicker({
+                language: 'es',
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                startDate: primerfecha,
+                endDate: ultimafecha
+            }).on('changeDate', function(selected){
+                var fechauno = new Date(selected.date.valueOf());
+                $('#fechados_inactvprod').datepicker('setStartDate', fechauno);
+            });
+
+            $('#fechados_inactvprod').datepicker({
+                language: 'es',
+                autoclose: true,
+                format: 'yyyy-mm-dd',
+                endDate: ultimafecha
+            });
+
+            $('#mes_inactvprod').datepicker({
+                autoclose: true,
+                language: 'es',
+                format: 'yyyy-mm',
+                startView: 'months',
+                minViewMode: 'months',
+                startDate: primermes,
+                endDate: ultimomes
+            });
         },
         error: function(status, xhr, error){
             console.error('Error al obtener la última fecha', error);
         }
     });
+    //CONFIGURACIÓN DE LOS DATETIME
 
     $('#editfecha_vprod').datepicker({
         language: 'es',
@@ -547,51 +604,6 @@ $(document).ready(function() {
     });
     //INTERACTIVIDAD - OPCIONES DE EXPORTAR EXCEL POR TIEMPO
 
-    //CONFIGURACIÓN DE REPORTE ACTIVOS DE PRODUCTOS
-    $.ajax({
-        url: 'cproductos/fechasmeses_vprod',
-        type: 'GET',
-        dataType: 'JSON',
-        success: function(data){
-            var fechauno_actvprod = data.primerfecha;
-            var fechados_actvprod = data.ultimafecha;
-            var mesuno_actvprod  = data.primermes;
-            var mesdos_actvprod = data.ultimomes;
-
-            $('#fechauno_actvprod').datepicker({
-                autoclose: true,
-                language: 'es',
-                format: 'yyyy-mm-dd',
-                startDate: fechauno_actvprod,
-                endDate: fechados_actvprod,
-            }).on('changeDate', function(selected){
-                var fechauno = new Date(selected.date.valueOf());
-                $('#fechados_actvprod').datepicker('setStartDate', fechauno);
-            });
-
-            $('#fechados_actvprod').datepicker({
-                autoclose: true,
-                language: 'es',
-                format: 'yyyy-mm-dd',
-                endDate: fechados_actvprod
-            });
-
-            $('#mes_actvprod').datepicker({
-                autoclose: true,
-                language: 'es',
-                format: 'yyyy-mm',
-                startView: 'months',
-                minViewMode: 'months',
-                startDate: mesuno_actvprod,
-                endDate: mesdos_actvprod
-            });
-        },
-        error: function(status, xhr, error){
-            console.error('Ocurrio un error al obtener las fechas:', error);
-        }
-    });
-    //CONFIGURACIÓN DE REPORTE ACTIVOS DE PRODUCTOS
-
     //INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
     dosfecha_actvprod.prop('disabled', true).css('opacity', 0.5);
     lbldosfecha_actvprod.prop('disabled', true).css('opacity', 0.5);
@@ -628,51 +640,6 @@ $(document).ready(function() {
         });
     });
     //INTERACTIVIDAD - OPCIONES DE REPORTES DE ACTIVOS
-
-    //CONFIGURACIÓN DE REPORTE INACTIVOS DE PRODUCTOS
-    $.ajax({
-        url: 'cproductos/fechasmeses_vprod',
-        type: 'GET',
-        dataType: 'JSON',
-        success: function(data){
-            var primerfecha = data.primerfecha;
-            var ultimafecha = data.ultimafecha;
-            var primermes = data.primermes;
-            var ultimomes = data.ultimomes;
-
-            $('#fechauno_inactvprod').datepicker({
-                language: 'es',
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                startDate: primerfecha,
-                endDate: ultimafecha
-            }).on('changeDate', function(selected){
-                var fechauno = new Date(selected.date.valueOf());
-                $('#fechados_inactvprod').datepicker('setStartDate', fechauno);
-            });
-
-            $('#fechados_inactvprod').datepicker({
-                language: 'es',
-                autoclose: true,
-                format: 'yyyy-mm-dd',
-                endDate: ultimafecha
-            });
-
-            $('#mes_inactvprod').datepicker({
-                autoclose: true,
-                language: 'es',
-                format: 'yyyy-mm',
-                startView: 'months',
-                minViewMode: 'months',
-                startDate: primermes,
-                endDate: ultimomes
-            });
-        },
-        error: function(status, xhr, error){
-            console.error('Ocurrio un error al obtener las fechas:', error);
-        }
-    });
-    //CONFIGURACIÓN DE REPORTE INACTIVOS DE PRODUCTOS
 
     //INTERACTIVIDAD - OPCIONES DE REPORTES DE INACTIVOS
     dosfecha_inactvprod.prop('disabled', true).css('opacity', 0.5);
