@@ -14,7 +14,7 @@
                     <h3 class="panel-title">Tipos de Clientes</h3>
                 </div>
                 <!-- AQUÍ INICIA EL MODAL PARA AGREGAR TIPOS DE CLIENTES -->
-                <div class="modal fade" id="vtipo_agregartipocliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal fade" id="vtipos_agregartipocliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header d-block">
@@ -24,7 +24,7 @@
                                 </h4>
                             </div>
                             <div class="modal-body">
-                                <form method="post" action="" id="vtipo_formregistrar" enctype="multipart/form-data">
+                                <form method="post" id="vtipos_formregistrar" enctype="multipart/form-data">
                                     <div class="col-6">
                                         <label for="tipocliente" class="form-label">Tipo de Cliente</label>
                                         <input type="text" name="tipocliente" id="tipocliente" placeholder="Tipo de Cliente" class="form-control">
@@ -39,7 +39,7 @@
                                     </div> -->
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="vtipo_regcancelar">Cancelar</button>
-                                        <button type="submit" class="btn btn-primary" id="vtipo_registrar">Registrar tipo de cliente</button>
+                                        <button type="submit" class="btn btn-primary" id="vtipos_registrar">Registrar tipo de cliente</button>
                                     </div>
                                 </form>
                             </div>
@@ -49,7 +49,7 @@
                 <!-- AQUÍ TERMINA EL MODAL PARA AGREGAR TIPOS DE CLIENTES -->
 
                 <!--  INICIO DE MODAL DE EDITAR TIPOS DE CLIENTES -->
-                <div class="modal fade" id="vtipo_modeditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal fade" id="vtipos_modeditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header d-block">
@@ -59,7 +59,7 @@
                                 </h4>
                             </div>
                             <div class="modal-body">
-                                <form method="post" action="" id="vtipo_formeditar" enctype="multipart/form-data">
+                                <form method="post" id="vtipos_formeditar" enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <input type="hidden" id="editid" name="editid" value="" class="form-control">
                                     </div>
@@ -69,7 +69,7 @@
                                     </div><br>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-primary" id="vtipo_actualizar">Actualizar</button>
+                                        <button type="submit" class="btn btn-primary" id="vtipos_actualizar">Actualizar</button>
                                     </div>
                                 </form>
                             </div>
@@ -79,7 +79,7 @@
                 <!-- FINAL DE MODAL DE EDITAR TIPOS DE CLIENTES -->
 
                 <!-- AQUÍ INICIA EL MODAL PARA IMPORTAR EXCEL -->
-                <div class="modal fade" id="vtipo_modexcel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal fade" id="vtipos_modexcel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header d-block">
@@ -88,7 +88,7 @@
                                 </h4>
                             </div>
                             <div class="modal-body">
-                                <form action="<?= base_url()?>clientes/ctipos_clientes/tiposclientesexcel" enctype="multipart/form-data" method="post">
+                                <form action="<?= base_url()?>clientes/ctipos_clientes/importexcel_vtipos" enctype="multipart/form-data" method="post">
                                     <div class="mb-3">
                                     <input type="file" name="file_excel" required />
                                     </div>
@@ -145,8 +145,8 @@
                                     <div class="caret_vtipos"></div>
                                 </div>
                                 <ul class="menu_vtipos">
-                                    <li><a class="dropdown-item" href="<?= base_url() ?>clientes/ctipos_clientes/pdfacttotal_vtipos"><i class="fa-regular fa-file-pdf"></i>&nbspTipos de Clientes Activos</a></li>
-                                    <li><a class="dropdown-item" href="<?= base_url() ?>clientes/ctipos_clientes/pdfinacttotal_vtipos"><i class="fa-regular fa-file-pdf"></i>&nbspTipos de Clientes Inactivos</a></li>
+                                    <li><a class="btn btn-default" href="<?= base_url() ?>clientes/ctipos_clientes/pdfacttotal_vtipos"><i class="fa-regular fa-file-pdf"></i>&nbspTipos de Clientes Activos</a></li>
+                                    <li><a class="btn btn-default" href="<?= base_url() ?>clientes/ctipos_clientes/pdfinacttotal_vtipos"><i class="fa-regular fa-file-pdf"></i>&nbspTipos de Clientes Inactivos</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
                                 <th class="text-center">Tipo de Cliente</th>
                                 <th class="text-center">Cant. Clientes</th> <!-- Se rellenara cargando una carpeta de imagenes en assets -->
                                 <th class="text-center">Estado</th>
-                                <th class="text-center" style="width: 100px">Opciones</th>
+                                <th class="text-center">Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -184,15 +184,12 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><span id="celda_estado" style="font-weight: bold; font-size:11px"><?= $row['estado_vtipos']?></span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-warning fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#vtipo_modeditar" onclick="vtipos_editar(<?= $row['id']?>)" value="<?= $row['id']?>"></button>
-                                    <button onclick="mensajeborrar_vtipos(<?= $row['id']?>)" class="btn btn-sm btn-danger fa-solid fa-trash-can"></button>
-                                </td>
+                                <td></td>
+                                <td></td>
                             </tr>                    
                         </tbody>
                     </table>
-                </div>
+                </div><br>
                 <!--Aquí termina la tabla -->
                 <div class="row">
                     <div class="d-flex justify-content-between">

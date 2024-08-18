@@ -1,6 +1,5 @@
 $(document).ready(function() 
 {
-
     //CONFIGURACIÓN DE DATATABLES
     var tabla = $('#tabla_vtipos').DataTable({
         language:{
@@ -51,7 +50,7 @@ $(document).ready(function()
                 'createdCell': function(td, cellData, rowData, row, col)
                 {
                      var id = rowData.id;
-                     var botoneditar_vtipos = `<button class="btn btn-sm btn-warning fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#vtipo_modeditar" onclick="vtipos_editar(${id})" value=""></button>`;
+                     var botoneditar_vtipos = `<button class="btn btn-sm btn-warning fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#vtipos_modeditar" onclick="vtipos_editar(${id})" value=""></button>`;
                      var botoneliminar_vtipos = `<button onclick="mensajeborrar_vtipos(${id})" class="btn btn-sm btn-danger fa-solid fa-trash-can"></button>`;
                      $(td).addClass('text-center').html(botoneditar_vtipos+'<span style="margin-left: 5px;"></span>'+botoneliminar_vtipos);
                 }

@@ -46,6 +46,9 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/almacen/vproductos.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/almacen/vcategorias.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/almacen/vmarcas.css">
+  <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/clientes/vtipos_clientes.css">
+  <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/clientes/vtotal_clientes.css">
+  <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/clientes/vadi_clientes.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

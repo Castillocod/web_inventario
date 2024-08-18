@@ -23,7 +23,7 @@
                                 </h4>
                             </div>
                             <div class="modal-body">
-                                <form method="post" action="" id="vmarcas_formregistrar" enctype="multipart/form-data">
+                                <form method="post" id="vmarcas_formregistrar" enctype="multipart/form-data">
                                     <div class="row d-flex justify-content-between">
                                         <div class="col-6">
                                             <label for="marca" class="form-label">Marca</label>
@@ -109,7 +109,7 @@
                             <div class="modal-body">
                                 <form action="<?= base_url()?>almacen/cmarcas/importexcel_vmarcas" enctype="multipart/form-data" method="post">
                                     <div class="mb-3">
-                                    <input type="file" name="file_excel" required />
+                                        <input type="file" name="file_excel" required />
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>

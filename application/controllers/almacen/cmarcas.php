@@ -424,7 +424,7 @@ class cmarcas extends CI_Controller
         }
         else
         {
-            echo 'Fallo el recibir las fechas';
+            echo 'Fallo al recibir las fechas';
         }
     }
 
