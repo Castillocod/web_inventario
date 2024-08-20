@@ -32,22 +32,24 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach($almacen_productos as $row) { ?>
-            <tr>
-                <td style="font-size: 20px; text-align: center;"><?= $row->id?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->modelo?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->marca?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->categoria?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->titulo?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->stock?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->preciolista?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->precioespecial?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->preciooriginal?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->preciointegrado?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->preciotienda?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->codigofiscal?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->estado_prod?></span></td>
-            </tr>
+            <?php if(!empty($almacen_productos) && is_array($almacen_productos)) {?>
+                <?php foreach($almacen_productos as $row) { ?>
+                    <tr>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->id?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->modelo?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->marca?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->categoria?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->titulo?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->stock?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->preciolista?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->precioespecial?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->preciooriginal?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->preciointegrado?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->preciotienda?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->codigofiscal?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->estado_prod?></span></td>
+                    </tr>
+                <?php } ?>
             <?php } ?>
         </tbody>
     </table>

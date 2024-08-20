@@ -12,6 +12,70 @@ class mtotal_clientes extends CI_Model
         return $query->num_rows();
     }
 
+    public function obtenertipoclientes()
+    {
+        $query = $this->db->get('clientes_tiposclientes');
+        return $query->result_array();
+    }
+
+    public function all_vtotal_count()
+    {
+        $query = $this->db->get('clientes_totalclientes');
+        return $query->num_rows();
+    }
+
+    public function all_vtotal($limite, $iniciar)
+    {
+        $this->db->limit($limite, $iniciar);
+        $query = $this->db->get('clientes_totalclientes');
+
+        if($query->num_rows() > 0)
+        {
+            return $query->result();
+        }
+    }
+
+    public function vtotal_search($limite, $iniciar, $buscar)
+    {
+        $this->db->from('clientes_totalclientes');
+        $this->db->like('id', $buscar, 'both');
+        $this->db->or_like('nombre', $buscar, 'both');
+        $this->db->or_like('tipocliente', $buscar, 'both');
+        $this->db->or_like('ciudad', $buscar, 'both');
+        $this->db->or_like('estado_vtotal', $buscar, 'both');
+        $this->db->or_like('pais', $buscar, 'both');
+        $this->db->or_like('empresa', $buscar, 'both');
+        $this->db->or_like('disponible_vtotal', $buscar, 'both');
+        $this->db->limit($limite, $iniciar);
+
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+        {
+            return $query->result();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public function vtotal_search_count($buscar)
+    {
+        $this->db->from('clientes_totalclientes');
+        $this->db->like('id', $buscar, 'both');
+        $this->db->or_like('nombre', $buscar, 'both');
+        $this->db->or_like('tipocliente', $buscar, 'both');
+        $this->db->or_like('ciudad', $buscar, 'both');
+        $this->db->or_like('estado_vtotal', $buscar, 'both');
+        $this->db->or_like('pais', $buscar, 'both');
+        $this->db->or_like('empresa', $buscar, 'both');
+        $this->db->or_like('disponible_vtotal', $buscar, 'both');
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     public function agregarvtotal($data)
     {
         $this->db->insert('clientes_totalclientes', $data);

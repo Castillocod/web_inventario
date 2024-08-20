@@ -37,8 +37,10 @@
                                             <!-- <input type="text" name="marca" id="marca" class="form-control" placeholder="Marca"> -->
                                             <select name="marca" id="marca" class="form-control">
                                                 <option value="" disabled selected>Selecciona una marca</option>
-                                                <?php foreach ($marcas as $marca) { ?>
-                                                    <option value="<?= $marca['marca']?>"><?= $marca['marca']?></option>
+                                                <?php if(!empty($marcas) && is_array($marcas)) { ?>
+                                                    <?php foreach ($marcas as $marca) { ?>
+                                                        <option value="<?= $marca['marca']?>"><?= $marca['marca']?></option>
+                                                    <?php } ?>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -52,8 +54,10 @@
                                             <label for="categoria" class="form-label">Categoría</label>
                                             <select name="categoria" id="categoria" class="form-control">
                                                 <option value="" disabled selected>Selecciona una categoría</option>
-                                                <?php foreach ($categorias as $categoria) { ?>
-                                                    <option value="<?= $categoria['categoria']?>"><?= $categoria['categoria']?></option>
+                                                <?php if(!empty($categorias) && is_array($categorias)) { ?>
+                                                    <?php foreach ($categorias as $categoria) { ?>
+                                                        <option value="<?= $categoria['categoria']?>"><?= $categoria['categoria']?></option>
+                                                    <?php } ?>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -160,8 +164,10 @@
                                             <label for="editmarca" class="form-label">Marca</label>
                                             <!-- <input type="text" name="editmarca" id="editmarca" class="form-control" placeholder="Marca"> -->
                                             <select name="editmarca" id="editmarca" class="form-control">
-                                                <?php foreach ($marcas as $marca) { ?>
-                                                    <option value="<?= $marca['marca']?>"><?= $marca['marca']?></option>
+                                                <?php if(!empty($marcas) && is_array($marcas)) {?>
+                                                    <?php foreach ($marcas as $marca) { ?>
+                                                        <option value="<?= $marca['marca']?>"><?= $marca['marca']?></option>
+                                                    <?php } ?>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -174,9 +180,11 @@
                                         <div class="col-6">
                                             <label for="editcategoria" class="form-label">Categoría</label>
                                             <select name="editcategoria" id="editcategoria" class="form-control">
-                                                <?php foreach ($categorias as $categoria) { ?>
-                                                    <option value="<?= $categoria['categoria']?>"><?= $categoria['categoria']?></option>
-                                                <?php } ?>
+                                                <?php if(!empty($categorias) && is_array($categorias)) {?>
+                                                    <?php foreach ($categorias as $categoria) { ?>
+                                                        <option value="<?= $categoria['categoria']?>"><?= $categoria['categoria']?></option>
+                                                    <?php } ?>
+                                                <?php }?>
                                             </select>
                                         </div>
                                     </div>

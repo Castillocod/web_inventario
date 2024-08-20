@@ -37,8 +37,10 @@
                                             <!-- <input type="text" name="tipocliente" id="tipocliente" placeholder="Tipo de Cliente" class="form-control"> -->
                                             <select name="tipocliente" id="tipocliente" class="form-control">
                                                 <option value="" disabled selected>Selecciona el tipo de cliente</option>
-                                                <?php foreach ($tipoclientes as $tipocliente) { ?>
-                                                    <option value="<?= $tipocliente['tipocliente']?>"><?= $tipocliente['tipocliente']?></option>
+                                                <?php if(!empty($tipoclientes) && is_array($tipoclientes)) { ?>
+                                                    <?php foreach ($tipoclientes as $tipocliente) { ?>
+                                                        <option value="<?= $tipocliente['tipocliente']?>"><?= $tipocliente['tipocliente']?></option>
+                                                    <?php } ?>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -66,11 +68,17 @@
                                     <div class="mb-3">
                                         <label for="pais" class="form-label">País</label>
                                         <input type="text" name="pais" id="pais" placeholder="País" class="form-control">
-                                    </div>                                       
-                                    <div class="mb-3">
-                                        <label for="direccion" class="form-label">Dirección</label>
-                                        <input type="text" name="direccion" id="direccion" placeholder="Dirección" class="form-control">
                                     </div>
+                                    <div class="row d-flex justify-content-between">
+                                        <div class="col-6">
+                                            <label for="direccion" class="form-label">Dirección</label>
+                                            <input type="text" name="direccion" id="direccion" placeholder="Dirección" class="form-control">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="fecha_vtotal">Fecha</label>
+                                            <input type="text" name="fecha_vtotal" id="fecha_vtotal" placeholder="Fecha" class="form-control" style="pointer-events: none;" readonly>
+                                        </div>
+                                    </div>                                                           
                                     <div class="mb-3">
                                         <label for="empresa" class="form-label">Empresa</label>
                                         <input type="text" name="empresa" id="empresa" placeholder="Empresa" class="form-control">
@@ -121,8 +129,10 @@
                                             <!-- <input type="text" name="tipocliente" id="tipocliente" placeholder="Tipo de Cliente" class="form-control"> -->
                                             <select name="edittipocliente" id="edittipocliente" class="form-control">
                                                 <!-- <option value="" disabled selected>Selecciona el tipo de cliente</option> -->
-                                                <?php foreach ($tipoclientes as $tipocliente) { ?>
-                                                    <option value="<?= $tipocliente['tipocliente']?>"><?= $tipocliente['tipocliente']?></option>
+                                                <?php if (!empty($tipoclientes) && is_array($tipoclientes)) {?>
+                                                    <?php foreach ($tipoclientes as $tipocliente) { ?>
+                                                        <option value="<?= $tipocliente['tipocliente']?>"><?= $tipocliente['tipocliente']?></option>
+                                                    <?php } ?>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -150,11 +160,17 @@
                                     <div class="mb-3">
                                         <label for="editpais" class="form-label">País</label>
                                         <input type="text" name="editpais" id="editpais" placeholder="País" class="form-control">
-                                    </div>                                       
-                                    <div class="mb-3">
-                                        <label for="editdireccion" class="form-label">Dirección</label>
-                                        <input type="text" name="editdireccion" id="editdireccion" placeholder="Dirección" class="form-control">
                                     </div>
+                                    <div class="row d-flex justify-content-between">
+                                        <div class="col-6">
+                                            <label for="editdireccion" class="form-label">Dirección</label>
+                                            <input type="text" name="editdireccion" id="editdireccion" placeholder="Dirección" class="form-control">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="editfecha_vtotal">Fecha</label>
+                                            <input type="text" name="editfecha_vtotal" id="editfecha_vtotal" placeholder="Fecha" class="form-control" style="pointer-events: none;" readonly>
+                                        </div>
+                                    </div>                                                                       
                                     <div class="mb-3">
                                         <label for="editempresa" class="form-label">Empresa</label>
                                         <input type="text" name="editempresa" id="editempresa" placeholder="Empresa" class="form-control">
@@ -296,13 +312,8 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><span id="celda_disponible" style="font-weight:bold; font-size:11px;"></span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-warning fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#vtotal_modeditar" onclick="vtotal_editar()" value=""></button>
-                                    <div style="padding-top: 3px;">
-                                        <button onclick="mensajeborrar_vtotal()" class="btn btn-sm btn-danger fa-solid fa-trash-can"></button>
-                                    </div>
-                                </td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>

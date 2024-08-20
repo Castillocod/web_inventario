@@ -1,0 +1,91 @@
+.dropdown_vtotal{
+    position: relative;
+    width: 150px;
+}
+
+.dropdown_vtotal{
+    box-sizing: border-box;
+}
+
+.select_vtotal{
+    background: #ff0000;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 2px #ff0000 solid;
+    border-radius: 4px;
+    padding-left: 5px;
+    padding-right: 2px;
+    height: 40px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.select_clicked_vtotal{
+    border: 2px #db4b4b solid;
+    box-shadow: 0 0 0.8em #26489a;
+}
+
+.select_vtotal:hover{
+    background: #db4b4b;
+    border: 2px #db4b4b solid;
+}
+
+.caret_vtotal{
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #fff;
+    transition: 0.3s;
+}
+
+.caret_rotate_vtotal{
+    transform: rotate(180deg);
+}
+
+.meun_vtotal{
+    list-style: none;
+    padding: 0.2em 0.5em;
+    background: #ffffff;
+    border: 1px #545556 solid;
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
+    border-radius: 0.5em;
+    color: #000000;
+    position: absolute;
+    top: 45px;
+    left: -30px;
+    width: 200px;
+    opacity: 0;
+    display: none;
+    transition: 0.2s;
+    z-index: 1;
+}
+
+.menu_vtotal li button{
+    text-align: left;
+    padding: 0.7em 0.5em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    width: 185px;
+}
+
+.menu_vtotal li button:hover{
+    background: #e1e1e4;
+}
+
+.menu_vtotal_open{
+    display: block;
+    opacity: 1;
+}
+
+.disabled_dropdown_vtotal .select_vtotal{
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.disabled_dropdown_vtotal .menu_vtotal{
+    display: none;
+}

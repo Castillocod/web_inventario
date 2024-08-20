@@ -416,7 +416,7 @@ class cmarcas extends CI_Controller
 
         if($fechauno_actvmarcas && $fechados_actvmarcas)
         {
-            $data['almacen_marcas'] = $this->mmarcas->pdfactfechas_vmarcas($fechauno_actvmarcas, $fechados_actvmarcas);
+            $data['almacen_marcas'] = $this->mmarcas->pdfactfechas_vmarcas($fechauno_actvmarcas, $fechados_actvmarcas) ?? [];
             $html = $this->load->view('almacen/reportes_vmarcas/rep_activos_vmarcas', $data, true);
             $mpdf = new Mpdf\Mpdf();
             $mpdf->WriteHTML($html);
@@ -434,7 +434,7 @@ class cmarcas extends CI_Controller
 
         if($mes_actvmarcas)
         {
-            $data['almacen_marcas'] = $this->mmarcas->pdfactmes_vmarcas($mes_actvmarcas);
+            $data['almacen_marcas'] = $this->mmarcas->pdfactmes_vmarcas($mes_actvmarcas) ?? [];
             $html = $this->load->view('almacen/reportes_vmarcas/rep_activos_vmarcas', $data, true);
             $mpdf = new Mpdf\Mpdf();
             $mpdf->WriteHTML($html);
@@ -448,7 +448,7 @@ class cmarcas extends CI_Controller
 
     public function pdfacttotal_vmarcas()
     {
-        $data['almacen_marcas'] = $this->mmarcas->pdfacttotal_vmarcas();
+        $data['almacen_marcas'] = $this->mmarcas->pdfacttotal_vmarcas() ?? [];
         $html = $this->load->view('almacen/reportes_vmarcas/rep_activos_vmarcas', $data, true);
         $mpdf = new Mpdf\Mpdf();
         $mpdf->WriteHTML($html);
@@ -462,7 +462,7 @@ class cmarcas extends CI_Controller
 
         if($fechauno_inactvmarcas && $fechados_inactvmarcas)
         {
-            $data['almacen_marcas'] = $this->mmarcas->pdfinactfechas_vmarcas($fechauno_inactvmarcas, $fechados_inactvmarcas);
+            $data['almacen_marcas'] = $this->mmarcas->pdfinactfechas_vmarcas($fechauno_inactvmarcas, $fechados_inactvmarcas) ?? [];
             $html = $this->load->view('almacen/reportes_vmarcas/rep_inactivos_vmarcas', $data, true);
             $mpdf = new Mpdf\Mpdf();
             $mpdf->WriteHTML($html);
@@ -480,7 +480,7 @@ class cmarcas extends CI_Controller
 
         if($mes_inactvmarcas)
         {
-            $data['almacen_marcas'] = $this->mmarcas->pdfinactmes_vmarcas($mes_inactvmarcas);
+            $data['almacen_marcas'] = $this->mmarcas->pdfinactmes_vmarcas($mes_inactvmarcas) ?? [];
             $html = $this->load->view('almacen/reportes_vmarcas/rep_inactivos_vmarcas', $data, true);
             $mpdf = new Mpdf\Mpdf();
             $mpdf->WriteHTML($html);
@@ -494,7 +494,7 @@ class cmarcas extends CI_Controller
 
     public function pdfinacttotal_vmarcas()
     {
-        $data['almacen_marcas'] = $this->mmarcas->pdfinacttotal_vmarcas();
+        $data['almacen_marcas'] = $this->mmarcas->pdfinacttotal_vmarcas() ?? [];
         $html = $this->load->view('almacen/reportes_vmarcas/rep_inactivos_vmarcas', $data, true);
         $mpdf = new Mpdf\Mpdf();
         $mpdf->WriteHTML($html);

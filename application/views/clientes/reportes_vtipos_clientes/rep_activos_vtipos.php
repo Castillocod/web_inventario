@@ -23,13 +23,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($clientes_tiposclientes as $row) { ?>
-                    <tr>
-                        <td style="font-size: 20px; text-align: center;"><?= $row['id']?></td>
-                        <td style="font-size: 20px; text-align: center;"><?= $row['tipocliente']?></td>
-                        <td style="font-size: 20px; text-align: center;"><?= $row['cantclientes']?></td>
-                        <td style="font-size: 20px; text-align: center;"><?= $row['estado_vtipos']?></td>
-                    </tr>
+                    <?php if(!empty($clientes_tiposclientes) && is_array($clientes_tiposclientes)) { ?>
+                        <?php foreach($clientes_tiposclientes as $row) { ?>
+                            <tr>
+                                <td style="font-size: 20px; text-align: center;"><?= $row['id']?></td>
+                                <td style="font-size: 20px; text-align: center;"><?= $row['tipocliente']?></td>
+                                <td style="font-size: 20px; text-align: center;"><?= $row['cantclientes']?></td>
+                                <td style="font-size: 20px; text-align: center;"><?= $row['estado_vtipos']?></td>
+                            </tr>
+                        <?php } ?>
                     <?php } ?>
                 </tbody>
             </table>

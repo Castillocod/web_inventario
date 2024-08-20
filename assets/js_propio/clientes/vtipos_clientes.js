@@ -15,9 +15,9 @@ $(document).ready(function()
             'error': function(xhr, status, error, code){
                 alert('Error al hacer la petición');
                 console.error('Error:', error);
-                console.error('XHR:', xhr);
-                console.error('Code:', code);
-                console.error('Status:', status);
+                console.xhr('XHR:', xhr);
+                console.code('Code:', code);
+                console.status('Status:', status);
 
                 if(xhr.responseText){
                     console.error('Respuesta del error:', xhr.responseText);

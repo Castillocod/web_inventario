@@ -22,12 +22,14 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach($almacen_categorias as $row) { ?>
-            <tr>
-                <td style="font-size: 20px; text-align: center;"><?= $row->id?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->categoria?></td>
-                <td style="font-size: 20px; text-align: center;"><?= $row->estado_vcat?></td>
-            </tr>
+            <? if(!empty($almacen_categorias) && is_array($almacen_categorias)) { ?>
+                <?php foreach($almacen_categorias as $row) { ?>
+                    <tr>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->id?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->categoria?></td>
+                        <td style="font-size: 20px; text-align: center;"><?= $row->estado_vcat?></td>
+                    </tr>
+                <?php } ?>
             <?php } ?>
         </tbody>
     </table>

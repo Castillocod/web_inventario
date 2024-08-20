@@ -11,9 +11,10 @@ class ctotal_clientes extends CI_Controller
 
     public function index()
     {
+        $this->data['tipoclientes'] = $this->mtotal_clientes->obtenertipoclientes() ?? [];
         $this->load->view('layouts/header');
         $this->load->view('layouts/content');
-        $this->load->view('clientes/vtotal_clientes');
+        $this->load->view('clientes/vtotal_clientes', $this->data);
         $this->load->view('layouts/footer');
     }
 
@@ -21,6 +22,64 @@ class ctotal_clientes extends CI_Controller
     {
         $comprobacionvtotal = $this->mtotal_clientes->comprobacionvtotal();
         echo json_encode($comprobacionvtotal > 0);
+    }
+
+    public function obtenerdatos()
+    {
+        $columnas = [
+            'id',
+            'nombre',
+            'tipocliente',
+            'ciudad',
+            'estado_vtotal',
+            'pais',
+            'empresa',
+            'disponible_vtotal'
+        ];
+
+        $limite = $this->input->post('length');
+        $iniciar = $this->input->post('start');
+
+        $totaldata = $this->mtotal_clientes->all_vtotal_count();
+        $totalfiltered = $totaldata;
+
+        if(empty($this->input->post('search')['value']))
+        {
+            $vtotal = $this->mtotal_clientes->all_vtotal($limite, $iniciar);
+        }
+        else
+        {
+            $buscar = $this->input->post('search')['value'];
+            $vtotal = $this->mtotal_clientes->vtotal_search($limite, $iniciar, $buscar);
+            $totalfiltered = $this->mtotal_clientes->vtotal_search_count($buscar);
+        }
+
+        $datos = array();
+        if(!empty($vtotal))
+        {
+            foreach($vtotal as $vtota)
+            {
+                $vdata['id'] = $vtota->id;
+                $vdata['nombre'] = $vtota->nombre;
+                $vdata['tipocliente'] = $vtota->tipocliente;
+                $vdata['ciudad'] = $vtota->ciudad;
+                $vdata['estado_vtotal'] = $vtota->estado_vtotal;
+                $vdata['pais'] = $vtota->pais;
+                $vdata['empresa'] = $vtota->empresa;
+                $vdata['disponible_vtotal'] = $vtota->disponible_vtotal;
+
+                $datos[] = $vdata;
+            }
+        }
+
+        $json_data = array(
+            'draw' => intval($this->input->post('draw')),
+            'recordsTotal' => intval($totaldata),
+            'recordsFiltered' => intval($totalfiltered),
+            'data' => $datos
+        );
+
+        echo json_encode($json_data);
     }
 
     public function importexcel_vtotal()

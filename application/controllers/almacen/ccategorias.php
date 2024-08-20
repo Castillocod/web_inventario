@@ -405,7 +405,7 @@ class ccategorias extends CI_Controller
 
         if($fechauno_actvcat && $fechados_actvcat)
         {
-            $data['almacen_categorias'] = $this->mcategorias->pdfactfechas_vcat($fechauno_actvcat, $fechados_actvcat);
+            $data['almacen_categorias'] = $this->mcategorias->pdfactfechas_vcat($fechauno_actvcat, $fechados_actvcat) ?? [];
             $html = $this->load->view('almacen/reportes_vcategorias/rep_activos_vcat', $data, true);
             $mpdf = new \Mpdf\Mpdf();
             $mpdf->writeHTML($html);
@@ -423,7 +423,7 @@ class ccategorias extends CI_Controller
 
         if($mes_actvcat)
         {
-            $data['almacen_categorias'] = $this->mcategorias->pdfactmes_vcat($mes_actvcat);
+            $data['almacen_categorias'] = $this->mcategorias->pdfactmes_vcat($mes_actvcat) ?? [];
             $html = $this->load->view('almacen/reportes_vcategorias/rep_activos_vcat', $data, true);
             $mpdf = new \Mpdf\Mpdf();
             $mpdf->writeHTML($html);
@@ -437,7 +437,7 @@ class ccategorias extends CI_Controller
 
     public function pdfacttotal_vcat()
     {
-        $data['almacen_categorias'] = $this->mcategorias->pdfacttotal_vcat();
+        $data['almacen_categorias'] = $this->mcategorias->pdfacttotal_vcat() ?? [];
         $html = $this->load->view('almacen/reportes_vcategorias/rep_activos_vcat', $data, true);
         $mpdf = new \Mpdf\Mpdf();
         $mpdf->WriteHTML($html);
@@ -451,7 +451,7 @@ class ccategorias extends CI_Controller
 
         if($fechauno_inactvcat && $fechados_inactvcat)
         {
-            $data['almacen_categorias'] = $this->mcategorias->pdfinactfechas_vcat($fechauno_inactvcat, $fechados_inactvcat);
+            $data['almacen_categorias'] = $this->mcategorias->pdfinactfechas_vcat($fechauno_inactvcat, $fechados_inactvcat) ?? [];
             $html = $this->load->view('almacen/reportes_vcategorias/rep_inactivos_vcat', $data, true);
             $mpdf = new \Mpdf\Mpdf();
             $mpdf->writeHTML($html);
@@ -469,7 +469,7 @@ class ccategorias extends CI_Controller
 
         if($mes_inactvcat)
         {
-            $data['almacen_categorias'] = $this->mcategorias->pdfinactmes_vcat($mes_inactvcat);
+            $data['almacen_categorias'] = $this->mcategorias->pdfinactmes_vcat($mes_inactvcat) ?? [];
             $html = $this->load->view('almacen/reportes_vcategorias/rep_inactivos_vcat', $data, true);
             $mpdf = new \Mpdf\Mpdf();
             $mpdf->WriteHTML($html);
@@ -483,7 +483,7 @@ class ccategorias extends CI_Controller
 
     public function pdfinacttotal_vcat()
     {
-        $data['almacen_categorias'] = $this->mcategorias->pdfinacttotal_vcat();
+        $data['almacen_categorias'] = $this->mcategorias->pdfinacttotal_vcat() ?? [];
         $html = $this->load->view('almacen/reportes_vcategorias/rep_inactivos_vcat', $data, true);
         $mpdf = new \Mpdf\Mpdf();
         $mpdf->WriteHTML($html);

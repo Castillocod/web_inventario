@@ -315,7 +315,7 @@ class ctipos_clientes extends CI_Controller
 
     public function pdfacttotal_vtipos()
     {
-        $data['clientes_tiposclientes'] = $this->mtipos_clientes->pdfacttotal_vtipos();
+        $data['clientes_tiposclientes'] = $this->mtipos_clientes->pdfacttotal_vtipos() ?? [];
         $html = $this->load->view('clientes/reportes_vtipos_clientes/rep_activos_vtipos', $data, true);
         $mpdf = new \Mpdf\Mpdf();
         $mpdf->WriteHTML($html);
@@ -324,7 +324,7 @@ class ctipos_clientes extends CI_Controller
 
     public function pdfinacttotal_vtipos()
     {
-        $data['clientes_tiposclientes'] = $this->mtipos_clientes->pdfinacttotal_vtipos();
+        $data['clientes_tiposclientes'] = $this->mtipos_clientes->pdfinacttotal_vtipos() ?? [];
         $html = $this->load->view('clientes/reportes_vtipos_clientes/rep_inactivos_vtipos', $data, true);
         $mpdf = new \Mpdf\Mpdf();
         $mpdf->WriteHTML($html);

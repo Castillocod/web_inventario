@@ -17,8 +17,8 @@ class cproductos extends CI_Controller
 
     public function index()
     {
-        $this->data['marcas'] = $this->mproductos->obtenermarcas();
-        $this->data['categorias'] = $this->mproductos->obtenercategorias();
+        $this->data['marcas'] = $this->mproductos->obtenermarcas() ?? [];
+        $this->data['categorias'] = $this->mproductos->obtenercategorias() ?? [];
         $this->load->view('layouts/header');
         $this->load->view('layouts/content');
         $this->load->view('almacen/vproductos', $this->data);
@@ -374,7 +374,7 @@ class cproductos extends CI_Controller
 
         if($fechauno_actvprod && $fechados_actvprod)
         {
-            $data['almacen_productos'] = $this->mproductos->pdf_actvprodfechas($fechauno_actvprod, $fechados_actvprod);
+            $data['almacen_productos'] = $this->mproductos->pdf_actvprodfechas($fechauno_actvprod, $fechados_actvprod) ?? [];
             $html = $this->load->view('almacen/reportes_vproductos/rep_activos_vprod', $data, true);
             $mpdf = new Mpdf\Mpdf();
             $mpdf->WriteHTML($html);
@@ -393,7 +393,7 @@ class cproductos extends CI_Controller
 
         if($mes_actvprod)
         {
-            $data['almacen_productos'] = $this->mproductos->pdf_actvprodmeses($mes_actvprod);
+            $data['almacen_productos'] = $this->mproductos->pdf_actvprodmeses($mes_actvprod) ?? [];
             $html = $this->load->view('almacen/reportes_vproductos/rep_activos_vprod', $data, true);
             $mpdf = new Mpdf\Mpdf();
             $mpdf->WriteHTML($html);
@@ -408,7 +408,7 @@ class cproductos extends CI_Controller
 
     public function pdf_actvprodtotales()
     {
-        $data['almacen_productos'] = $this->mproductos->pdf_actvprodtotales();
+        $data['almacen_productos'] = $this->mproductos->pdf_actvprodtotales() ?? [];
         $html = $this->load->view('almacen/reportes_vproductos/rep_activos_vprod', $data, true);
         $mpdf = new Mpdf\Mpdf();
         $mpdf->WriteHTML($html);
@@ -422,7 +422,7 @@ class cproductos extends CI_Controller
 
         if($fechauno_inactvprod && $fechados_inactvprod)
         {
-            $data['almacen_productos'] = $this->mproductos->pdf_inactvprodfechas($fechauno_inactvprod, $fechados_inactvprod);
+            $data['almacen_productos'] = $this->mproductos->pdf_inactvprodfechas($fechauno_inactvprod, $fechados_inactvprod) ?? [];
             $html = $this->load->view('almacen/reportes_vproductos/rep_inactivos_vprod', $data, true);
             $mpdf = new Mpdf\Mpdf();
             $mpdf->WriteHTML($html);
@@ -440,7 +440,7 @@ class cproductos extends CI_Controller
         $mes_inactvprod = $this->input->get('mes_inactvprod');
         if($mes_inactvprod)
         {
-            $data['almacen_productos'] = $this->mproductos->pdf_inactvprodmeses($mes_inactvprod);
+            $data['almacen_productos'] = $this->mproductos->pdf_inactvprodmeses($mes_inactvprod) ?? [];
             $html = $this->load->view('almacen/reportes_vproductos/rep_inactivos_vprod', $data, true);
             $mpdf = new Mpdf\Mpdf();
             $mpdf->WriteHTML($html);
@@ -454,7 +454,7 @@ class cproductos extends CI_Controller
 
     public function pdf_inactvprodtotales()
     {
-        $data['almacen_productos'] = $this->mproductos->pdf_inactvprodtotales();
+        $data['almacen_productos'] = $this->mproductos->pdf_inactvprodtotales() ?? [];
         $html = $this->load->view('almacen/reportes_vproductos/rep_inactivos_vprod', $data, true);
         $mpdf = new Mpdf\Mpdf();
         $mpdf->WriteHTML($html);
