@@ -46,7 +46,7 @@
     transform: rotate(180deg);
 }
 
-.meun_vtotal{
+.menu_vtotal{
     list-style: none;
     padding: 0.2em 0.5em;
     background: #ffffff;
@@ -56,8 +56,8 @@
     color: #000000;
     position: absolute;
     top: 45px;
-    left: -30px;
-    width: 200px;
+    left: -15px;
+    width: 180px;
     opacity: 0;
     display: none;
     transition: 0.2s;
@@ -69,7 +69,7 @@
     padding: 0.7em 0.5em;
     border-radius: 0.5em;
     cursor: pointer;
-    width: 185px;
+    width: 165px;
 }
 
 .menu_vtotal li button:hover{

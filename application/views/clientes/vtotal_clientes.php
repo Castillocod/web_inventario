@@ -62,7 +62,7 @@
                                         </div>
                                         <div class="col-6">
                                             <label for="estado" class="form-label">Estado</label>
-                                            <input type="text" name="estado" id="estado" placeholder="Estado" class="form-control">
+                                            <input type="text" name="estado_vtotal" id="estado_vtotal" placeholder="Estado" class="form-control">
                                         </div>
                                     </div><br>
                                     <div class="mb-3">
@@ -88,9 +88,9 @@
                                         <input type="text" name="rfc" id="rfc" placeholder="RFC" maxlength="13" class="form-control">
                                     </div>
                                     <div class="mb-3">
-                                    <label for="disponible" style="padding-right: 60px">Disponible</label>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="switchdisponiblecliente">
+                                    <label for="disponible_vtotal" style="padding-right: 60px">Disponible</label>
+                                        <div class="form-check form-switch d-flex align-item-center">
+                                            <input class="form-check-input" type="checkbox" id="switchdisponiblevtotal">
                                             <label id="disponible_lblvtotal" name="disponible_lblvtotal" class="form-check-label" value=""></label>
                                             <input type="hidden" id="disponible_vtotal" name="disponible_vtotal" value="">
                                         </div>
@@ -182,7 +182,7 @@
                                     <div class="mb-3">
                                     <label for="edit_disponible" style="padding-right: 60px">Disponible</label>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="edit_switchdisponiblecliente">
+                                            <input class="form-check-input" type="checkbox" id="edit_switchdisponiblevtotal">
                                             <label id="editdisponible_lblvtotal" name="editdisponible_lblvtotal" class="form-check-label" value=""></label>
                                             <input type="hidden" id="editdisponible_vtotal" name="editdisponible_vtotal" value="">
                                         </div>
@@ -249,6 +249,188 @@
                     </div>
                 </div>
                 <!-- AQUÍ TERMINA EL MODAL PARA IMPORTAR EXCEL -->
+
+                <!-- AQUÍ INICIA EL MODAL PARA EXPORTAR POR MES Y DIAS -->
+                <div class="modal fade" id="vtotal_exportarexcel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog col-xl">
+                        <div class="modal-content">
+                            <div class="modal-header d-block">
+                                <h4 class="modal-title text-center">
+                                    Exportación por Tiempo
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <center><h4>Selecciona el tipo de exportación</h4></center>
+                                <div class="col-12">
+                                    <fieldset><legend>Datos por Fecha</legend></fieldset>
+                                    <div class="row d-flex justify-content-between">
+                                    
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechauno_excelvtotal"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechauno_excelvtotal" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechados_excelvtotal"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechados_excelvtotal" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Datos por Mes</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblmes_excelvtotal"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="mes_excelvtotal" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Todos los Datos</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <label for="">
+                                                <input type="radio" name="total_excelvtotal" id="total_excelvtotal" value="">
+                                                <span style="font-weight:bold; font-family:Arial, Helvetica, sans-serif;" id="lbltotal_excelvtotal">Total de Datos</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" data-bs-dismiss="modal" id="cancelar_excelvtotal">Cancelar</button>
+                                <button class="btn btn-success" id="crear_excelvtotal" onclick="exportarexcel_vtotal()">Exportar datos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- AQUÍ TERMINA EL MODAL PARA EXPORTAR POR MES Y DIAS -->
+
+                <!-- AQUÍ INICIA EL MODAL PARA REPORTES DE ACTIVOS POR MES Y DIAS -->
+                <div class="modal fade" id="reportespdf_actvtotal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog col-xl">
+                        <div class="modal-content">
+                            <div class="modal-header d-block">
+                                <h4 class="modal-title text-center">
+                                    Reportes de Clientes Activos
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <center><h4>Selecciona el tipo de reporte</h4></center>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte por Fechas</legend></fieldset>
+                                    <div class="row d-flex justify-content-between">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechauno_actvtotal"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechauno_actvtotal" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechados_actvtotal"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechados_actvtotal" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte por Mes</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblmes_actvtotal"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="mes_actvtotal" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte Total</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <label for="">
+                                                <input type="radio" name="total_actvtotal" id="total_actvtotal" value="">
+                                                <span style="font-weight:bold; font-family:Arial, Helvetica, sans-serif;" id="lbltotal_actvtotal">Total de Datos</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" data-bs-dismiss="modal" id="cancelar_actvtotal">Cancelar</button>
+                                <button class="btn btn-success" id="crear_actvtotal" onclick="reporteactivos_vtotal()">Crear Reporte</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- AQUÍ TERMINA EL MODAL PARA REPORTES DE ACTIVOS POR MES Y DIAS -->
+
+                <!-- AQUÍ INICIA EL MODAL PARA REPORTES DE INACTIVOS POR MES Y DIAS -->
+                <div class="modal fade" id="reportespdf_inactvtotal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog col-xl">
+                        <div class="modal-content">
+                            <div class="modal-header d-block">
+                                <h4 class="modal-title text-center">
+                                    Reportes de Clientes Inactivos
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <center><h4>Selecciona el tipo de reporte</h4></center>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte por Fechas</legend></fieldset>
+                                    <div class="row d-flex justify-content-between">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechauno_inactvtotal"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechauno_inactvtotal" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblfechados_inactvtotal"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="fechados_inactvtotal" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte por Mes</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">                                    
+                                            <div class="input-group">
+                                                <span class="form-control col-3" id="lblmes_inactvtotal"><i class="fa-solid fa-calendar-days"></i></span>
+                                                <input class="form-control col-12" id="mes_inactvtotal" style="text-transform:uppercase;" value="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <fieldset><legend>Reporte Total</legend></fieldset>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <label for="">
+                                                <input type="radio" name="total_actvtotal" id="total_inactvtotal" value="">
+                                                <span style="font-weight:bold; font-family:Arial, Helvetica, sans-serif;" id="lbltotal_inactvtotal">Total de Datos</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" data-bs-dismiss="modal" id="cancelar_inactvtotal">Cancelar</button>
+                                <button class="btn btn-success" id="crear_inactvtotal" onclick="reporteinactivos_vtotal()">Crear Reporte</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- AQUÍ TERMINA EL MODAL PARA REPORTES DE INACTIVOS POR MES Y DIAS -->
+
                 <div class="row dt-search">
                     <div>
                         <label for="dt-search-0">Buscar:</label>
