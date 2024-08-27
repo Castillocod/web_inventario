@@ -116,18 +116,23 @@ class mtipos_clientes extends CI_Model
 
     public function actualizarestado()
     {
-        $subquery = $this->db->select('tipocliente, COUNT(*) as cantidad_clientes');
+        $this->db->select('tipocliente, COUNT(*) as cantidad_clientes');
         $this->db->from('clientes_totalclientes');
         $this->db->group_by('tipocliente');
-        $this->db->get_compiled_select();
+        $subquery = $this->db->get_compiled_select();
 
         $sql = "UPDATE clientes_tiposclientes ctp
-        LEFT JOIN (
-            SELECT tipocliente, COUNT(*) AS cantidad_clientes
-            FROM clientes_totalclientes
-            GROUP BY tipocliente
-        ) sub ON ctp.tipocliente = sub.tipocliente
-        SET ctp.estado_vtipos = CASE WHEN IFNULL(sub.cantidad_clientes, 0) = 0 THEN 'INACTIVO' ELSE 'ACTIVO' END";
+                LEFT JOIN (
+                    SELECT tipocliente, COUNT(*) AS cantclientes
+                    FROM clientes_totalclientes
+                    GROUP BY tipocliente
+                ) sub ON ctp.tipocliente = sub.tipocliente
+                SET ctp.estado_vtipos = CASE 
+                    WHEN IFNULL(sub.cantclientes, 0) = 0 
+                    THEN 'INACTIVO' 
+                    ELSE 'ACTIVO' 
+                END,
+                ctp.cantclientes = IFNULL(sub.cantclientes, 0)";
 
         $this->db->query($sql);
     }

@@ -499,7 +499,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div><br>
                 <!--Aquí termina la tabla -->
                 <div class="row">
                     <div class="d-flex justify-content-between">

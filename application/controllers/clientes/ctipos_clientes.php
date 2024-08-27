@@ -17,6 +17,7 @@ class ctipos_clientes extends CI_Controller
 
     public function index()
     {
+        $this->mtipos_clientes->actualizarestado();
         $this->load->view('layouts/header');
         $this->load->view('layouts/content');
         $this->load->view('clientes/vtipos_clientes');

@@ -1,4 +1,9 @@
 <?php 
+
+require ('vendor/autoload.php');
+require FCPATH.'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class ctotal_clientes extends CI_Controller
 {
     function __construct()
@@ -110,7 +115,7 @@ class ctotal_clientes extends CI_Controller
                     $fecha_vtotal = date('Y-m-d');
                     $pais = $spreadsheet->getActiveSheet()->getCell('F'.$row->getRowIndex());
                     $empresa = $spreadsheet->getActiveSheet()->getCell('G'.$row->getRowIndex());
-                    $disponible = $spreadsheet->getActiveSheet()->getCell('H'.$row->getRowIndex());
+                    $disponible_vtotal = $spreadsheet->getActiveSheet()->getCell('H'.$row->getRowIndex());
                     $direccion = $spreadsheet->getActiveSheet()->getCell('I'.$row->getRowIndex());
                     $correo = $spreadsheet->getActiveSheet()->getCell('J'.$row->getRowIndex());
                     $telefono = $spreadsheet->getActiveSheet()->getCell('K'.$row->getRowIndex());
@@ -124,7 +129,7 @@ class ctotal_clientes extends CI_Controller
                         'fecha_vtotal' => $fecha_vtotal,
                         'pais' => $pais,
                         'empresa' => $empresa,
-                        'disponible' => $disponible,
+                        'disponible_vtotal' => $disponible_vtotal,
                         'direccion' => $direccion,
                         'correo' => $correo,
                         'telefono' => $telefono,
@@ -502,7 +507,7 @@ class ctotal_clientes extends CI_Controller
             $this->form_validation->set_rules('pais', 'Pais', 'required|trim');
             $this->form_validation->set_rules('direccion', 'Direccion', 'required|trim');
             $this->form_validation->set_rules('correo', 'Correo', 'required|trim|valid_email');
-            $this->form_validation->set_rules('telefono', 'Telefono', 'required|trim|min-length[10]');
+            $this->form_validation->set_rules('telefono', 'Telefono', 'required|trim|min_length[10]');
             $this->form_validation->set_rules('empresa', 'Empresa', 'required|trim');
             $this->form_validation->set_rules('rfc', 'RFC', 'required|trim');
             $this->form_validation->set_rules('disponible_vtotal', 'Disponible_vtotal');

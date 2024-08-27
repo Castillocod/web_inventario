@@ -10,7 +10,7 @@ class mtotal_clientes extends CI_Model
     {
         $query = $this->db->get('clientes_totalclientes');
         return $query->num_rows();
-    }
+    }    
 
     public function obtenertipoclientes()
     {

@@ -311,9 +311,6 @@ $(document).ready(function() {
                 $('#dropdown_vproductos').removeClass('disabled_dropdown_vprod');
                 $('[name="dt_buscar_vprod"]').prop('disabled', false);
             }
-        },
-        error: function(status, xhr, error){
-            console.error("Error al comprobar datos:", error);
         }
     });
     //COMPROBACIÓN DE DATOS
@@ -341,9 +338,6 @@ $(document).ready(function() {
                     valordeldolar = value.preciodolar;
                 });
             }
-        },
-        error(xhr, status, error){
-            console.error('Error al cargar las formulas', error);
         }
     });
 
@@ -547,9 +541,6 @@ $(document).ready(function() {
                 startDate: primermes,
                 endDate: ultimomes
             });
-        },
-        error: function(status, xhr, error){
-            console.error('Error al obtener la última fecha', error);
         }
     });
     //CONFIGURACIÓN DE LOS DATETIME

@@ -104,7 +104,7 @@ $(document).ready(function()
             }
         }
     });
-    //COMPROBACIÓN DE DATOS DE TIPOSCLIENTES 
+    //COMPROBACIÓN DE DATOS DE TIPOSCLIENTES W
 });
 
 $(document).on('click', '#vtipos_registrar', function(e){

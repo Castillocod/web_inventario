@@ -270,9 +270,6 @@ $(document).ready(function()
                 startDate: primermes,
                 endDate: ultimomes
             });
-        },
-        error: function(xhr, status, error){
-            console.error('Error al obtener las fechas:', error);
         }
     });
     //CONFIGURACIÓN DE LOS DATETIME
