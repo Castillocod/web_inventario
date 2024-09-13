@@ -395,7 +395,7 @@ class ctotal_clientes extends CI_Controller
 
         if($fechauno_actvtotal && $fechados_actvtotal)
         {
-            $data['clientes_totalclientes'] = $this->mtotal_clientes->pdfactfechas_vtotal($fechauno_actvtotal, $fechados_actvtotal);
+            $data['clientes_totalclientes'] = $this->mtotal_clientes->pdfactfechas_vtotal($fechauno_actvtotal, $fechados_actvtotal) ?? [];
             $html = $this->load->view('clientes/reportes_vtotal_clientes/rep_activos_vtotal', $data, true);
             $mpdf = new Mpdf\Mpdf();
             $mpdf->WriteHTML($html);
@@ -413,7 +413,7 @@ class ctotal_clientes extends CI_Controller
 
         if($mes_actvtotal)
         {
-            $data['clientes_totalclientes'] = $this->mtotal_clientes->pdfactmes_vtotal($mes_actvtotal);
+            $data['clientes_totalclientes'] = $this->mtotal_clientes->pdfactmes_vtotal($mes_actvtotal) ?? [];
             $html = $this->load->view('clientes/reportes_vtotal_clientes/rep_activos_vtotal', $data, true);
             $mpdf = new Mpdf\Mpdf();
             $mpdf->WriteHTML($html);
@@ -427,7 +427,7 @@ class ctotal_clientes extends CI_Controller
 
     public function pdfacttotal_vtotal()
     {
-        $data['clientes_totalclientes'] = $this->mtotal_clientes->pdffacttotal_vtotal();
+        $data['clientes_totalclientes'] = $this->mtotal_clientes->pdffacttotal_vtotal() ?? [];
         $html = $this->load->view('clientes/reportes_vtotal_clientes/rep_activos_vtotal', $data, true);
         $mpdf = new Mpdf\Mpdf();
         $mpdf->WriteHTML($html);
@@ -441,7 +441,7 @@ class ctotal_clientes extends CI_Controller
 
         if($fechauno_inactvtotal && $fechados_inactvtotal)
         {
-            $data['clientes_totalclientes'] = $this->mtotal_clientes->pdfinactfechas_vtotal($fechauno_inactvtotal, $fechados_inactvtotal);
+            $data['clientes_totalclientes'] = $this->mtotal_clientes->pdfinactfechas_vtotal($fechauno_inactvtotal, $fechados_inactvtotal) ?? [];
             $html = $this->load->view('clientes/reportes_vtotal_clientes/rep_inactivos_vtotal', $data, true);
             $mpdf = new Mpdf\Mpdf();
             $mpdf->WriteHTML($html);
@@ -459,7 +459,7 @@ class ctotal_clientes extends CI_Controller
 
         if($mes_inactvtotal)
         {
-            $data['clientes_totalclientes'] = $this->mtotal_clientes->pdfinactmes_vtotal($mes_inactvtotal);
+            $data['clientes_totalclientes'] = $this->mtotal_clientes->pdfinactmes_vtotal($mes_inactvtotal) ?? [];
             $html = $this->load->view('clientes/reportes_vtotal_clientes/rep_inactivos_vtotal', $data, true);
             $mpdf = new Mpdf\Mpdf();
             $mpdf->WriteHTML($html);
@@ -473,7 +473,7 @@ class ctotal_clientes extends CI_Controller
 
     public function pdfinacttotal_vtotal()
     {
-        $data['clientes_totalclientes'] = $this->mtotal_clientes->pdfinacttotal_vtotal();
+        $data['clientes_totalclientes'] = $this->mtotal_clientes->pdfinacttotal_vtotal() ?? [];
         $html = $this->load->view('clientes/reportes_vtotal_clientes/rep_inactivos_vtotal', $data, true);
         $mpdf = new Mpdf\Mpdf();
         $mpdf->WriteHTML($html);

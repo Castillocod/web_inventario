@@ -40,15 +40,14 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/libreria_datepicker/bootstrap-datepicker.min.css">
 
   <!-- CSS Propio -->
-  <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/almacen.css"> -->
-  <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/css_ajax.css"> -->
-  <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/reportes_vproductos.css"> -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/almacen/vproductos.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/almacen/vcategorias.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/almacen/vmarcas.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/clientes/vtipos_clientes.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/clientes/vtotal_clientes.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/clientes/vadi_clientes.css">
+  <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/cotizador/vad_cotizador.css">
+  <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/cotizador/vgenerarcot.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

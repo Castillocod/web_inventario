@@ -415,7 +415,7 @@
                                     <div class="row">
                                         <div class="col-5">
                                             <label for="">
-                                                <input type="radio" name="total_actvtotal" id="total_inactvtotal" value="">
+                                                <input type="radio" name="total_inactvtotal" id="total_inactvtotal" value="">
                                                 <span style="font-weight:bold; font-family:Arial, Helvetica, sans-serif;" id="lbltotal_inactvtotal">Total de Datos</span>
                                             </label>
                                         </div>
@@ -448,7 +448,7 @@
                                 </div>
                                 <ul class="menu_vtotal">
                                     <li><button class="btn btn-default" id="btnactivos_actvtotal" data-bs-toggle="modal" data-bs-target="#reportespdf_actvtotal"><i class="fa-regular fa-file-pdf"></i>&nbspClientes Activos</button></li>
-                                    <li><button class="btn btn-default" id="btninactivos_inactvtotal"><i class="fa-regular fa-file-pdf" data-bs-target="#reportespdf_inactvtotal"></i>&nbspClientes Inactivos</button></li>
+                                    <li><button class="btn btn-default" id="btninactivos_inactvtotal" data-bs-toggle="modal" data-bs-target="#reportespdf_inactvtotal"><i class="fa-regular fa-file-pdf"></i>&nbspClientes Inactivos</button></li>
                                 </ul>
                             </div>
                         </div>

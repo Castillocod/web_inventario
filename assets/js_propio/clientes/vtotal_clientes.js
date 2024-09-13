@@ -21,7 +21,7 @@ const lbltotales_actvtotal = $('#lbltotal_actvtotal');
 //INTERACTIVIDAD - VARIABLES DE REPORTES DE ACTIVOS
 
 //INTERACTIVIDAD - VARIABLES DE REPORTES DE INACTIVOS
-const unofecha_inactvtotal = $('#lblfechauno_inactvtotal');
+const unofecha_inactvtotal = $('#fechauno_inactvtotal');
 const lblunofecha_inactvtotal = $('#lblfechauno_inactvtotal');
 const dosfecha_inactvtotal = $('#fechados_inactvtotal');
 const lbldosfecha_inactvtotal = $('#lblfechados_inactvtotal');
@@ -212,7 +212,7 @@ $(document).ready(function()
                 startDate: primerfecha,
                 endDate: ultimafecha
             }).on('changeDate', function(selected){
-                var fechainicial = new Date(selected.date.valueOF());
+                var fechainicial = new Date(selected.date.valueOf());
                 $('#fechados_excelvtotal').datepicker('setStartDate', fechainicial);
             });
 
@@ -375,7 +375,7 @@ $(document).ready(function()
     dosfecha_inactvtotal.prop('disabled', true).css('opacity', 0.5);
     lbldosfecha_inactvtotal.prop('disabled', true).css('opacity', 0.5);
 
-    unofecha_inactvtotal.on('click', function() {
+    unofecha_inactvtotal.on('change', function() {
         if($(this).val())
         {
             $(this).prop('disabled', true).css('opacity', 0.5);

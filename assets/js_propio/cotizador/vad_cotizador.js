@@ -1,4 +1,288 @@
 $(document).ready(function() {
+
+    //CONFIGURACIÓN DE LA DATATABLES
+    var tabla_totalcotizaciones = $('#tabla_totalcotizaciones').DataTable({
+        language:{
+            'emptyTable': 'No hay datos disponibles'
+        },
+        'processing': true,
+        'serverSide': true,
+        'ordering': false,
+        'ajax': {
+            'url': 'cad_cotizador/tabla_totalcotizaciones',
+            'type': 'POST',
+            'dataType': 'JSON',
+            'error': function(xhr, error, code){
+                alert('Error al hacer la petición');
+                console.error('Error:', error);
+                console.xhr('XHR:', xhr);
+                console.code('Code:', code);
+
+                if(xhr.responseText){
+                    console.error('Respuesta del error:', xhr.responseText);
+                }
+            }
+        },
+        'columns': [
+            {'data': 'folio_cotizacion', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'tipocliente_cot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'idcliente_cot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'nombrecliente_cot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'fecha_vcot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'hora_vcot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'estado_borrador', 'createdCell': function(td, cellData, rowData, row, col){
+                var estado_borrador = cellData.trim();
+                $(td).addClass('text-center').html('<span id="celda_estado_borrador" style="font-weight: bold; font-size: 11px">'+cellData+'</span>');
+
+                if(estado_borrador === 'Pendiente'){
+                    $(td).find('span').addClass('badge badge-success');
+                } else if(estado_borrador === 'Terminada'){
+                    $(td).find('span').addClass('badge badge-warning');
+                }
+            }},
+            {'data': null,
+                'orderable': false,
+                'searchable': false,
+                'createdCell': function(td, cellData, rowData, row, col)
+                {
+                    var folio_cotizacion = rowData.folio_cotizacion;
+                    var botonver_totalcotizaciones = `<button class="btn btn-success btnver_listacot fa-regular fa-eye" id="" name="btnver_listacot" data-bs-toggle="modal" data-bs-target="#modal_vercotizacion" onclick="datoscotizacion(${folio_cotizacion})" value="${folio_cotizacion}" style="width: 15px;"></button>`;
+                    var botonir_totalcotizaciones = `<button class="btn btn-primary fa-solid fa-arrow-right" id="btn_mandardatoslista" name="" value="${folio_cotizacion}" onclick="datosborradorlista(${folio_cotizacion})"></button>`;
+                    $(td).addClass('text-center').html(botonver_totalcotizaciones + '<div style="padding-top: 3px;">' + botonir_totalcotizaciones + '</div>');
+                }
+            }
+        ],
+        'dom': 'rt<"bottom"p>',
+        'initComplete': function(){
+            var pagination = $('.pagination');
+            pagination.attr('id', 'pagination_totalesvcot');
+            $('#pagination_totalcotizaciones').append(pagination);
+        },
+        'drawCallback': function(settings){
+            var pagination = $('.pagination');
+            pagination.attr('id', 'pagination_totalesvcot');
+            $('#pagination_totalcotizaciones').html('');
+        }
+    });
+
+    tabla_totalcotizaciones.on('draw', function() {
+        var pagination = $('.pagination');
+        pagination.attr('id', 'pagination_totalesvcot');
+        $('#pagination_totalcotizaciones').append(pagination);
+    });
+
+    var tabla_totalpendientes = $('#tabla_totalpendientes').DataTable({
+        language:{
+            'emptyTable': 'No hay datos disponibles'
+        },
+        'processing': true,
+        'serverSide': true,
+        'ordering': false,
+        'ajax': {
+            'url': 'cad_cotizador/tabla_totalpendientes',
+            'type': 'POST',
+            'dataType': 'JSON',
+            'error': function(xhr, error, code){
+                alert('Error al hacer la petición');
+                console.error('Error:', error);
+                console.xhr('XHR:', xhr);
+                console.code('Código:', code);
+
+                if(xhr.responseText)
+                {
+                    console.error('Respuesta del error', xhr.responseText);
+                }
+            }
+        },
+        'columns': [
+            {'data': 'folio_cotizacion', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'tipocliente_cot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'idcliente_cot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'nombrecliente_cot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'fecha_vcot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'hora_vcot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'estado_borrador', 'createdCell': function(td, cellData, rowData, row, col){
+                var estado_borrador = cellData.trim();
+                $(td).addClass('text-center').html('<span id="celda_estado_borrador" style="font-weight: bold; font-size: 11px">'+cellData+'</span>');
+
+                if(estado_borrador === 'Pendiente'){
+                    $(td).find('span').addClass('badge badge-success');
+                } else if(estado_borrador === 'Terminada'){
+                    $(td).find('span').addClass('badge badge-warning');
+                }
+            }},
+            {'data': null,
+                'orderable': false,
+                'searchable': false,
+                'createdCell': function(td, cellData, rowData, row, col)
+                {
+                    var folio_cotizacion = rowData.folio_cotizacion;
+                    var botonver_totalpendientes = `<button class="btn btn-success btnver_pendientes fa-regular fa-eye" id="" name="" data-bs-toggle="modal" data-bs-target="#modal_verpendientes_cot" value="${folio_cotizacion}" onclick="datospendientes(${folio_cotizacion})" style="width: 15px;"></button>`;
+                    var botonir_totalpendientes = `<button class="btn btn-primary fa-solid fa-arrow-right" id="" name="" value="${folio_cotizacion}" onclick="datosborradorlista(${folio_cotizacion})"></button>`;
+                    $(td).addClass('text-center').html(botonver_totalpendientes + '<div style="padding-top: 3px;">' + botonir_totalpendientes + '</div>');
+                }
+            }
+
+        ],
+        'dom': 'rt<"bottom"p>',
+        'initComplete': function(){
+            var pagination = $('.pagination');
+            pagination.attr('id', 'pagination_pendientesvcot');
+            $('#pagination_totalpendientes').append(pagination);
+        },
+        'drawCallback': function(settings){
+            var pagination = $('.pagination');
+            pagination.attr('id', 'pagination_pendientesvcot');
+            $('#pagination_totalpendientes').html('');
+        }
+    });
+
+    tabla_totalpendientes.on('draw', function() {
+        var pagination = $('.pagination');
+        pagination.attr('id', 'pagination_pendientesvcot');
+        $('#pagination_totalpendientes').append(pagination);
+    });
+
+    var tabla_totalterminadas = $('#tabla_totalterminadas').DataTable({
+        language:{
+            'emptyTable': 'No hay datos disponibles'
+        },
+        'processing': true,
+        'serverSide': true,
+        'ordering': false,
+        'ajax':{
+            'url': 'cad_cotizador/tabla_totalterminadas',
+            'type': 'POST',
+            'dataType': 'JSON',
+            'error': function(xhr, error, code){
+                alert('Error al hacer la petición');
+                console.error('Error:', error);
+                console.xhr('XHR:', xhr);
+                console.code('Código:', code);
+
+                if(xhr.responseText)
+                {
+                    console.error('Respuesta del error', xhr.responseText);
+                }
+            }
+        },
+        'columns': [
+            {'data': 'folio_cotizacion', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'tipocliente_cot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'idcliente_cot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'nombrecliente_cot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'fecha_vcot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'hora_vcot', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'estado_borrador', 'createdCell': function(td, cellData, rowData, row, col){
+                var estado_borrador = cellData.trim();
+                $(td).addClass('text-center').html('<span id="celda_estado_borrador" style="font-weight: bold; font-size: 11px">'+cellData+'</span>');
+
+                if(estado_borrador === 'Pendiente'){
+                    $(td).find('span').addClass('badge badge-success');
+                } else if(estado_borrador === 'Terminada'){
+                    $(td).find('span').addClass('badge badge-warning');
+                }
+            }},
+            {'data': null,
+                'orderable': false,
+                'searchable': false,
+                'createdCell': function(td, cellData, rowData, row, col)
+                {
+                    var folio_cotizacion = rowData.folio_cotizacion;
+                    var botonver_totalterminadas = `<button class="btn btn-success btnver_terminadas fa-regular fa-eye" id="" name="" value="${folio_cotizacion}" data-bs-toggle="modal" data-bs-target="#modal_verterminadas_cot" onclick="datosterminadas(${folio_cotizacion})" style="width: 15px;"></button>`;
+                    var botonir_totalterminadas = `<button class="btn btn-primary fa-solid fa-arrow-right" id="" name="" value="${folio_cotizacion}" onclick="datosborradorlista(${folio_cotizacion})"></button>`;
+                    $(td).addClass('text-center').html(botonver_totalterminadas + '<div style="padding-top: 3px;">' + botonir_totalterminadas + '</div>');
+                }
+            }
+        ],
+        'dom': 'rt<"bottom"p>',
+        'initComplete': function(){
+            var pagination = $('.pagination');
+            pagination.attr('id', 'pagination_terminadasvcot');
+            $('#pagination_totalterminadas').append(pagination);
+        },
+        'drawCallback': function(settings){
+            var pagination = $('.pagination');
+            pagination.attr('id', 'pagination_terminadasvcot');
+            $('#pagination_totalterminadas').html('');
+        }
+    });
+
+    tabla_totalterminadas.on('draw', function() {
+        var pagination = $('.pagination');
+        pagination.attr('id', 'pagination_terminadasvcot');
+        $('#pagination_totalterminadas').append(pagination);
+    });
+
+    $('#dt-search-0').on('keyup', function(){
+        tabla_totalcotizaciones.search(this.value).draw();
+        tabla_totalpendientes.search(this.value).draw();
+        tabla_totalterminadas.search(this.value).draw();
+    });
+
+    $('#dt-length-0').on('change', function() {
+        tabla_totalcotizaciones.page.len(this.value).draw();
+        tabla_totalpendientes.page.len(this.value).draw();
+        tabla_totalterminadas.page.len(this.value).draw();
+    });
+    //CONFIGURACIÓN DE LA DATATABLES
+
+    //COMPROBACIÓN DE DATOS
+    $.ajax({
+        url: 'cad_cotizador/comprobacionvcot',
+        type: 'GET',
+        dataType: 'JSON',
+        success: function(data){
+            if(!data)
+            {
+                $('[name="dt_buscar_totalcotizaciones"]').prop('disabled', true);
+                $('[name="tabla_totalcotizaciones_length"]').prop('disabled', true);
+            }
+            else
+            {
+                $('[name="dt_buscar_totalcotizaciones"]').prop('disabled', false);
+                $('[name="tabla_totalcotizaciones_length"]').prop('disabled', false);
+            }
+        }
+    });
+    //COMPROBACIÓN DE DATOS
+
     $.ajax({
         url: 'cad_cotizador/modificarformulas',
         type: 'GET',
@@ -184,8 +468,8 @@ function datoscotizacion(folio_cotizacion)
             $('[name="subtotal_vad"]').val(data.datoscotizaciones.subtotal_cot);
             $('[name="iva_vad"]').val(data.datoscotizaciones.iva_cot);
             $('[name="total_vad"]').val(data.datoscotizaciones.total_cot);
-            $('[name="fecha_vad"]').val(data.datoscotizaciones.fecha);
-            $('[name="hora_vad"]').val(data.datoscotizaciones.hora);
+            $('[name="fecha_vad"]').val(data.datoscotizaciones.fecha_vcot);
+            $('[name="hora_vad"]').val(data.datoscotizaciones.hora_vcot);
             $('[name="estado_vad"]').val(data.datoscotizaciones.estado_borrador);
 
             var htmlcotizacion = '';

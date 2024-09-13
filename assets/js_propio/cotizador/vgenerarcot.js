@@ -368,7 +368,8 @@ function limpiartexto(){
 		cancelButtonText: "Cancelar",
 		allowOutsideClick: false,
 	}).then((result) => {
-		if (result.isConfirmed) {
+		if (result.isConfirmed) 
+        {
 			$('#tc_cliente').prop('disabled', false);
             $('#cliente_prod, #buscar_prod, #sel_prod, #prod_cant').prop('disabled', true);
             $('#tc_cliente, #cliente_prod, #buscar_prod, #sel_prod, #prod_cant').val('');

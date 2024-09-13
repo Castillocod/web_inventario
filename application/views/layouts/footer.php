@@ -26,7 +26,6 @@
 <script src="<?= base_url() ?>assets/js_propio/clientes/vadi_clientes.js"></script>
 <script src="<?= base_url() ?>assets/js_propio/cotizador/vgenerarcot.js"></script>
 <script src="<?= base_url() ?>assets/js_propio/cotizador/vad_cotizador.js"></script>
-<script src="<?= base_url() ?>assets/js_propio/consultas/vconsulta_fechas.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button)
