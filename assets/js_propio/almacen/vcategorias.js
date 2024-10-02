@@ -34,8 +34,10 @@ const lbltotales_inactvcat = $('#lbltotal_inactvcat');
 $(document).ready(function() {
     var tabla_vcat = $('#tabla_vcat').DataTable({
         language:{
-            'emptyTable': 'No hay datos disponibles'
+            'emptyTable': 'No hay datos disponibles',
+            'zeroRecords': 'No se encontraron coincidencias'
         },
+        'autoWidth': false,
         'processing': true,
         'serverSide': true,
         'ordering': false,

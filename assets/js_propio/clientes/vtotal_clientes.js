@@ -37,8 +37,10 @@ $(document).ready(function()
     //CONFIGURACIÓN DE DATATABLES
     var tabla = $('#tabla_vtotal').DataTable({
         language:{
-            'emptyTable': 'No hay datos disponibles'
+            'emptyTable': 'No hay datos disponibles',
+            'zeroRecords': 'No se encontraron coincidencias'
         },
+        'autoWidth': false,
         'processing': true,
         'serverSide': true,
         'ordering': false,
@@ -85,11 +87,11 @@ $(document).ready(function()
                 var dispnible_vtotal = cellData.trim();
                 $(td).addClass('text-center').html('<span id="celda_disponible_vtotal" style="font-weight: bold; font-size: 11px;">'+cellData+'</span>');
 
-                if(dispnible_vtotal === 'ACTIVO')
+                if(dispnible_vtotal === 'DISPONIBLE')
                 {
-                    $(td).find('span').addClass('badge badge-success');
-                } else if(dispnible_vtotal === 'INACTIVO'){
-                    $(td).find('span').addClass('badge badge-warning');
+                    $(td).find('span').addClass('badge badge-primary');
+                } else if(dispnible_vtotal === 'NO DISPONIBLE'){
+                    $(td).find('span').addClass('badge badge-dark');
                 }
             }},
             {'data': null,
@@ -155,33 +157,33 @@ $(document).ready(function()
         }
     });
     //COMPROBACIÓN DE DATOS DE TOTALCLIENTES
-    $('#disponible_lblvtotal').text('INACTIVO');
-    $('#disponible_vtotal').val('INACTIVO');
+    $('#disponible_lblvtotal').text('NO DISPONIBLE');
+    $('#disponible_vtotal').val('NO DISPONIBLE');
     $('#switchdisponiblevtotal').addClass('switch-inactivo');
 
     $('#switchdisponiblevtotal').change(function(){
         if($(this).prop('checked'))
         {
-            $('#disponible_lblvtotal').text('ACTIVO');
-            $('#disponible_vtotal').val('ACTIVO');
+            $('#disponible_lblvtotal').text('DISPONIBLE');
+            $('#disponible_vtotal').val('DISPONIBLE');
         }
         else
         {
-            $('#disponible_lblvtotal').text('INACTIVO');
-            $('#disponible_vtotal').val('INACTIVO');
+            $('#disponible_lblvtotal').text('NO DISPONIBLE');
+            $('#disponible_vtotal').val('NO DISPONIBLE');
         }
     });
 
     $('#edit_switchdisponiblevtotal').change(function() {
         if($(this).prop('checked'))
         {
-            $('#edit_disponible_lblvtotal').text('ACTIVO');
-            $('#edit_disponible_vtotal').val('ACTIVO');
+            $('#edit_disponible_lblvtotal').text('DISPONIBLE');
+            $('#edit_disponible_vtotal').val('DISPONIBLE');
         }
         else
         {
-            $('#edit_disponible_lblvtotal').text('INACTIVO');
-            $('#edit_disponible_vtotal').val('INACTIVO');
+            $('#edit_disponible_lblvtotal').text('NO DISPONIBLE');
+            $('#edit_disponible_vtotal').val('NO DISPONIBLE');
         }
     });
 
@@ -778,16 +780,16 @@ function vtotal_editar(id)
             $('[name="editrfc"]').val(data.rfc);
             
 
-            if(data.disponible_vtotal == 'ACTIVO')
+            if(data.disponible_vtotal == 'DISPONIBLE')
             {
-                $('#edit_disponible_lblvtotal').text('ACTIVO');
-                $('#edit_disponible_vtotal').val('ACTIVO');
+                $('#edit_disponible_lblvtotal').text('DISPONIBLE');
+                $('#edit_disponible_vtotal').val('DISPONIBLE');
                 $('#edit_switchdisponiblevtotal').removeClass('switch-inactivo').addClass('switch-activo').prop('checked', true);
             }
             else
             {
-                $('#edit_disponible_lblvtotal').text('INACTIVO');
-                $('#edit_disponible_vtotal').val('INACTIVO');
+                $('#edit_disponible_lblvtotal').text('NO DISPONIBLE');
+                $('#edit_disponible_vtotal').val('NO DISPONIBLE');
                 $('#edit_switchdisponiblevtotal').removeClass('switch-activo').addClass('switch-inactivo').prop('checked', false);
             }
             $('#vtotal_modeditar').modal();

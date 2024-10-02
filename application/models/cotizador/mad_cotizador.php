@@ -18,10 +18,129 @@ class mad_cotizador extends CI_Model
         return $query->num_rows();
     }
 
+    public function all_totalcotizaciones($limite, $iniciar)
+    {
+        $this->db->limit($limite, $iniciar);
+        $query = $this->db->get('cotizador_borradores');
+
+        if($query->num_rows() > 0)
+        {
+            return $query->result();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public function totalcotizaciones_search($limite, $iniciar, $buscar)
+    {
+        $this->db->from('cotizador_borradores');
+        $this->db->like('folio_cotizacion', $buscar, 'both');
+        $this->db->or_like('tipocliente_cot', $buscar, 'both');
+        $this->db->or_like('idcliente_cot', $buscar, 'both');
+        $this->db->or_like('nombrecliente_cot', $buscar, 'both');
+        $this->db->or_like('fecha_vcot', $buscar, 'both');
+        $this->db->or_like('hora_vcot', $buscar, 'both');
+        $this->db->or_like('estado_borrador', $buscar, 'both');
+        $this->db->limit($limite, $iniciar);
+
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+        {
+            return $query->result();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public function totalcotizaciones_search_count($buscar)
+    {
+        $this->db->from('cotizador_borradores');
+        $this->db->like('folio_cotizacion', $buscar, 'both');
+        $this->db->or_like('tipocliente_cot', $buscar, 'both');
+        $this->db->or_like('idcliente_cot', $buscar, 'both');
+        $this->db->or_like('nombrecliente_cot', $buscar, 'both');
+        $this->db->or_like('fecha_vcot', $buscar, 'both');
+        $this->db->or_like('hora_vcot', $buscar, 'both');
+        $this->db->or_like('estado_borrador', $buscar, 'both');
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     public function all_totalpendientes_count()
     {
         $this->db->where('estado_borrador', 'Pendiente');
         $query = $this->db->get('cotizador_borradores');
+        return $query->num_rows();
+    }
+
+    public function all_totalpendientes($limite, $iniciar)
+    {
+        $this->db->where('estado_borrador', 'Pendiente');
+        $this->db->limit($limite, $iniciar);
+        $query = $this->db->get('cotizador_borradores');
+
+        if($query->num_rows() > 0)
+        {
+            return $query->result();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public function totalpendientes_search($limite, $iniciar, $buscar)
+    {
+        $this->db->from('cotizador_borradores');
+
+        $this->db->group_start();
+        $this->db->like('folio_cotizacion', $buscar, 'both');
+        $this->db->or_like('tipocliente_cot', $buscar, 'both');
+        $this->db->or_like('idcliente_cot', $buscar, 'both');
+        $this->db->or_like('nombrecliente_cot', $buscar, 'both');
+        $this->db->or_like('fecha_vcot', $buscar, 'both');
+        $this->db->or_like('hora_vcot', $buscar, 'both');
+        $this->db->or_like('estado_borrador', $buscar, 'both');
+        $this->db->group_end();
+
+        $this->db->where('estado_borrador', 'Pendiente');
+        $this->db->limit($limite, $iniciar);
+
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+        {
+            return $query->result();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public function totalpendientes_search_count($buscar)
+    {
+        $this->db->from('cotizador_borradores');
+
+        $this->db->group_start();
+        $this->db->like('folio_cotizacion', $buscar, 'both');
+        $this->db->or_like('tipocliente_cot', $buscar, 'both');
+        $this->db->or_like('idcliente_cot', $buscar, 'both');
+        $this->db->or_like('nombrecliente_cot', $buscar, 'both');
+        $this->db->or_like('fecha_vcot', $buscar, 'both');
+        $this->db->or_like('hora_vcot', $buscar, 'both');
+        $this->db->or_like('estado_borrador', $buscar, 'both');
+        $this->db->group_end();
+
+        $this->db->where('estado_borrador', 'Pendiente');
+
+        $query = $this->db->get();
         return $query->num_rows();
     }
 
@@ -32,8 +151,9 @@ class mad_cotizador extends CI_Model
         return $query->num_rows();
     }
 
-    public function all_cotizaciones($limite, $iniciar)
+    public function all_totalterminadas($limite, $iniciar)
     {
+        $this->db->where('estado_borrador', 'Terminada');
         $this->db->limit($limite, $iniciar);
         $query = $this->db->get('cotizador_borradores');
 
@@ -47,16 +167,21 @@ class mad_cotizador extends CI_Model
         }
     }
 
-    public function cotizaciones_search($limite, $iniciar, $buscar)
+    public function totalterminadas_search($limite, $iniciar, $buscar)
     {
         $this->db->from('cotizador_borradores');
-        $this->db->like('folio_cotizaciones', $buscar, 'both');
+
+        $this->db->group_start();
+        $this->db->like('folio_cotizacion', $buscar, 'both');
         $this->db->or_like('tipocliente_cot', $buscar, 'both');
         $this->db->or_like('idcliente_cot', $buscar, 'both');
         $this->db->or_like('nombrecliente_cot', $buscar, 'both');
         $this->db->or_like('fecha_vcot', $buscar, 'both');
         $this->db->or_like('hora_vcot', $buscar, 'both');
         $this->db->or_like('estado_borrador', $buscar, 'both');
+        $this->db->group_end();
+
+        $this->db->where('estado_borrador', 'Terminada');
         $this->db->limit($limite, $iniciar);
 
         $query = $this->db->get();
@@ -71,19 +196,24 @@ class mad_cotizador extends CI_Model
         }
     }
 
-    public function cotizaciones_search_count($buscar)
+    public function totalterminadas_search_count($buscar)
     {
         $this->db->from('cotizador_borradores');
-        $this->db->like('folio_cotizaciones', $buscar, 'both');
+
+        $this->db->group_start();
+        $this->db->like('folio_cotizacion', $buscar, 'both');
         $this->db->or_like('tipocliente_cot', $buscar, 'both');
         $this->db->or_like('idcliente_cot', $buscar, 'both');
         $this->db->or_like('nombrecliente_cot', $buscar, 'both');
         $this->db->or_like('fecha_vcot', $buscar, 'both');
         $this->db->or_like('hora_vcot', $buscar, 'both');
         $this->db->or_like('estado_borrador', $buscar, 'both');
+        $this->db->group_end();
+
+        $this->db->where('estado_borrador', 'Terminada');
 
         $query = $this->db->get();
-        return $query->result();
+        return $query->num_rows();
     }
 
     public function totalpendientes()
@@ -124,7 +254,7 @@ class mad_cotizador extends CI_Model
 
     public function verdatoshtml($folio_cotizacion)
     {
-        $this->db->where('folio_cotizaciones', $folio_cotizacion);
+        $this->db->where('folio_cotizacion', $folio_cotizacion);
         $query = $this->db->get('tablahtml_borrador');
         return $query->result_array();
     }

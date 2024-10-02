@@ -62,30 +62,7 @@
                 </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item menu-close">
-            <a href="#" class="nav-link">
-              <i class="fa-solid fa-truck-front"></i>
-              <p>
-                Consulta General
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?= base_url() ?>consultas/cconsulta_fechas" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Consultas por Fecha</p> <!-- Esto mostrara todos los productos -->
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Consultas por Mes</p> <!-- Esta opción mostrara los productos ordenados por categoria-->
-                </a>
-              </li>
-            </ul>
-          </li>
+          </li>         
           <li class="nav-item menu-close">
             <a href="#" class="nav-link">
               <i class="fa-solid fa-handshake"></i>
@@ -114,7 +91,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li>          
           <li class="nav-item menu-close">
             <a href="#" class="nav-link">
             <i class="fa-solid fa-table"></i>
@@ -134,6 +111,29 @@
                 <a href="<?= base_url() ?>cotizador/cad_cotizador" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Administrar Cotizador</p> <!-- Esta opción mostrara los productos ordenados por categoria-->
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item menu-close">
+            <a href="#" class="nav-link">
+              <i class="fa-solid fa-truck-front"></i>
+              <p>
+                Consulta General
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url() ?>consultas/cconsulta_fechas" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Consultas por Fecha</p> <!-- Esto mostrara todos los productos -->
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Consultas por Mes</p> <!-- Esta opción mostrara los productos ordenados por categoria-->
                 </a>
               </li>
             </ul>

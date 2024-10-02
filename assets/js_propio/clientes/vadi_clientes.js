@@ -3,8 +3,10 @@ $(document).ready(function()
     //CONFIGURACIÓN DE DATATABLES
     var tabla = $('#tabla_vadi').DataTable({
         language:{
-            'emptyTable': 'No hay datos disponibles'
+            'emptyTable': 'No hay datos disponibles',
+            'zeroRecords': 'No se encontrarion coincidencias'
         },
+        'autoWidth': false,
         'processing': true,
         'serverSide': true,
         'ordering': false,

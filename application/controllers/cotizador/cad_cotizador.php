@@ -15,7 +15,7 @@ class cad_cotizador extends CI_Controller
     public function index()
     {
         $this->data['totalpendientes'] = $this->mad_cotizador->totalpendientes();
-        $this->data['totalterminadas'] = $this->mad_cotizador->totalcotizaciones();
+        $this->data['totalterminadas'] = $this->mad_cotizador->totalterminadas();
         $this->data['totalcotizaciones'] = $this->mad_cotizador->totalcotizaciones();
         $this->load->view('layouts/header');
         $this->load->view('layouts/content');
@@ -44,18 +44,18 @@ class cad_cotizador extends CI_Controller
         $limite = $this->input->post('length');
         $iniciar = $this->input->post('start');
 
-        $totaldata = $this->mad_cotizador->all_cotizaciones_count();
+        $totaldata = $this->mad_cotizador->all_totalcotizaciones_count();
         $totalfiltered = $totaldata;
 
         if(empty($this->input->post('search')['value']))
         {
-            $totalcotizaciones = $this->mad_cotizador->all_cotizaciones($limite, $iniciar);
+            $totalcotizaciones = $this->mad_cotizador->all_totalcotizaciones($limite, $iniciar);
         }
         else
         {
             $buscar = $this->input->post('search')['value'];
-            $totalcotizaciones = $this->mad_cotizador->cotizaciones_search($limite, $iniciar, $buscar);
-            $totalfiltered = $this->mad_cotizador->cotizaciones_search_count($buscar);
+            $totalcotizaciones = $this->mad_cotizador->totalcotizaciones_search($limite, $iniciar, $buscar);
+            $totalfiltered = $this->mad_cotizador->totalcotizaciones_search_count($buscar);
         }
 
         $datos = array();
@@ -104,13 +104,13 @@ class cad_cotizador extends CI_Controller
 
         if(!empty($this->input->post('search')['value']))
         {
-            $totalpendientes = $this->mad_cotizador->all_cotizaciones($limite, $iniciar);
+            $totalpendientes = $this->mad_cotizador->all_totalpendientes($limite, $iniciar);
         }
         else
         {
             $buscar = $this->input->post('search')['value'];
-            $totalcotizaciones = $this->mad_cotizador->cotizaciones_search($limite, $iniciar, $buscar);
-            $totalfiltered = $this->mad_cotizador->cotizaciones_search_count($buscar);
+            $totalpendientes = $this->mad_cotizador->totalpendientes_search($limite, $iniciar, $buscar);
+            $totalfiltered = $this->mad_cotizador->totalpendientes_search_count($buscar);
         }
 
         $datos = array();
@@ -139,9 +139,62 @@ class cad_cotizador extends CI_Controller
         echo json_encode($json_data);
     }
 
+    public function tabla_totalterminadas()
+    {
+        $columnas = [
+            'folio_cotizacion',
+            'tipocliente_cot',
+            'idcliente_cot',
+            'nombrecliente_cot',
+            'fecha_vcot',
+            'hora_vcot',
+            'estado_borrador'
+        ];
+
+        $limite = $this->input->post('length');
+        $iniciar = $this->input->post('start');
+
+        $totaldata = $this->mad_cotizador->all_totalterminadas_count();
+        $totalfiltered = $totaldata;
+
+        if(!empty($this->input->post('search')['value']))
+        {
+            $totalterminadas = $this->mad_cotizador->all_totalterminadas($limite, $iniciar);
+        }
+        else
+        {
+            $buscar = $this->input->post('search')['value'];
+            $totalterminadas = $this->mad_cotizador->totalterminadas_search($limite, $iniciar, $buscar);
+            $totalfiltered = $this->mad_cotizador->totalterminadas_search_count($buscar);
+        }
+
+        $datos = array();
+        if(!empty($totalterminadas))
+        {
+            foreach($totalterminadas as $totalterminada){
+                $vdata['folio_cotizacion'] = $totalterminada->folio_cotizacion;
+                $vdata['tipocliente_cot'] = $totalterminada->tipocliente_cot;
+                $vdata['idcliente_cot'] = $totalterminada->idcliente_cot;
+                $vdata['nombrecliente_cot'] = $totalterminada->nombrecliente_cot;
+                $vdata['fecha_vcot'] = $totalterminada->fecha_vcot;
+                $vdata['hora_vcot'] = $totalterminada->hora_vcot;
+                $vdata['estado_borrador'] = $totalterminada->estado_borrador;
+
+                $datos[] = $vdata;
+            }
+        }
+
+        $json_data = array(
+            'draw' => intval($this->input->post('draw')),
+            'recordsTotal' => intval($totaldata),
+            'recordsFiltered' => intval($totalfiltered),
+            'data' => $datos
+        );
+    }
+
     public function modificarformulas()
     {
-        $datos = $this->mad_otizador->modificarformulas();
+        $datos = $this->mad_cotizador->modificarformulas();
         echo json_encode($datos);
     }
 

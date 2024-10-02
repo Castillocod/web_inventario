@@ -5,6 +5,7 @@ $(document).ready(function() {
         language:{
             'emptyTable': 'No hay datos disponibles'
         },
+        'autoWidth': false,
         'processing': true,
         'serverSide': true,
         'ordering': false,
@@ -13,10 +14,8 @@ $(document).ready(function() {
             'type': 'POST',
             'dataType': 'JSON',
             'error': function(xhr, error, code){
-                alert('Error al hacer la petición');
+                alert('Error al hacer la petición de cotizaciones');
                 console.error('Error:', error);
-                console.xhr('XHR:', xhr);
-                console.code('Code:', code);
 
                 if(xhr.responseText){
                     console.error('Respuesta del error:', xhr.responseText);
@@ -47,9 +46,9 @@ $(document).ready(function() {
                 $(td).addClass('text-center').html('<span id="celda_estado_borrador" style="font-weight: bold; font-size: 11px">'+cellData+'</span>');
 
                 if(estado_borrador === 'Pendiente'){
-                    $(td).find('span').addClass('badge badge-success');
+                    $(td).find('span').addClass('badge badge-danger');
                 } else if(estado_borrador === 'Terminada'){
-                    $(td).find('span').addClass('badge badge-warning');
+                    $(td).find('span').addClass('badge badge-success');
                 }
             }},
             {'data': null,
@@ -58,8 +57,8 @@ $(document).ready(function() {
                 'createdCell': function(td, cellData, rowData, row, col)
                 {
                     var folio_cotizacion = rowData.folio_cotizacion;
-                    var botonver_totalcotizaciones = `<button class="btn btn-success btnver_listacot fa-regular fa-eye" id="" name="btnver_listacot" data-bs-toggle="modal" data-bs-target="#modal_vercotizacion" onclick="datoscotizacion(${folio_cotizacion})" value="${folio_cotizacion}" style="width: 15px;"></button>`;
-                    var botonir_totalcotizaciones = `<button class="btn btn-primary fa-solid fa-arrow-right" id="btn_mandardatoslista" name="" value="${folio_cotizacion}" onclick="datosborradorlista(${folio_cotizacion})"></button>`;
+                    var botonver_totalcotizaciones = `<button class="btn btn-success btnver_listacot fa-regular fa-eye" id="" name="btnver_listacot" data-bs-toggle="modal" data-bs-target="#modal_vercotizacion" onclick="datoscotizacion(${folio_cotizacion})" style="width: 15px;"></button>`;
+                    var botonir_totalcotizaciones = `<button class="btn btn-primary fa-solid fa-arrow-right" id="btn_mandardatoslista" name="" onclick="datosborradorlista(${folio_cotizacion})"></button>`;
                     $(td).addClass('text-center').html(botonver_totalcotizaciones + '<div style="padding-top: 3px;">' + botonir_totalcotizaciones + '</div>');
                 }
             }
@@ -72,8 +71,11 @@ $(document).ready(function() {
         },
         'drawCallback': function(settings){
             var pagination = $('.pagination');
-            pagination.attr('id', 'pagination_totalesvcot');
-            $('#pagination_totalcotizaciones').html('');
+            if($('#pagination_totalcotizaciones').children().length === 0)
+            {
+                pagination.attr('id', 'pagination_totalesvcot');
+                $('#pagination_totalcotizaciones').append(pagination);
+            }            
         }
     });
 
@@ -87,6 +89,7 @@ $(document).ready(function() {
         language:{
             'emptyTable': 'No hay datos disponibles'
         },
+        'autoWidth': false,
         'processing': true,
         'serverSide': true,
         'ordering': false,
@@ -95,10 +98,8 @@ $(document).ready(function() {
             'type': 'POST',
             'dataType': 'JSON',
             'error': function(xhr, error, code){
-                alert('Error al hacer la petición');
+                alert('Error al hacer la petición de pendientes');
                 console.error('Error:', error);
-                console.xhr('XHR:', xhr);
-                console.code('Código:', code);
 
                 if(xhr.responseText)
                 {
@@ -130,9 +131,9 @@ $(document).ready(function() {
                 $(td).addClass('text-center').html('<span id="celda_estado_borrador" style="font-weight: bold; font-size: 11px">'+cellData+'</span>');
 
                 if(estado_borrador === 'Pendiente'){
-                    $(td).find('span').addClass('badge badge-success');
+                    $(td).find('span').addClass('badge badge-danger');
                 } else if(estado_borrador === 'Terminada'){
-                    $(td).find('span').addClass('badge badge-warning');
+                    $(td).find('span').addClass('badge badge-success');
                 }
             }},
             {'data': null,
@@ -141,12 +142,11 @@ $(document).ready(function() {
                 'createdCell': function(td, cellData, rowData, row, col)
                 {
                     var folio_cotizacion = rowData.folio_cotizacion;
-                    var botonver_totalpendientes = `<button class="btn btn-success btnver_pendientes fa-regular fa-eye" id="" name="" data-bs-toggle="modal" data-bs-target="#modal_verpendientes_cot" value="${folio_cotizacion}" onclick="datospendientes(${folio_cotizacion})" style="width: 15px;"></button>`;
-                    var botonir_totalpendientes = `<button class="btn btn-primary fa-solid fa-arrow-right" id="" name="" value="${folio_cotizacion}" onclick="datosborradorlista(${folio_cotizacion})"></button>`;
+                    var botonver_totalpendientes = `<button class="btn btn-success btnver_pendientes fa-regular fa-eye" id="" name="" data-bs-toggle="modal" data-bs-target="#modal_verpendientes_cot" onclick="datospendientes(${folio_cotizacion})" style="width: 15px;"></button>`;
+                    var botonir_totalpendientes = `<button class="btn btn-primary fa-solid fa-arrow-right" id="" name="" onclick="datosborradorlista(${folio_cotizacion})"></button>`;
                     $(td).addClass('text-center').html(botonver_totalpendientes + '<div style="padding-top: 3px;">' + botonir_totalpendientes + '</div>');
                 }
             }
-
         ],
         'dom': 'rt<"bottom"p>',
         'initComplete': function(){
@@ -156,8 +156,11 @@ $(document).ready(function() {
         },
         'drawCallback': function(settings){
             var pagination = $('.pagination');
-            pagination.attr('id', 'pagination_pendientesvcot');
-            $('#pagination_totalpendientes').html('');
+            if($('#pagination_totalpendientes').children().length === 0)
+            {
+                pagination.attr('id', 'pagination_pendientesvcot');
+                $('#pagination_totalpendientes').append(pagination);
+            }            
         }
     });
 
@@ -171,6 +174,7 @@ $(document).ready(function() {
         language:{
             'emptyTable': 'No hay datos disponibles'
         },
+        'autoWidth': false,
         'processing': true,
         'serverSide': true,
         'ordering': false,
@@ -179,10 +183,8 @@ $(document).ready(function() {
             'type': 'POST',
             'dataType': 'JSON',
             'error': function(xhr, error, code){
-                alert('Error al hacer la petición');
-                console.error('Error:', error);
-                console.xhr('XHR:', xhr);
-                console.code('Código:', code);
+                // alert('Error al hacer la petición de terminadas');
+                // console.error('Error:', error);
 
                 if(xhr.responseText)
                 {
@@ -214,9 +216,9 @@ $(document).ready(function() {
                 $(td).addClass('text-center').html('<span id="celda_estado_borrador" style="font-weight: bold; font-size: 11px">'+cellData+'</span>');
 
                 if(estado_borrador === 'Pendiente'){
-                    $(td).find('span').addClass('badge badge-success');
+                    $(td).find('span').addClass('badge badge-danger');
                 } else if(estado_borrador === 'Terminada'){
-                    $(td).find('span').addClass('badge badge-warning');
+                    $(td).find('span').addClass('badge badge-success');
                 }
             }},
             {'data': null,
@@ -225,8 +227,8 @@ $(document).ready(function() {
                 'createdCell': function(td, cellData, rowData, row, col)
                 {
                     var folio_cotizacion = rowData.folio_cotizacion;
-                    var botonver_totalterminadas = `<button class="btn btn-success btnver_terminadas fa-regular fa-eye" id="" name="" value="${folio_cotizacion}" data-bs-toggle="modal" data-bs-target="#modal_verterminadas_cot" onclick="datosterminadas(${folio_cotizacion})" style="width: 15px;"></button>`;
-                    var botonir_totalterminadas = `<button class="btn btn-primary fa-solid fa-arrow-right" id="" name="" value="${folio_cotizacion}" onclick="datosborradorlista(${folio_cotizacion})"></button>`;
+                    var botonver_totalterminadas = `<button class="btn btn-success btnver_terminadas fa-regular fa-eye" id="" name="" data-bs-toggle="modal" data-bs-target="#modal_verterminadas_cot" onclick="datosterminadas(${folio_cotizacion})" style="width: 15px;"></button>`;
+                    var botonir_totalterminadas = `<button class="btn btn-primary fa-solid fa-arrow-right" id="" name="" onclick="datosborradorlista(${folio_cotizacion})"></button>`;
                     $(td).addClass('text-center').html(botonver_totalterminadas + '<div style="padding-top: 3px;">' + botonir_totalterminadas + '</div>');
                 }
             }
@@ -239,8 +241,11 @@ $(document).ready(function() {
         },
         'drawCallback': function(settings){
             var pagination = $('.pagination');
-            pagination.attr('id', 'pagination_terminadasvcot');
-            $('#pagination_totalterminadas').html('');
+            if($('#pagination_totalterminadas').children().length === 0)
+            {
+                pagination.attr('id', 'pagination_terminadasvcot');
+            $('#pagination_totalterminadas').append(pagination);
+            }            
         }
     });
 
@@ -453,7 +458,7 @@ function modificarformulas()
 function datoscotizacion(folio_cotizacion)
 {
     $('#vad_formcotizacion')[0].reset();
-    $('#vcotizador_table tbody').html('');
+    $('#tablaver_cotizaciones tbody').html('');
 
     $.ajax({
         url: 'cad_cotizador/verdatoscotizacion/' + folio_cotizacion,
@@ -475,18 +480,17 @@ function datoscotizacion(folio_cotizacion)
             var htmlcotizacion = '';
             $.each(data.datostablahtml, function(index, value) {
                 htmlcotizacion += '<tr>';
-                htmlcotizacion += '<td>'+value.folio_cotizacion+'</td>';
-                htmlcotizacion += '<td style="display: none;">'+value.idproducto_cot+'</td>';
-                htmlcotizacion += '<td style="display: none;">'+value.modeloprod_cot+'</td>';
-                htmlcotizacion += '<td>'+value.nombreprod_cot+'</td>';
-                htmlcotizacion += '<td>'+value.cantidadprod_cot+'</td>';
-                htmlcotizacion += '<td>'+value.tipoprecio_cot+'</td>';
-                htmlcotizacion += '<td>'+value.preciomxn_cot+'</td>';
-                htmlcotizacion += '<td>'+value.preciousd_cot+'</td>';
+                htmlcotizacion += '<td class="text-center">'+value.folio_cotizacion+'</td>';
+                htmlcotizacion += '<td class="text-center" style="display: none;">'+value.idproducto_cot+'</td>';
+                htmlcotizacion += '<td class="text-center" style="display: none;">'+value.modeloprod_cot+'</td>';
+                htmlcotizacion += '<td class="text-center">'+value.nombreprod_cot+'</td>';
+                htmlcotizacion += '<td class="text-center">'+value.cantidadprod_cot+'</td>';
+                htmlcotizacion += '<td class="text-center">'+value.tipoprecio_cot+'</td>';
+                htmlcotizacion += '<td class="text-center">'+value.preciomxn_cot+'</td>';
+                htmlcotizacion += '<td class="text-center">'+value.preciousd_cot+'</td>';
                 htmlcotizacion += '</tr>';
             });
-            $('#vcotizador_table tbody').html(htmlcotizacion);
-
+            $('#tablaver_cotizaciones tbody').html(htmlcotizacion);
             $('#modal_vercotizacion').modal();
         },
         error: function(xhr, status, error){
@@ -494,13 +498,13 @@ function datoscotizacion(folio_cotizacion)
         },
     });
     $('#vad_formcotizacion')[0].reset();
-    $('#vcotizador_table tbody').html('');
+    $('#tablaver_cotizaciones tbody').html('');
 }
 
 function datospendientes(folio_cotizacion)
 {
     $('#vadpendientes_formcotizacion')[0].reset();
-    $('#vpendientes_table tbody').html('');
+    $('#tablaver_pendientes tbody').html('');
 
     $.ajax({
         url: 'cad_cotizador/verdatoscotizacion/' + folio_cotizacion,
@@ -515,24 +519,24 @@ function datospendientes(folio_cotizacion)
             $('[name="subtotal_pen"]').val(data.datoscotizaciones.subtotal_cot);
             $('[name="iva_pen"]').val(data.datoscotizaciones.iva_cot);
             $('[name="total_pen"]').val(data.datoscotizaciones.total_cot);
-            $('[name="fecha_pen"]').val(data.datoscotizaciones.fecha);
-            $('[name="hora_pen"]').val(data.datoscotizaciones.hora);
+            $('[name="fecha_pen"]').val(data.datoscotizaciones.fecha_vcot);
+            $('[name="hora_pen"]').val(data.datoscotizaciones.hora_vcot);
             $('[name="estado_pen"]').val(data.datoscotizaciones.estado_borrador);
 
             var htmlpendientes = '';
             $.each(data.datostablahtml, function(index, value){
                 htmlpendientes += '<tr>';
-                htmlpendientes += '<td>'+value.folio_cotizacion+'</td>';
-                htmlpendientes += '<td style="display: none;">'+value.idproducto_cot+'</td>';
-                htmlpendientes += '<td style="display: none;">'+value.modeloprod_cot+'</td>';
-                htmlpendientes += '<td>'+value.nombreprod_cot+'</td>';
-                htmlpendientes += '<td>'+value.cantidadprod_cot+'</td>';
-                htmlpendientes += '<td>'+value.tipoprecio_cot+'</td>';
-                htmlpendientes += '<td>'+value.preciomxn_cot+'</td>';
-                htmlpendientes += '<td>'+value.preciousd_cot+'</td>';
+                htmlpendientes += '<td class="text-center">'+value.folio_cotizacion+'</td>';
+                htmlpendientes += '<td class="text-center" style="display: none;">'+value.idproducto_cot+'</td>';
+                htmlpendientes += '<td class="text-center" style="display: none;">'+value.modeloprod_cot+'</td>';
+                htmlpendientes += '<td class="text-center">'+value.nombreprod_cot+'</td>';
+                htmlpendientes += '<td class="text-center">'+value.cantidadprod_cot+'</td>';
+                htmlpendientes += '<td class="text-center">'+value.tipoprecio_cot+'</td>';
+                htmlpendientes += '<td class="text-center">'+value.preciomxn_cot+'</td>';
+                htmlpendientes += '<td class="text-center">'+value.preciousd_cot+'</td>';
                 htmlpendientes += '</tr>';
             });
-            $('#vpendientes_table tbody').html(htmlpendientes);
+            $('#tablaver_pendientes tbody').html(htmlpendientes);
             $('#modal_verpendientes_cot').modal();
         },
         error: function(xhr, status, error){
@@ -541,13 +545,13 @@ function datospendientes(folio_cotizacion)
     });
 
     $('#vadpendientes_formcotizacion')[0].reset();
-    $('#vpendientes_table tbody').html('');
+    $('#tablaver_pendientes tbody').html('');
 }
 
 function datosterminadas(folio_cotizacion)
 {
     $('#vadterminadas_formcotizacion')[0].reset();
-    $('#vterminadas_table tbody').html('');
+    $('#tablaver_terminadas tbody').html('');
 
     $.ajax({
         url: 'cad_cotizador/verdatoscotizacion/' + folio_cotizacion,
@@ -562,24 +566,24 @@ function datosterminadas(folio_cotizacion)
             $('[name="subtotal_ter"]').val(data.datoscotizaciones.subtotal_cot);
             $('[name="iva_ter"]').val(data.datoscotizaciones.iva_cot);
             $('[name="total_ter"]').val(data.datoscotizaciones.total_cot);
-            $('[name="fecha_ter"]').val(data.datoscotizaciones.fecha);
-            $('[name="hora_ter"]').val(data.datoscotizaciones.hora);
+            $('[name="fecha_ter"]').val(data.datoscotizaciones.fecha_vcot);
+            $('[name="hora_ter"]').val(data.datoscotizaciones.hora_vcot);
             $('[name="estado_ter"]').val(data.datoscotizaciones.estado_borrador);
 
             var htmlterminadas = '';
             $.each(data.datostablahtml, function(index, value){
                 htmlterminadas += '<tr>';
-                htmlterminadas += '<td>'+value.folio_cotizacion+'</td>';
-                htmlterminadas += '<td style="display: none;">'+value.idproducto_cot+'</td>';
-                htmlterminadas += '<td style="display: none;">'+value.modeloprod_cot+'</td>';
-                htmlterminadas += '<td>'+value.nombreprod_cot+'</td>';
-                htmlterminadas += '<td>'+value.cantidadprod_cot+'</td>';
-                htmlterminadas += '<td>'+value.tipoprecio_cot+'</td>';
-                htmlterminadas += '<td>'+value.preciomxn_cot+'</td>';
-                htmlterminadas += '<td>'+value.preciousd_cot+'</td>';
+                htmlterminadas += '<td class="text-center">'+value.folio_cotizacion+'</td>';
+                htmlterminadas += '<td class="text-center" style="display: none;">'+value.idproducto_cot+'</td>';
+                htmlterminadas += '<td class="text-center" style="display: none;">'+value.modeloprod_cot+'</td>';
+                htmlterminadas += '<td class="text-center">'+value.nombreprod_cot+'</td>';
+                htmlterminadas += '<td class="text-center">'+value.cantidadprod_cot+'</td>';
+                htmlterminadas += '<td class="text-center">'+value.tipoprecio_cot+'</td>';
+                htmlterminadas += '<td class="text-center">'+value.preciomxn_cot+'</td>';
+                htmlterminadas += '<td class="text-center">'+value.preciousd_cot+'</td>';
                 htmlterminadas += '</tr>';
             });
-            $('#vterminadas_table tbody').html(htmlterminadas);
+            $('#tablaver_terminadas tbody').html(htmlterminadas);
             $('#modal_verterminadas_cot').modal();
         },
         error: function(xhr, status, error){
@@ -592,7 +596,7 @@ function datosterminadas(folio_cotizacion)
     
 
     $('#vadterminadas_formcotizacion')[0].reset();
-    $('#vterminadas_table tbody').html('');
+    $('#tablaver_terminadas tbody').html('');
 }
 
 function datosborradorlista(folio_cotizacion)
@@ -718,18 +722,3 @@ function mensajeborrador()
 		}
 	});
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    var celdaestado_cot = document.querySelectorAll('#celdaestado_cot');
-
-    celdaestado_cot.forEach(function(celdacot){
-        var estadocot = celdacot.textContent.trim();
-
-        if (estadocot === 'Pendiente'){
-            celdacot.classList.add('badge', 'badge-danger');
-        } else if (estadocot === 'Terminada') {
-            celdacot.classList.add('badge', 'badge-success');
-        }
-    });
-});
-

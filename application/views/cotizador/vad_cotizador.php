@@ -74,13 +74,13 @@
                                 <h3 class="panel-title">Lista de Cotizaciones</h3>
                             </div><br>
                             <div class="row dt-search">
-                                <div>
+                                <div class="d-flex justify-content-start">
                                     <label for="dt-search-0">Buscar:</label>                                    
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4">
                                     <input type="search" class="form-control" id="dt-search-0" name="dt_buscar_totalcotizaciones" placeholder="Escriba para buscar..." aria-controls="tabla_totalcotizaciones">
                                 </div>
-                                <div class="col-6 d-flex justify-content-end">
+                                <div class="col-8 d-flex justify-content-end">
                                     <div class="dt-length text-center">
                                         <div class="input-group">
                                             <h5 style="padding-top: 5px; padding-right: 5px;">Ver:</h5>
@@ -93,19 +93,19 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div><br>                            
                             <div class="table-responsive">
-                                <table class="table table-striped table-sm" id="tabla_totalcotizaciones">
+                                <table class="table table-striped" id="tabla_totalcotizaciones">
                                     <thead>
                                         <tr>
-                                            <th>Folio</th>
-                                            <th>Tipo de Cliente</th>
-                                            <th>ID de Cliente</th>
-                                            <th>Nombre del Cliente</th>
-                                            <th>Fecha</th>
-                                            <th>Hora</th>
-                                            <th>Estado</th>
-                                            <th>Opciones</th>
+                                            <th class="text-center">Folio</th>
+                                            <th class="text-center">Tipo de Cliente</th>
+                                            <th class="text-center">ID de Cliente</th>
+                                            <th class="text-center">Nombre del Cliente</th>
+                                            <th class="text-center">Fecha</th>
+                                            <th class="text-center">Hora</th>
+                                            <th class="text-center">Estado</th>
+                                            <th class="text-center">Opciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -309,17 +309,17 @@
                             </div><br>
                             <div class="row d-flex justify-content-between">
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-sm" id="vcotizador_table">
+                                    <table class="table table-striped table-sm" id="tablaver_cotizaciones">
                                         <thead>
                                             <tr>
-                                                <th>Folio</th>
-                                                <th style="display: none;">ID Producto</th>
-                                                <th style="display: none;">Modelo</th>
-                                                <th>Producto</th>
-                                                <th>Cantidad</th> <!-- Se rellenara cargando una carpeta de imagenes en assets -->
-                                                <th>Tipo de Precio</th>
-                                                <th>Precio MXN</th>
-                                                <th>Precio USD</th>
+                                                <th class="text-center">Folio</th>
+                                                <th class="text-center" style="display: none;">ID Producto</th>
+                                                <th class="text-center" style="display: none;">Modelo</th>
+                                                <th class="text-center">Producto</th>
+                                                <th class="text-center">Cantidad</th> <!-- Se rellenara cargando una carpeta de imagenes en assets -->
+                                                <th class="text-center">Tipo de Precio</th>
+                                                <th class="text-center">Precio MXN</th>
+                                                <th class="text-center">Precio USD</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -382,13 +382,13 @@
                     <div class="modal-body">                        
                         <form method="post" action="" id="vad_formpendientes" enctype="multipart/form-data">
                             <div class="row dt-search">
-                                <div>
+                                <div class="d-flex justify-content-start">
                                     <label for="dt-search-0">Buscar:</label>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4">
                                     <input type="search" class="form-control" id="dt-search-0" name="dt_buscar_totalpendientes" placeholder="Escriba para buscar..." aria-controls="tabla_totalpendientes">
                                 </div>
-                                <div class="col-6 d-flex justify-content-end">
+                                <div class="col-8 d-flex justify-content-end">
                                     <div class="dt-length text-center">
                                         <div class="input-group">
                                             <h5 style="padding-top: 5px; padding-right: 5px;">Ver:</h5>
@@ -401,19 +401,19 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div><br>  
                             <div class="table-responsive">
-                                <table class="table table-striped table-sm" id="tabla_totalpendientes">
+                                <table class="table table-striped" id="tabla_totalpendientes">
                                     <thead>
                                         <tr>
-                                            <th>Folio</th>
-                                            <th>Tipo de Cliente</th>
-                                            <th>ID de Cliente</th>
-                                            <th>Nombre del Cliente</th>
-                                            <th>Fecha</th>
-                                            <th>Hora</th>
-                                            <th>Estado</th>
-                                            <th>Opciones</th>
+                                            <th class="text-center">Folio</th>
+                                            <th class="text-center">Tipo de Cliente</th>
+                                            <th class="text-center">ID de Cliente</th>
+                                            <th class="text-center">Nombre del Cliente</th>
+                                            <th class="text-center">Fecha</th>
+                                            <th class="text-center">Hora</th>
+                                            <th class="text-center">Estado</th>
+                                            <th class="text-center">Opciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>                                            
@@ -429,7 +429,8 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div><br>
+                            </div>                                                      
+                            <br>
                             <div class="row">
                                 <div class="d-flex justify-content-end" id="pagination_totalpendientes">
 
@@ -482,14 +483,14 @@
                                     <table class="table table-striped table-sm" id="tablaver_pendientes">
                                         <thead>
                                             <tr>
-                                                <th>Folio</th>
-                                                <th style="display: none;">ID Producto</th>
-                                                <th style="display: none;">Modelo</th>
-                                                <th>Producto</th>
-                                                <th>Cantidad</th> <!-- Se rellenara cargando una carpeta de imagenes en assets -->
-                                                <th>Tipo de Precio</th>
-                                                <th>Precio MXN</th>
-                                                <th>Precio USD</th>
+                                                <th class="text-center">Folio</th>
+                                                <th class="text-center" style="display: none;">ID Producto</th>
+                                                <th class="text-center" style="display: none;">Modelo</th>
+                                                <th class="text-center">Producto</th>
+                                                <th class="text-center">Cantidad</th> <!-- Se rellenara cargando una carpeta de imagenes en assets -->
+                                                <th class="text-center">Tipo de Precio</th>
+                                                <th class="text-center">Precio MXN</th>
+                                                <th class="text-center">Precio USD</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -576,14 +577,14 @@
                                 <table class="table table-striped table-sm" id="tabla_totalterminadas">
                                     <thead>
                                         <tr>
-                                            <th>Folio</th>
-                                            <th>Tipo de Cliente</th>
-                                            <th>ID de Cliente</th>
-                                            <th>Nombre del Cliente</th>
-                                            <th>Fecha</th>
-                                            <th>Hora</th>
-                                            <th>Estado</th>
-                                            <th>Opciones</th>
+                                            <th class=text-center>Folio</th>
+                                            <th class="text-center">Tipo de Cliente</th>
+                                            <th class="text-center">ID de Cliente</th>
+                                            <th class="text-center">Nombre del Cliente</th>
+                                            <th class="text-center">Fecha</th>
+                                            <th class="text-center">Hora</th>
+                                            <th class="text-center">Estado</th>
+                                            <th class="text-center">Opciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -652,14 +653,14 @@
                                     <table class="table table-striped table-sm" id="tablaver_terminadas">
                                         <thead>
                                             <tr>
-                                                <th>Folio</th>
-                                                <th style="display: none;">ID Producto</th>
-                                                <th style="display: none;">Modelo</th>
-                                                <th>Producto</th>
-                                                <th>Cantidad</th> <!-- Se rellenara cargando una carpeta de imagenes en assets -->
-                                                <th>Tipo de Precio</th>
-                                                <th>Precio MXN</th>
-                                                <th>Precio USD</th>
+                                                <th class="text-center">Folio</th>
+                                                <th class="text-center" style="display: none;">ID Producto</th>
+                                                <th class="text-center" style="display: none;">Modelo</th>
+                                                <th class="text-center">Producto</th>
+                                                <th class="text-center">Cantidad</th> <!-- Se rellenara cargando una carpeta de imagenes en assets -->
+                                                <th class="text-center">Tipo de Precio</th>
+                                                <th class="text-center">Precio MXN</th>
+                                                <th class="text-center">Precio USD</th>
                                             </tr>
                                         </thead>
                                         <tbody>

@@ -277,7 +277,7 @@
                             <div class="modal-body">
                                 <form action="<?= base_url()?>almacen/cproductos/importexcel_vprod" enctype="multipart/form-data" method="post">
                                     <div class="mb-3">
-                                    <input type="file" name="file_excel" required />
+                                        <input type="file" name="file_excel" required />
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>

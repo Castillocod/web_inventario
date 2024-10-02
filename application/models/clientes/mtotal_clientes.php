@@ -187,7 +187,7 @@ class mtotal_clientes extends CI_Model
     {
         $this->db->where('fecha_vtotal >=', $fechauno_actvtotal);
         $this->db->where('fecha_vtotal <=', $fechados_actvtotal);
-        $this->db->where('disponible_vtotal', 'ACTIVO');
+        $this->db->where('disponible_vtotal', 'DISPONIBLE');
         $query = $this->db->get('clientes_totalclientes');
         return $query->result();
     }
@@ -195,14 +195,14 @@ class mtotal_clientes extends CI_Model
     public function pdfactmes_vtotal($mes_actvtotal)
     {
         $this->db->where('DATE_FORMAT(fecha_vtotal, "%Y-%m") =', $mes_actvtotal);
-        $this->db->where('disponible_vtotal', 'ACTIVO');
+        $this->db->where('disponible_vtotal', 'DISPONIBLE');
         $query = $this->db->get('clientes_totalclientes');
         return $query->result();
     }
 
     public function pdfacttotal_vtotal()
     {
-        $this->db->where('disponible_vtotal', 'ACTIVO');
+        $this->db->where('disponible_vtotal', 'DISPONIBLE');
         $query = $this->db->get('clientes_totalclientes');
         return $query->result();
     }
@@ -211,7 +211,7 @@ class mtotal_clientes extends CI_Model
     {
         $this->db->where('fecha_vtotal >=', $fechauno_inactvtotal);
         $this->db->where('fecha_vtotal <=', $fechados_inactvtotal);
-        $this->db->where('disponible_vtotal', 'INACTIVO');
+        $this->db->where('disponible_vtotal', 'NO DISPONIBLE');
         $query = $this->db->get('clientes_totalclientes');
         return $query->result();
     }
@@ -219,14 +219,14 @@ class mtotal_clientes extends CI_Model
     public function pdfinactmes_vtotal($mes_inactvtotal)
     {
         $this->db->where('DATE_FORMAT(fecha_vtotal, "%Y-%m") =', $mes_inactvtotal);
-        $this->db->where('disponible_vtotal', 'INACTIVO');
+        $this->db->where('disponible_vtotal', 'NO DISPONIBLE');
         $query = $this->db->get('clientes_totalclientes');
         return $query->result();
     }
 
     public function pdfinacttotal_vtotal()
     {
-        $this->db->where('disponible_vtotal', 'INACTIVO');
+        $this->db->where('disponible_vtotal', 'NO DISPONIBLE');
         $query = $this->db->get('clientes_totalclientes');
         return $query->result();
     }

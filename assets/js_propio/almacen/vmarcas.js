@@ -36,8 +36,10 @@ $(document).ready(function()
     //CONFIGURACIÓN DE LA DATATABLES
     var tabla = $('#tabla_vmarcas').DataTable({
         language:{
-            'emptyTable': 'No hay datos disponibles'
+            'emptyTable': 'No hay datos disponibles',
+            'zeroRecords': 'No se encontraron coincidencias'
         },
+        'autoWidth': false,
         'processing': true,
         'serverSide': true,
         'ordering': false,
