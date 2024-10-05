@@ -13,21 +13,22 @@
                     <h3 class="panel-title">Consultas por Fechas</h3>
                 </div><br>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-3 bg-red">
                         <div class="input-group">
                             <span class="form-control col-2" id="lblfechauno_vcon"><i class="fa-regular fa-clock"></i></span>
                             <input class="form-control input-sm" type="date" id="fechauno_vcon" name="fechauno_vcon">
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-3 bg-yellow">
                         <div class="input-group">
                             <span class="form-control col-2" id="lblfechados_vcon"><i class="fa-regular fa-clock"></i></span>
                             <input class="form-control input-sm" type="date" id="fechados_vcon" name="fechados_vcon">
                         </div>
                     </div>
-                    <div class="col-3">
-                        <button class="btn btn-primary" id="btnconsultas_vcon">Consultar:</button>
-                    </div>
+                    <div class="col-3">                        
+                        <button class="btn btn-primary" id="btnconsultas_vcon">Consultar:</button>                                           
+                        <button class="btn btn-danger" id="btncancel_fechasvcon">Cancelar</button>
+                    </div>                                                           
                 </div>
                 <br>
                 <div class="container">
@@ -40,9 +41,9 @@
                                 </button>                                
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" data-tab="eyelash-inactivos" id="eyelash_inactivos" style="font-weight: bold; color: black;" data-bs-toggle="tab" data-bs-target="#tabinact_vconfechas" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                <button class="nav-link" data-tab="eyelash-inactivos" id="eyelash_inactivos" style="font-weight: bold; color: black;" data-bs-toggle="tab" data-bs-target="#tabinact_fechasvcon" type="button" role="tab" aria-controls="profile" aria-selected="false">
                                     INACTIVOS
-                                    <span class="badge badge-warning" style="font-size: 11px; font-weight: bold;" value="">12</span>
+                                    <span class="badge badge-warning" style="font-size: 11px; font-weight: bold;" value=""><?= $sumainactivos ?></span>
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
@@ -116,7 +117,7 @@
 
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="tabinact_vconfechas" role="tabpanel" aria-labelledby="tabinact_vconfechas">
+                            <div class="tab-pane fade" id="tabinact_fechasvcon" role="tabpanel" aria-labelledby="tabinact_vconfechas">
                                 <div class="row dt-search-0">
                                     <div>
                                         <label for="dt-search-0">Buscar:</label>
@@ -128,7 +129,7 @@
                                         <div class="dt-length text-center">
                                             <div class="form-check form-switch d-flex align-items-center">
                                                 <h5 style="padding-top: 5px; padding-right: 5px;">Ver:</h5>
-                                                <select class="form-select" id="dt-length-0" name="tabla_inactivos_length" style="border-radius: 5px;" aria-controls="tabla_inactivos">
+                                                <select class="form-select" id="dt-length-0" name="tablainact_fechasvcon_length" style="border-radius: 5px;" aria-controls="tabla_inactivos">
                                                     <option value="10">10</option>
                                                     <option value="20">20</option>
                                                     <option value="50">50</option>

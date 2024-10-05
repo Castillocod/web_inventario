@@ -1,4 +1,15 @@
+
 $(document).ready(function() {
+    prodact_fechasvcon(); 
+    
+    $('#btncancel_fechasvcon').click(function(){
+        $('#btnconsultas_vcon').prop('disabled', true).css('opacity', 0.5);
+        $('#lblfechados_vcon').prop('disabled', true).css('opacity', 0.5);
+        $('#fechados_vcon').prop('disabled', true).css('opacity', 0.5);
+        $('#btncancel_fechasvcon').prop('disabled', true).css('opacity', 0.5);
+
+    });
+
     $('#comboact_fechasvcon').change(function(){
         var datocombo = $(this).val();
 
@@ -30,7 +41,7 @@ $(document).ready(function() {
             $('#tablainact_fechasvcon').DataTable().destroy();
         }
 
-        $('#tablainact_fechasvcon').empty();
+        $('#tablainact_fechasvcon tbody').empty();
 
         if(datocombo === 'Productos'){
             prodinact_fechasvcon();
@@ -43,7 +54,15 @@ $(document).ready(function() {
         }
     });
 
-    prodact_fechasvcon();
+    $('#myTab button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("data-bs-target");
+
+        if (target === '#tabact_fechasvcon') {                        
+            prodact_fechasvcon();
+        } else if(target === '#tabinact_fechasvcon'){                  
+            prodinact_fechasvcon();
+        }
+    }); 
 
     $('#fechauno_vcon').datepicker({
         language: 'es',
@@ -65,31 +84,13 @@ $(document).ready(function() {
 
     var comboinact_fechasvcon = $('#comboinact_fechasvcon').val();
     $('#colinact_fechasvcon').text(comboinact_fechasvcon);
-
-
-    $('#comboact_fechasvcon').change(function() {
-        var combo = $(this).val(); 
-    });
-
-    // var iniciopestana = $('#eyelash_activos').contents().filter(function() {
-    //     return this.nodeType === 3;
-    // }).text().trim();    
-    // $('.columna_fechasvcon').text(iniciopestana);
-
-    // $('[data-tab]').on('click', function(){
-    //     var textotab = $(this).contents().filter(function() {
-    //         return this.nodeType === 3;
-    //     }).text().trim();
-        
-    //     $('.columna_fechasvcon').text(textotab);
-    // });
-
-    $('')
 });
 
 function prodact_fechasvcon()
 {
-    $('#dt-length-0').val('10');
+    $('[name="tablaact_fechasvcon_length"]').val('10');
+    $('#pagination_inact_fechasvcon').empty();    
+    $('#pagination_act_fechasvcon').empty();
     $('#tablaact_fechasvcon').DataTable().destroy();
     $('#tablaact_fechasvcon tbody').empty();
 
@@ -127,7 +128,7 @@ function prodact_fechasvcon()
             {'data': 'estado_prod', 'createdCell': function(td, cellData, rowData, row, col){
                 var estado_vprod = cellData.trim();
                 $(td).addClass('text-center').html('<span id="celda_estado_tablaprod" style="font-weight: bold; font-size: 11px;">'+cellData+'</span>');
-                
+
                 if(estado_vprod === 'ACTIVO'){
                     $(td).find('span').addClass('badge badge-success');
                 } else if(estado_vprod === 'INACTIVO'){
@@ -179,7 +180,9 @@ function prodact_fechasvcon()
 
 function catact_fechasvcon()
 {
-    $('#dt-length-0').val('10');
+    $('[name="tablaact_fechasvcon_length"]').val('10');
+    $('#pagination_inact_fechasvcon').empty();    
+    $('#pagination_act_fechasvcon').empty();
     $('#tablaact_fechasvcon').DataTable().destroy();
     $('#tablaact_fechasvcon tbody').empty();
 
@@ -234,8 +237,8 @@ function catact_fechasvcon()
                 {
                     var id = rowData.id;
                     // var prodeditar_fechasvcon = ``;
-                    var prodver_fechasvcon = `<button class="btn btn-sm btn-success fa-regular fa-eye" data-bs-toggle="modal" data-bs-target="#" onclick="ver_vconfechas(${id})"></button>`;
-                    $(td).addClass('text-center').html(prodver_fechasvcon);
+                    var catver_fechasvcon = `<button class="btn btn-sm btn-success fa-regular fa-eye" data-bs-toggle="modal" data-bs-target="#" onclick="ver_vconfechas(${id})"></button>`;
+                    $(td).addClass('text-center').html(catver_fechasvcon);
                 }
             }
         ],
@@ -269,7 +272,9 @@ function catact_fechasvcon()
 
 function marcasact_fechasvcon()
 {
-    $('#dt-length-0').val('10');
+    $('[name="tablaact_fechasvcon_length"]').val('10');
+    $('#pagination_inact_fechasvcon').empty();    
+    $('#pagination_act_fechasvcon').empty();
     $('#tablaact_fechasvcon').DataTable().destroy();
     $('#tablaact_fechasvcon tbody').empty();
 
@@ -324,8 +329,8 @@ function marcasact_fechasvcon()
                 {
                     var id = rowData.id;
                     // var prodeditar_fechasvcon = ``;
-                    var prodver_fechasvcon = `<button class="btn btn-sm btn-success fa-regular fa-eye" data-bs-toggle="modal" data-bs-target="#" onclick="ver_vconfechas(${id})"></button>`;
-                    $(td).addClass('text-center').html(prodver_fechasvcon);
+                    var marcasver_fechasvcon = `<button class="btn btn-sm btn-success fa-regular fa-eye" data-bs-toggle="modal" data-bs-target="#" onclick="ver_vconfechas(${id})"></button>`;
+                    $(td).addClass('text-center').html(marcasver_fechasvcon);
                 }
             }
         ],
@@ -340,8 +345,8 @@ function marcasact_fechasvcon()
             pagination.attr('id', 'pagination_actfechasvcon');
             $('#pagination_act_fechasvcon').html('');
         }
-    });  
-    
+    });
+
     $('#dt-search-0').on('keyup', function(){
         tablamarcasact_fechasvcon.search(this.value).draw();
     });
@@ -359,7 +364,9 @@ function marcasact_fechasvcon()
 
 function tcact_fechasvcon()
 {
-    $('#dt-length-0').val('10');
+    $('[name="tablaact_fechasvcon_length"]').val('10');
+    $('#pagination_inact_fechasvcon').empty();    
+    $('#pagination_act_fechasvcon').empty();
     $('#tablaact_fechasvcon').DataTable().destroy();
     $('#tablaact_fechasvcon tbody').empty();
 
@@ -445,7 +452,9 @@ function tcact_fechasvcon()
 
 function prodinact_fechasvcon()
 {
-    $('#dt-length-0').val('10');
+    $('[name="tablainact_fechasvcon_length"]').val('10');  
+    $('#pagination_inact_fechasvcon').empty();    
+    $('#pagination_act_fechasvcon').empty();
     $('#tablainact_fechasvcon').DataTable().destroy();
     $('#tablainact_fechasvcon tbody').empty();
 
@@ -489,6 +498,9 @@ function prodinact_fechasvcon()
                     $(td).find('span').addClass('badge badge-warning');
                 }
             }},
+            {'data': 'fecha_vprod', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
             {'data': null,
                 'orderable': false,
                 'searchable': false,
@@ -504,7 +516,7 @@ function prodinact_fechasvcon()
         'initComplete': function(){
             var pagination = $('.pagination');
             pagination.attr('id', 'pagination_inactfechasvcon');
-            $('#pagination_act_fechasvcon').append(pagination);
+            $('#pagination_inact_fechasvcon').append(pagination);
         },
         'drawCallback': function(settings){
             var pagination = $('.pagination');
@@ -530,15 +542,272 @@ function prodinact_fechasvcon()
 
 function catinact_fechasvcon()
 {
+    $('[name="tablainact_fechasvcon_length"]').val('10');
+    $('#pagination_inact_fechasvcon').empty();    
+    $('#pagination_act_fechasvcon').empty();
+    $('#tablainact_fechasvcon').DataTable().destroy();
+    $('#tablainact_fechasvcon tbody').empty();
 
+    var tablacatinact_fechasvcon = $('#tablainact_fechasvcon').DataTable({
+        language: {
+            'zeroRecords': 'No se encontraron coincidencias',
+            'emptyTable': 'No hay datos disponibles'
+        },
+        'autoWidth': false,
+        'processing': true,
+        'serverSide': true,
+        'ordering': false,
+        'ajax': {
+            'url': 'cconsulta_fechas/tablacatinact_fechasvcon',
+            'type': 'POST',
+            'dataType': 'JSON',
+            'error': function(xhr, status, error, code){
+                console.error('XHR:', xhr);
+                console.error('STATUS:', status);
+                console.error('CODE:', code);
+                console.error('ERROR:', error);
+
+                if(xhr.responseText)
+                {
+                    console.error('Respuesta del error:', xhr.responseText);
+                }
+            }
+        },
+        'columns':[
+            {'data': 'id', 'createdCell': function(td, cellData, rowData, col, row){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'categoria', 'createdCell': function(td, cellData, rowData, col, row){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'estado_vcat', 'createdCell': function(td, cellData, rowData, col, row){
+                var estado_vcat = cellData.trim();
+                $(td).addClass('text-center').html('<span id="celda_est_tablacatinact" style="font-weight: bold; font-size: 11px;">'+cellData+'</span>');
+
+                if(estado_vcat === 'ACTIVO'){
+                    $(td).find('span').addClass('badge badge-success');
+                } else if(estado_vcat === 'INACTIVO'){
+                    $(td).find('span').addClass('badge badge-warning');
+                }
+            }},
+            {'data': 'fecha_vcat', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': null,
+                'ordering': false,
+                'searchable': false,
+                'createdCell': function(td, cellData, rowData, col, row)
+                {
+                    var id = rowData.id;
+                    var catver_fechasvcon = `<button class="btn btn-sm btn-success fa-regular fa-eye" data-bs-toggle="modal" data-bs-target="#" onclick="ver_vconfechas(${id})"></button>`;
+                    $(td).addClass('text-center').html(catver_fechasvcon);
+                }
+            }
+        ],
+        'dom': 'rt<"bottom"p>',
+        'initComplete': function(){
+            var pagination = $('.pagination');
+            pagination.attr('id', 'pagination_inacfechasvcon');
+            $('#pagination_inact_fechasvcon').append(pagination);
+        },
+        'drawCallback': function(settings){
+            var pagination = $('.pagination');
+            pagination.attr('id', 'pagination_inactfechasvcon');
+            $('#pagination_inact_fechasvcon').html('');
+        }
+    });
+
+    $('#dt-search-0').on('keyup', function(){
+        tablacatinact_fechasvcon.search(this.value).draw();
+    });
+
+    $('#dt-length-0').on('change', function(){
+        tablacatinact_fechasvcon.page.len(this.value).draw();
+    });
+
+    tablacatinact_fechasvcon.on('draw', function(){
+        var pagination = $('.pagination');
+        pagination.attr('id', 'pagination_inactfechasvcon');
+        $('#pagination_inact_fechasvcon').append(pagination);
+    });
 }
 
 function marcasinact_fechasvcon()
 {
+    $('[name="tablainact_fechasvcon_length"]').val('10');
+    $('#pagination_inact_fechasvcon').empty();    
+    $('#pagination_act_fechasvcon').empty();
+    $('#tablainact_fechasvcon').DataTable().destroy();
+    $('#tablainact_fechasvcon tbody').empty();
 
+    var tablamarcasinact_fechasvcon = $('#tablainact_fechasvcon').DataTable({
+        language: {
+            'zeroRecords': 'No se encontraron coincidencias',
+            'emptyTable': 'No hay datos disponibles'
+        },
+        'autoWidth': false,
+        'processing': true,
+        'serverSide': true,
+        'ordering': false,
+        'ajax':{
+            'url': 'cconsulta_fechas/tablamarcasinact_fechasvcon',
+            'type': 'POST',
+            'dataType': 'JSON',
+            'error': function(xhr, error, status, code){
+                console.error('XHR:', xhr);
+                console.error('ERROR:', error);
+                console.error('STATUS:', status);
+                console.error('CODE:', code);
+
+                if(xhr.responseText)
+                {
+                    console.error('Respuesta del error:', xhr.responseText);
+                }
+            }
+        },
+        'columns':[
+            {'data': 'id', 'createdCell': function(td, cellData, rowData, col, row){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'marca', 'createdCell': function(td, cellData, rowData, col, row){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'estado_vmarcas', 'createdCell': function(td, cellData, rowData, col, row){
+                var estado_vmarcas = cellData.trim();
+                $(td).addClass('text-center').html('<span id="celda_est_tablamarcasinact" style="font-weight: bold; font-size: 11px;">'+cellData+'</span>');
+
+                if(estado_vmarcas === 'ACTIVO'){
+                    $(td).find('span').addClass('badge badge-success');
+                } else if(estado_vmarcas === 'INACTIVO'){
+                    $(td).find('span').addClass('badge badge-warning');
+                }
+            }},
+            {'data': 'fecha_vmarcas', 'createdCell': function(td, cellData, rowData, col, row){
+                $(td).addClass('text-center');
+            }},
+            {'data': null,
+                'ordering': false,
+                'searchable': false,
+                'createdCell': function(td, cellData, rowData, col, row){
+                    var id = rowData.id;
+                    var marcasver_fechasvcon = `<button class="btn btn-sm btn-success fa-regular fa-eye" data-bs-toggle="modal" data-bs-target="#" onclick="ver_vconfechas(${id})"></button>`;
+                    $(td).addClass('text-center').html(marcasver_fechasvcon);
+                }
+            }
+        ],
+        'dom': 'rt<"bottom"p>',
+        'initComplete': function(){
+            var pagination = $('.pagination');
+            pagination.attr('id', 'pagination_inactfechasvcon');
+            $('#pagination_inact_fechasvcon').append(pagination);
+        },
+        'drawCallback': function(settings){
+            var pagination = $('.pagination');
+            pagination.attr('id', 'pagination_inactfechasvcon');
+            $('#pagination_inact_fechasvcon').html('');
+        }
+    });
+
+    $('#dt-search-0').on('keyup', function(){
+        tablamarcasinact_fechasvcon.search(this.value).draw();
+    });
+
+    $('#dt-length-0').on('change', function(){
+        tablamarcasinact_fechasvcon.page.len(this.value).draw();
+    });
+
+    tablamarcasinact_fechasvcon.on('draw', function(){
+        var pagination = $('.pagination');
+        pagination.attr('id', 'pagination_inactfechasvcon');
+        $('#pagination_inact_fechasvcon').append(pagination);
+    });
 }
 
 function tcinact_fechasvcon()
 {
+    $('[name="tablainact_fechasvcon_length"]').val('10');
+    $('#pagination_inact_fechasvcon').empty();    
+    $('#pagination_act_fechasvcon').empty();
+    $('#tablainact_fechasvcon').DataTable().destroy();
+    $('#tablainact_fechasvcon tbody').empty();
 
+    var tablatiposinact_fechasvcon = $('#tablainact_fechasvcon').DataTable({
+        language:{
+            'zeroRecords': 'No se encontraron coincidencias',
+            'emptyTable': 'No hay datos disponibles'
+        },
+        'autoWidth': false,
+        'processing': true,
+        'serverSide': true,
+        'ordering': false,
+        'ajax':{
+            'url': 'cconsulta_fechas/tablatiposinact_fechasvcon',
+            'type': 'POST',
+            'dataType': 'JSON',
+            'error': function(xhr, status, error, code){
+                console.error('XHR:', xhr);
+                console.error('STATUS:', status);
+                console.error('ERROR:', error);
+                console.error('CODE:', code);
+
+                if(xhr.responseText)
+                {
+                    console.error('Respuesta del error:', xhr.responseText);
+                }
+            }
+        },
+        'columns':[
+            {'data': 'id', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},
+            {'data': 'tipocliente', 'createdCell': function(td, cellData, rowData, row, col){
+                $(td).addClass('text-center');
+            }},            
+            {'data': 'estado_vtipos', 'createdCell': function(td, cellData, rowData, row, col){
+                var estado_vtipos = cellData.trim();
+                $(td).addClass('text-center').html('<span id="celda_est_tablatiposinact" style="font-weight: bold; font-size: 11px;">'+cellData+'</span>');
+
+                if(estado_vtipos === 'ACTIVO'){
+                    $(td).find('span').addClass('badge badge-success')
+                } else if(estado_vtipos === 'INACTIVO'){
+                    $(td).find('span').addClass('badge badge-warning');
+                }
+            }},
+            {'data': null, 'visible': false},
+            {'data': null,
+                'orderable': false,
+                'searchable': false,
+                'createdCell': function(td, cellData, rowData, row, col){
+                    var id = rowData.id;
+                    var tiposver_fechasvcon = `<button class="btn btn-sm btn-success fa-regular fa-eye" data-bs-toggle="modal" data-bs-target="#" onclick="ver_vconfechas(${id})"></button>`;
+                    $(td).addClass('text-center').html(tiposver_fechasvcon);
+                }
+            }
+        ],
+        'dom': 'rt<"bottom"p>',
+        'initComplete': function(){
+            var pagination = $('.pagination');
+            pagination.attr('id', 'pagination_inactfechasvcon');
+            $('#pagination_inact_fechasvcon').append(pagination);
+        },
+        'drawCallback': function(settings){
+            var pagination = $('.pagination');
+            pagination.attr('id', 'pagination_inactfechasvcon');
+            $('#pagination_inact_fechasvcon').html('');
+        }
+    });
+
+    $('#dt-search-0').on('keyup', function(){
+        tablatiposinact_fechasvcon.search(this.value).draw();
+    });
+
+    $('#dt-length-0').on('change', function(){
+        tablatiposinact_fechasvcon.page.len(this.value).draw();
+    });
+
+    tablatiposinact_fechasvcon.on('draw', function(){
+        var pagination = $('.pagination');
+        pagination.attr('id', 'pagination_inactfechasvcon');
+        $('#pagination_inact_fechasvcon').append(pagination);
+    });
 }
