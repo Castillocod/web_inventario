@@ -84,13 +84,12 @@ $(document).ready(function()
                 $(td).addClass('text-center');
             }},
             {'data': 'disponible_vtotal', 'createdCell': function(td, cellData, rowData, row, col){
-                var dispnible_vtotal = cellData.trim();
+                var disponible_vtotal = cellData.trim();
                 $(td).addClass('text-center').html('<span id="celda_disponible_vtotal" style="font-weight: bold; font-size: 11px;">'+cellData+'</span>');
 
-                if(dispnible_vtotal === 'DISPONIBLE')
-                {
+                if(disponible_vtotal === 'DISPONIBLE'){
                     $(td).find('span').addClass('badge badge-primary');
-                } else if(dispnible_vtotal === 'NO DISPONIBLE'){
+                } else if(disponible_vtotal === 'NO DISPONIBLE'){
                     $(td).find('span').addClass('badge badge-dark');
                 }
             }},

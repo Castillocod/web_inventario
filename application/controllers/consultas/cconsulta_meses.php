@@ -1,14 +1,15 @@
-<?php
+<?php 
 require ('vendor/autoload.php');
 require FCPATH.'vendor/autoload.php';
-require_once APPPATH . 'libraries/ssp.class.php';
+
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-class cconsulta_fechas extends CI_Controller
+class cconsulta_meses extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
+        $this->load->model('consultas/mconsulta_meses');
         $this->load->model('consultas/mconsulta_fechas');
     }
 
@@ -20,11 +21,11 @@ class cconsulta_fechas extends CI_Controller
         $this->data['clientes'] = $this->mconsulta_fechas->sumaclientes();
         $this->load->view('layouts/header');
         $this->load->view('layouts/content');
-        $this->load->view('consultas/vconsulta_fechas', $this->data);
+        $this->load->view('consultas/vconsulta_meses', $this->data);
         $this->load->view('layouts/footer');
     }
 
-    public function tablaprodact_fechasvcon()
+    public function tablaprodact_mesesvcon()
     {
         $columnas = [
             'id',
@@ -32,24 +33,23 @@ class cconsulta_fechas extends CI_Controller
             'estado_prod',
             'fecha_vprod'
         ];
-
+        
         $limite = $this->input->post('length');
         $iniciar = $this->input->post('start');
-        $fechauno = $this->input->post('fechauno');
-        $fechados = $this->input->post('fechados');
+        $meses_vcon = $this->input->post('meses_vcon');
 
-        $totaldata = $this->mconsulta_fechas->all_tablaprodact_count($fechauno, $fechados);
+        $totaldata = $this->mconsulta_meses->all_tablaprodact_count($meses_vcon);
         $totalfiltered = $totaldata;
 
         if(empty($this->input->post('search')['value']))
         {
-            $tablaprodact = $this->mconsulta_fechas->all_tablaprodact($limite, $iniciar, $fechauno, $fechados);
+            $tablaprodact = $this->mconsulta_meses->all_tablaprodact($limite, $iniciar, $meses_vcon);
         }
         else
         {
             $buscar = $this->input->post('search')['value'];
-            $tablaprodact = $this->mconsulta_fechas->tablaprodact_search($limite, $iniciar, $buscar, $fechauno, $fechados);
-            $totalfiltered = $this->mconsulta_fechas->tablaprodact_search_count($buscar, $fechauno, $fechados);
+            $tablaprodact = $this->mconsulta_meses->tablaprodact_search($limite, $iniciar, $buscar, $meses_vcon);
+            $totalfiltered = $this->mconsulta_meses->tablaprodact_search_count($buscar, $meses_vcon);
         }
 
         $datos = array();
@@ -75,7 +75,7 @@ class cconsulta_fechas extends CI_Controller
         echo json_encode($json_data);
     }
 
-    public function tablacatact_fechasvcon()
+    public function tablacatact_mesesvcon()
     {
         $columnas = [
             'id',
@@ -86,21 +86,20 @@ class cconsulta_fechas extends CI_Controller
 
         $limite = $this->input->post('length');
         $iniciar = $this->input->post('start');
-        $fechauno = $this->input->post('fechauno');
-        $fechados = $this->input->post('fechados');
+        $meses_vcon = $this->input->post('meses_vcon');
 
-        $totaldata = $this->mconsulta_fechas->all_tablacatact_count($fechauno, $fechados);
+        $totaldata = $this->mconsulta_meses->all_tablacatact_count($meses_vcon);
         $totalfiltered = $totaldata;
 
         if(empty($this->input->post('search')['value']))
         {
-            $tablacatact = $this->mconsulta_fechas->all_tablacatact($limite, $iniciar, $fechauno, $fechados);
+            $tablacatact = $this->mconsulta_meses->all_tablacatact($limite, $iniciar, $meses_vcon);
         }
         else
         {
             $buscar = $this->input->post('search')['value'];
-            $tablacatact = $this->mconsulta_fechas->tablacatact_search($limite, $iniciar, $buscar, $fechauno, $fechados);
-            $totalfiltered = $this->mconsulta_fechas->tablacatact_search_count($buscar, $fechauno, $fechados);
+            $tablacatact = $this->mconsulta_meses->tablacatact_search($limite, $iniciar, $buscar, $meses_vcon);
+            $totalfiltered = $this->mconsulta_meses->tablacatact_search_count($buscar, $meses_vcon);
         }
 
         $datos = array();
@@ -126,39 +125,38 @@ class cconsulta_fechas extends CI_Controller
         echo json_encode($json_data);
     }
 
-    public function tablamarcasact_fechasvcon()
+    public function tablamarcasact_mesesvcon()
     {
         $columnas = [
             'id',
             'marca',
             'estado_vmarcas',
-            'fecha_vmarcas'            
+            'fecha_vmarcas'
         ];
 
         $iniciar = $this->input->post('start');
         $limite = $this->input->post('length');
-        $fechauno = $this->input->post('fechauno');
-        $fechados = $this->input->post('fechados');
+        $meses_vcon = $this->input->post('meses_vcon');
 
-        $totaldata = $this->mconsulta_fechas->all_tablamarcasact_count($fechauno, $fechados);
+        $totaldata = $this->mconsulta_meses->all_tablamarcasact_count($meses_vcon);
         $totalfiltered = $totaldata;
 
         if(empty($this->input->post('search')['value']))
         {
-            $tablamarcasact = $this->mconsulta_fechas->all_tablamarcasact($limite, $iniciar, $fechauno, $fechados);
+            $tablamarcasact = $this->mconsulta_meses->all_tablamarcasact($limite, $iniciar, $meses_vcon);
         }
         else
         {
             $buscar = $this->input->post('search')['value'];
-            $tablamarcasact = $this->mconsulta_fechas->tablamarcasact_search($limite, $iniciar, $buscar, $fechauno, $fechados);
-            $totalfiltered = $this->mconsulta_fechas->tablamarcasact_search_count($buscar, $fechauno, $fechados);
+            $tablamarcasact = $this->mconsulta_meses->tablamarcasact_search($limite, $iniciar, $buscar, $meses_vcon);
+            $totalfiltered = $this->mconsulta_meses->tablamarcasact_search_count($buscar, $meses_vcon);
         }
 
         $datos = array();
         if(!empty($tablamarcasact))
         {
             foreach($tablamarcasact as $tablamarcasac){
-                $vdata['id'] = $tablamarcasac->id;
+                $vdata['id'] = $tablamarcasact->id;
                 $vdata['marca'] = $tablamarcasac->marca;
                 $vdata['estado_vmarcas'] = $tablamarcasac->estado_vmarcas;
                 $vdata['fecha_vmarcas'] = $tablamarcasac->fecha_vmarcas;
@@ -177,7 +175,7 @@ class cconsulta_fechas extends CI_Controller
         echo json_encode($json_data);
     }
 
-    public function tablatiposact_fechasvcon()
+    public function tablatiposact_mesesvcon()
     {
         $columnas = [
             'id',
@@ -188,18 +186,18 @@ class cconsulta_fechas extends CI_Controller
         $iniciar = $this->input->post('start');
         $limite = $this->input->post('length');
 
-        $totaldata = $this->mconsulta_fechas->all_tablatiposact_count();
+        $totaldata = $this->mconsulta_meses->all_tablatiposact_count();
         $totalfiltered = $totaldata;
 
         if(empty($this->input->post('search')['value']))
         {
-            $tablatiposact = $this->mconsulta_fechas->all_tablatiposact($iniciar, $limite);
+            $tablatiposact = $this->mconsulta_meses->all_tablatiposact($iniciar, $limite);
         }
         else
         {
             $buscar = $this->input->post('search')['value'];
-            $tablatiposact = $this->mconsulta_fechas->tablatiposact_search($limite, $iniciar, $buscar);
-            $totalfiltered = $this->mconsulta_fechas->tablatiposact_search_count($buscar);
+            $tablatiposact = $this->mconsulta_meses->tablatiposact_search($limite, $iniciar, $buscar);
+            $totalfiltered = $this->mconsulta_meses->tablatiposact_search_count($buscar);
         }
 
         $datos = array();
@@ -224,7 +222,7 @@ class cconsulta_fechas extends CI_Controller
         echo json_encode($json_data);
     }
 
-    public function tablaprodinact_fechasvcon()
+    public function tablaprodinact_mesesvcon()
     {
         $columnas = [
             'id',
@@ -235,35 +233,26 @@ class cconsulta_fechas extends CI_Controller
 
         $iniciar = $this->input->post('start');
         $limite = $this->input->post('length');
-        $fechauno = $this->input->post('fechauno');
-        $fechados = $this->input->post('fechados');
+        $meses_vcon = $this->input->post('meses_vcon');
 
-        // log_message('info', 'Valores recibidos: Fecha Uno: ' . $fechauno . ', Fecha Dos: ' . $fechados);
-
-        $totaldata = $this->mconsulta_fechas->all_tablaprodinact_count($fechauno, $fechados);
+        $totaldata = $this->mconsulta_meses->all_tablatiposact_count($meses_vcon);
         $totalfiltered = $totaldata;
 
         if(empty($this->input->post('search')['value']))
         {
-            $tablaprodinact = $this->mconsulta_fechas->all_tablaprodinact($limite, $iniciar, $fechauno, $fechados);
+            $tablaprodinact = $this->mconsulta_meses->all_tablaprodinact($iniciar, $limite, $meses_vcon);
         }
         else
         {
             $buscar = $this->input->post('search')['value'];
-            // echo 'Datos buscados en controlador: ' . $buscar;
-            // log_message('info', 'Valor de búsqueda: ' . $buscar);
-            $tablaprodinact = $this->mconsulta_fechas->tablaprodinact_search($limite, $iniciar, $buscar, $fechauno, $fechados);
-            $totalfiltered = $this->mconsulta_fechas->tablaprodinact_search_count($buscar, $fechauno, $fechados);
+            $tablaprodinact = $this->mconsulta_meses->tablaprodinact_search($iniciar, $limite, $buscar, $meses_vcon);
+            $totalfiltered = $this->mconsulta_meses->tablaprodinact_search_count($buscar, $meses_vcon);
         }
-
-        // log_message('info', 'Total de registros: ' . $totaldata . ', Registros filtrados: ' . $totalfiltered);
-        // log_message('info', 'Datos obtenidos: ' . print_r($tablaprodinact, true));
 
         $datos = array();
         if(!empty($tablaprodinact))
         {
-            foreach($tablaprodinact as $tablaprodinac)
-            {
+            foreach($tablaprodinact as $tablaprodinac){
                 $vdata['id'] = $tablaprodinac->id;
                 $vdata['modelo'] = $tablaprodinac->modelo;
                 $vdata['estado_prod'] = $tablaprodinac->estado_prod;
@@ -280,14 +269,10 @@ class cconsulta_fechas extends CI_Controller
             'data' => $datos
         );
 
-        // log_message('info', 'Respuesta JSON enviada: ' . json_encode($json_data));
-                
         echo json_encode($json_data);
-
-        // echo 'Datos encontrados:' . $json_data;
     }
 
-    public function tablacatinact_fechasvcon()
+    public function tablacatinact_mesesvcon()
     {
         $columnas = [
             'id',
@@ -298,21 +283,20 @@ class cconsulta_fechas extends CI_Controller
 
         $iniciar = $this->input->post('start');
         $limite = $this->input->post('length');
-        $fechauno = $this->input->post('fechauno');
-        $fechados = $this->input->post('fechados');
+        $meses_vcon = $this->input->post('meses_vcon');
 
-        $totaldata = $this->mconsulta_fechas->all_tablacatinact_count($fechauno, $fechados);
+        $totaldata = $this->mconsulta_meses->all_tablacatinact_count($meses_vcon);
         $totalfiltered = $totaldata;
 
         if(empty($this->input->post('search')['value']))
         {
-            $tablacatinact = $this->mconsulta_fechas->all_tablacatinact($iniciar, $limite, $fechauno, $fechados);
+            $tablacatinact = $this->mconsulta_meses->all_tablacatinact($iniciar, $limite, $meses_vcon);
         }
         else
         {
             $buscar = $this->input->post('search')['value'];
-            $tablacatinact = $this->mconsulta_fechas->tablacatinact_search($iniciar, $limite, $buscar, $fechauno, $fechados);
-            $totalfiltered = $this->mconsulta_fechas->tablacatinact_search_count($buscar, $fechauno, $fechados);
+            $tablacatinact = $this->mconsulta_meses->tablacatinact_search($iniciar, $limite, $buscar, $meses_vcon);
+            $totalfiltered = $this->mconsulta_meses->tablacatinact_search_count($buscar, $meses_vcon);
         }
 
         $datos = array();
@@ -323,6 +307,7 @@ class cconsulta_fechas extends CI_Controller
                 $vdata['categoria'] = $tablacatinac->categoria;
                 $vdata['estado_vcat'] = $tablacatinac->estado_vcat;
                 $vdata['fecha_vcat'] = $tablacatinac->fecha_vcat;
+
                 $datos[] = $vdata;
             }
         }
@@ -337,7 +322,7 @@ class cconsulta_fechas extends CI_Controller
         echo json_encode($json_data);
     }
 
-    public function tablamarcasinact_fechasvcon()
+    public function tablamarcasinact_mesesvcon()
     {
         $columnas = [
             'id',
@@ -348,21 +333,20 @@ class cconsulta_fechas extends CI_Controller
 
         $iniciar = $this->input->post('start');
         $limite = $this->input->post('length');
-        $fechauno = $this->input->post('fechauno');
-        $fechados = $this->input->post('fechados');
+        $meses_vcon = $this->input->post('meses_vcon');
 
-        $totaldata = $this->mconsulta_fechas->all_tablamarcasinact_count($fechauno, $fechados);
+        $totaldata = $this->mconsulta_meses->all_tablamarcasinact_count($meses_vcon);
         $totalfiltered = $totaldata;
 
         if(empty($this->input->post('search')['value']))
         {
-            $tablamarcasinact = $this->mconsulta_fechas->all_tablamarcasinact($iniciar, $limite, $fechauno, $fechados);
+            $tablamarcasinact = $this->mconsulta_meses->all_tablamarcasinact($iniciar, $limite, $meses_vcon);
         }
         else
         {
             $buscar = $this->input->post('search')['value'];
-            $tablamarcasinact = $this->mconsulta_fechas->tablamarcasinact_search($iniciar, $limite, $buscar, $fechauno, $fechados);
-            $totalfiltered = $this->mconsulta_fechas->tablamarcasinact_search_count($buscar, $fechauno, $fechados);
+            $tablamarcasinact = $this->mconsulta_meses->tablamarcasinact_search($iniciar, $limite, $buscar, $meses_vcon);
+            $totalfiltered = $this->mconsulta_meses->tablamarcasinact_search_count($buscar, $meses_vcon);
         }
 
         $datos = array();
@@ -387,7 +371,7 @@ class cconsulta_fechas extends CI_Controller
         echo json_encode($json_data);
     }
 
-    public function tablatiposinact_fechasvcon()
+    public function tablatiposinact_mesesvcon()
     {
         $columnas = [
             'id',
@@ -398,18 +382,18 @@ class cconsulta_fechas extends CI_Controller
         $iniciar = $this->input->post('start');
         $limite = $this->input->post('length');
 
-        $totaldata = $this->mconsulta_fechas->all_tablatiposinact_count();
+        $totaldata = $this->mconsulta_meses->all_tablatiposinact_count();
         $totalfiltered = $totaldata;
 
         if(empty($this->input->post('search')['value']))
         {
-            $tablatiposinact = $this->mconsulta_fechas->all_tablatiposinact($iniciar, $limite);
+            $tablatiposinact = $this->mconsulta_meses->all_tablatiposinact($iniciar, $limite); 
         }
         else
         {
             $buscar = $this->input->post('search')['value'];
-            $tablatiposinact = $this->mconsulta_fechas->tablatiposinact_search($iniciar, $limite, $buscar);
-            $totalfiltered = $this->mconsulta_fechas->tablatiposinact_search_count($buscar);
+            $tablatiposinact = $this->mconsulta_meses->tablatiposinact_search($iniciar, $limite, $buscar);
+            $totalfiltered = $this->mconsulta_meses->tablatiposinact_search_count($buscar);
         }
 
         $datos = array();
@@ -433,7 +417,7 @@ class cconsulta_fechas extends CI_Controller
         echo json_encode($json_data);
     }
 
-    public function tablacotpen_fechasvcon()
+    public function tablacotpen_mesesvcon()
     {
         $columnas = [
             'folio_cotizacion',
@@ -444,28 +428,26 @@ class cconsulta_fechas extends CI_Controller
 
         $iniciar = $this->input->post('start');
         $limite = $this->input->post('length');
-        $fechauno = $this->input->post('fechauno');
-        $fechados = $this->input->post('fechados');
+        $meses_vcon = $this->input->post('meses_vcon');
 
-        $totaldata = $this->mconsulta_fechas->all_tablacotpen_count($fechauno, $fechados);
+        $totaldata = $this->mconsulta_meses->all_tablacotpen_count($meses_vcon);
         $totalfiltered = $totaldata;
 
         if(empty($this->input->post('search')['value']))
         {
-            $tablacotpen = $this->mconsulta_fechas->all_tablacotpen($iniciar, $limite, $fechauno, $fechados);
+            $tablacotpen = $this->mconsulta_meses->all_tablacotpen($iniciar, $limite, $meses_vcon);
         }
         else
         {
             $buscar = $this->input->post('search')['value'];
-            $tablacotpen = $this->mconsulta_fechas->tablacotpen_search($iniciar, $limite, $buscar, $fechauno, $fechados);
-            $totalfiltered = $this->mconsulta_fechas->tablacotpen_search_count($buscar, $fechauno, $fechados);
+            $tablacotpen = $this->mconsulta_meses->tablacotpen_search($iniciar, $limite, $buscar, $meses_vcon);
+            $totalfiltered = $this->mconsulta_meses->tablacotpen_search_count($buscar, $meses_vcon);
         }
 
         $datos = array();
         if(!empty($tablacotpen))
         {
-            foreach($tablacotpen as $tablacotpend)
-            {
+            foreach($tablacotpen as $tablacotpend){
                 $vdata['folio_cotizacion'] = $tablacotpend->folio_cotizacion;
                 $vdata['nombrecliente_cot'] = $tablacotpend->nombrecliente_cot;
                 $vdata['estado_borrador'] = $tablacotpend->estado_borrador;
@@ -481,10 +463,10 @@ class cconsulta_fechas extends CI_Controller
             'data' => $datos
         );
 
-        echo json_encode($json_data);
+        echo json_encode($json_data); 
     }
 
-    public function tablacotter_fechasvcon()
+    public function tablacotter_mesesvcon()
     {
         $columnas = [
             'folio_cotizacion',
@@ -495,21 +477,20 @@ class cconsulta_fechas extends CI_Controller
 
         $iniciar = $this->input->post('start');
         $limite = $this->input->post('length');
-        $fechauno = $this->input->post('fechauno');
-        $fechados = $this->input->post('fechados');
+        $meses_vcon = $this->input->post('meses_vcon');
 
-        $totaldata = $this->mconsulta_fechas->all_tablacotter_count($fechauno, $fechados);
+        $totaldata = $this->mconsulta_meses->all_tablacotter_count($meses_vcon);
         $totalfiltered = $totaldata;
 
         if(empty($this->input->post('search')['value']))
         {
-            $tablacotter = $this->mconsulta_fechas->all_tablacotter($iniciar, $limite, $fechauno, $fechados);
+            $tablacotter = $this->mconsulta_meses->all_tablacotter($iniciar, $limite, $meses_vcon);
         }
         else
         {
             $buscar = $this->input->post('search')['value'];
-            $tablacotter = $this->mconsulta_fechas->tablacotter_search($iniciar, $limite, $buscar, $fechauno, $fechados);
-            $totalfiltered = $this->mconsulta_fechas->tablacotter_search_count($buscar, $fechauno, $fechados);
+            $tablacotter = $this->mconsulta_meses->tablacotter_search($iniciar, $limite, $buscar, $meses_vcon);
+            $totalfiltered = $this->mconsulta_meses->tablacotter_search_count($buscar, $meses_vcon);
         }
 
         $datos = array();
@@ -535,143 +516,19 @@ class cconsulta_fechas extends CI_Controller
         echo json_encode($json_data);
     }
 
-    public function tablaclientesdisp_fechasvcon()
-    {
-        $columnas = [
-            'id', 
-            'nombre',
-            'fecha_vtotal', 
-            'disponible_vtotal'            
-        ];
-
-        $iniciar = $this->input->post('start');
-        $limite = $this->input->post('length');
-        $fechauno = $this->input->post('fechauno');
-        $fechados = $this->input->post('fechados');        
-
-        $totaldata = $this->mconsulta_fechas->all_tablaclientesdisp_count($fechauno, $fechados);
-        $totalfiltered = $totaldata;
-
-        if(empty($this->input->post('search')['value']))
-        {
-            $tablaclientesdisp = $this->mconsulta_fechas->all_tablaclientesdisp($iniciar, $limite, $fechauno, $fechados);
-        }
-        else
-        {
-            $buscar = $this->input->post('search')['value'];
-            $tablaclientesdisp = $this->mconsulta_fechas->tablaclientesdisp_search($iniciar, $limite, $buscar, $fechauno, $fechados);
-            $totalfiltered = $this->mconsulta_fechas->tablaclientesdisp_search_count($buscar, $fechauno, $fechados);
-        }
-
-        $data = array();
-        if(!empty($tablaclientesdisp))
-        {
-            foreach($tablaclientesdisp as $tablaclientesdis)
-            {
-                $vdata['id'] = $tablaclientesdis->id;
-                $vdata['nombre'] = $tablaclientesdis->nombre;
-                $vdata['fecha_vtotal'] = $tablaclientesdis->fecha_vtotal;
-                $vdata['disponible_vtotal'] = $tablaclientesdis->disponible_vtotal;                
-
-                $data[] = $vdata;
-            }
-        }
-        
-        $json_data = array(
-            'draw' => intval($this->input->post('draw')),
-            'recordsTotal' => intval($totaldata),
-            'recordsFiltered' => intval($totalfiltered),
-            'data' => $data
-        );
-
-        echo json_encode($json_data);
-    }
-
-    public function tablaclientesnodisp_fechasvcon()
+    public function tablaclientesdisp_mesesvcon()
     {
         $columnas = [
             'id',
             'nombre',
             'fecha_vtotal',
-            'disponible_vtotal'            
+            'disponible_vtotal'
         ];
-
-        $iniciar = $this->input->post('start');
-        $limite = $this->input->post('length');
-        $fechauno = $this->input->post('fechauno');
-        $fechados = $this->input->post('fechados');
-
-        $totaldata = $this->mconsulta_fechas->all_tablaclientesnodisp_count($fechauno, $fechados);
-        $totalfiltered = $totaldata;
-
-        if(empty($this->input->post('search')['value']))
-        {
-            $tablaclientesnodisp = $this->mconsulta_fechas->all_tablaclientesnodisp($iniciar, $limite, $fechauno, $fechados);
-        }
-        else
-        {
-            $buscar = $this->input->post('search')['value'];
-            $tablaclientesnodisp = $this->mconsulta_fechas->tablaclientesnodisp_search($iniciar, $limite, $buscar, $fechauno, $fechados);
-            $totalfiltered = $this->mconsulta_fechas->tablaclientesnodisp_search_count($buscar, $fechauno, $fechados);
-        }
-
-        $datos = array();
-        if(!empty($tablaclientesnodisp))
-        {
-            foreach($tablaclientesnodisp as $tablaclientesnodis){
-                $vdata['id'] = $tablaclientesnodis->id;
-                $vdata['nombre'] = $tablaclientesnodis->nombre;
-                $vdata['fecha_vtotal'] = $tablaclientesnodis->fecha_vtotal;
-                $vdata['disponible_vtotal'] = $tablaclientesnodis->disponible_vtotal;                
-                $datos[] = $vdata;
-            }
-        }
-
-        $json_data = array(
-            'draw' => intval($this->input->post('draw')),
-            'recordsTotal' => intval($totaldata),
-            'recordsFiltered' => intval($totalfiltered),
-            'data' => $datos
-        );
-
-        echo json_encode($json_data);
     }
 
-    public function verprodactinact_fechasvcon($id)
+    public function tablaclientesnodisp_mesesvcon()
     {
-        $datos = $this->mconsulta_fechas->verprodactinact_fechasvcon($id);
-        echo json_encode($datos);
-    }
 
-    public function vercatactinact_fechasvcon($id)
-    {
-        $datos = $this->mconsulta_fechas->vercatactinact_fechasvcon($id);
-        echo json_encode($datos);
-    }
-
-    public function vermarcasactinact_fechasvcon($id)
-    {
-        $datos = $this->mconsulta_fechas->vermarcasactinact_fechasvcon($id);
-        echo json_encode($datos);
-    }
-
-    public function vertiposactinact_fechasvcon($id)
-    {
-        $datos = $this->mconsulta_fechas->vertiposactinact_fechasvcon($id);
-        echo json_encode($datos);
-    }
-
-    public function datoscotpenter_fechasvcon($folio_cotpenter)
-    {
-        $datoscotizaciones['datoscotizaciones'] = $this->mconsulta_fechas->datoscotpenter_fechasvcon($folio_cotpenter);
-        $datoscotizaciones['datostablahtml'] = $this->mconsulta_fechas->datoshtml_fechasvcon($folio_cotpenter);
-        echo json_encode($datoscotizaciones);
-    }
-
-    public function verclientesdispnodisp_fechasvcon($id)
-    {
-        $datos = $this->mconsulta_fechas->verclientesdispnodisp_fechasvcon($id);
-        echo json_encode($datos);
     }
 }
 ?>

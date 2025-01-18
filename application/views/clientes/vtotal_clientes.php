@@ -15,7 +15,7 @@
                 <div class="panel-heading d-flex justify-content-center">
                     <h3 class="panel-title">Total de Clientes</h3>
                 </div>
-                <!-- AQUÍ INICIA EL MODAL PARA AGREGAR PRODUCTOS -->
+                <!-- AQUÍ INICIA EL MODAL PARA AGREGAR CLIENTES -->
                 <div class="modal fade" id="vtotal_agregarclientes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -104,9 +104,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- AQUÍ TERMINA EL MODAL PARA AGREGAR PRODUCTOS -->
+                <!-- AQUÍ TERMINA EL MODAL PARA AGREGAR CLIENTES -->
 
-                <!--  INICIO DE MODAL DE EDITAR PRODUCTOS -->
+                <!--  INICIO DE MODAL DE EDITAR CLIENTES -->
                 <div class="modal fade" id="vtotal_modeditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -196,7 +196,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- FINAL DE MODAL DE EDITAR PRODUCTOS -->
+                <!-- FINAL DE MODAL DE EDITAR CLIENTES -->
 
                 <!-- AQUÍ INICIA EL MODAL PARA IMPORTAR EXCEL -->
                 <div class="modal fade" id="vtotal_modexcel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">

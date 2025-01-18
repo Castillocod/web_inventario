@@ -1057,7 +1057,8 @@ function vprod_editar(id)
                 $('#edit_estado_prod').val('ACTIVO');
                 $('#edit_switchestadoproductos').removeClass('switch-inactivo').addClass('switch-activo').prop('checked', true);
             }
-            else{
+            else
+            {
                 $('#edit_estado_lblprod').text('INACTIVO');
                 $('#edit_estado_prod').val('INACTIVO');
                 $('#edit_switchestadoproductos').removeClass('switch-activo').addClass('switch-inactivo').prop('checked', false);

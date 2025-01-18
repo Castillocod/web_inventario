@@ -577,7 +577,7 @@
                                 <table class="table table-striped table-sm" id="tabla_totalterminadas">
                                     <thead>
                                         <tr>
-                                            <th class=text-center>Folio</th>
+                                            <th class="text-center">Folio</th>
                                             <th class="text-center">Tipo de Cliente</th>
                                             <th class="text-center">ID de Cliente</th>
                                             <th class="text-center">Nombre del Cliente</th>

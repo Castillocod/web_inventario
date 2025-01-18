@@ -383,8 +383,7 @@ class cproductos extends CI_Controller
         else
         {
             echo "Fallo al recibir las fechas";
-        }
-        
+        }        
     }
 
     public function pdf_actvprodmeses()

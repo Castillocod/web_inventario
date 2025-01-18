@@ -718,7 +718,7 @@ function vcat_editar(id)
         {
             $('[name="editid"]').val(data.id);
             $('[name="editcategoria"]').val(data.categoria);
-            $('[name="edit_estado_vcat"]').val(data.estado_vcat);
+            // $('[name="edit_estado_vcat"]').val(data.estado_vcat);
             $('[name="editfecha_vcat"]').val(data.fecha_vcat);
 
             if(data.estado_vcat == 'ACTIVO'){

@@ -131,7 +131,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="<?= base_url() ?>consultas/cconsulta_meses" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Consultas por Mes</p> <!-- Esta opción mostrara los productos ordenados por categoria-->
                 </a>

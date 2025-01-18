@@ -49,6 +49,7 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/cotizador/vad_cotizador.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/cotizador/vgenerarcot.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/consultas/vconsulta_fechas.css">
+  <link rel="stylesheet" href="<?= base_url() ?>assets/css_propio/consultas/vconsulta_meses.css">
 
   <!-- NAV TAPS -->
   
